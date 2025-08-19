@@ -8,6 +8,7 @@ import { FilesModule } from './files/files.module';
 import { AuthModule } from './auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CacheModule } from '@nestjs/cache-manager';
+import { PersonModule } from './modules/person/person.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { CacheModule } from '@nestjs/cache-manager';
     CommonModule,
     FilesModule,
     AuthModule,
+    PersonModule,
   ],
   controllers: [AppController],
   providers: [AppService],

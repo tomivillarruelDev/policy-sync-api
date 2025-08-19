@@ -9,7 +9,7 @@ services:
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: rootroot
-      POSTGRES_DB: NEST_BACKEND
+      POSTGRES_DB: POLICY_SYNC
     volumes:
       - ./postgres:/var/lib/postgresql/data
 

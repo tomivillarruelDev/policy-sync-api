@@ -4,8 +4,6 @@ import { UpdateAddressDto } from '../dto/update-address.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Address } from '../entities/addresses.entity';
-import { Country } from '../entities/country.entity';
-import { State } from '../entities/state.entity';
 import { City } from '../entities/city.entity';
 import { Person } from '../../../entities/person.entity';
 import { handleDBErrors } from '../../../../../common/utils/typeorm-errors.util';
@@ -14,23 +12,16 @@ import { handleDBErrors } from '../../../../../common/utils/typeorm-errors.util'
 export class AddressService {
   constructor(
     @InjectRepository(Address) private readonly addrRepo: Repository<Address>,
-    @InjectRepository(Country)
-    private readonly countryRepo: Repository<Country>,
-    @InjectRepository(State) private readonly stateRepo: Repository<State>,
     @InjectRepository(City) private readonly cityRepo: Repository<City>,
     @InjectRepository(Person) private readonly personRepo: Repository<Person>,
   ) {}
 
   async create(dto: CreateAddressDto): Promise<Address> {
-    const [country, state, city, person] = await Promise.all([
-      this.countryRepo.findOne({ where: { id: dto.countryId } }),
-      this.stateRepo.findOne({ where: { id: dto.stateId } }),
+    const [city, person] = await Promise.all([
       this.cityRepo.findOne({ where: { id: dto.cityId } }),
       this.personRepo.findOne({ where: { id: dto.personId } }),
     ]);
 
-    if (!country) throw new NotFoundException('Country no encontrado');
-    if (!state) throw new NotFoundException('State no encontrado');
     if (!city) throw new NotFoundException('City no encontrada');
     if (!person) throw new NotFoundException('Person no encontrada');
 
@@ -39,8 +30,6 @@ export class AddressService {
       streetNumber: dto.streetNumber,
       zipCode: dto.zipCode,
       apartment: dto.apartment,
-      country,
-      state,
       city,
       person,
     });
@@ -71,20 +60,6 @@ export class AddressService {
     if (dto.streetNumber !== undefined) entity.streetNumber = dto.streetNumber;
     if (dto.zipCode !== undefined) entity.zipCode = dto.zipCode;
     if (dto.apartment !== undefined) entity.apartment = dto.apartment;
-    if (dto.countryId) {
-      const country = await this.countryRepo.findOne({
-        where: { id: dto.countryId },
-      });
-      if (!country) throw new NotFoundException('Country no encontrado');
-      entity.country = country;
-    }
-    if (dto.stateId) {
-      const state = await this.stateRepo.findOne({
-        where: { id: dto.stateId },
-      });
-      if (!state) throw new NotFoundException('State no encontrado');
-      entity.state = state;
-    }
     if (dto.cityId) {
       const city = await this.cityRepo.findOne({ where: { id: dto.cityId } });
       if (!city) throw new NotFoundException('City no encontrada');

@@ -11,10 +11,14 @@ import {
 import { CountryService } from './services/country.service';
 import { CreateCountryDto } from './dto/create-country.dto';
 import { UpdateCountryDto } from './dto/update-country.dto';
+import { StateService } from './services/state.service';
 
 @Controller('countries')
 export class CountryController {
-  constructor(private readonly service: CountryService) {}
+  constructor(
+    private readonly service: CountryService,
+    private readonly stateService: StateService,
+  ) {}
 
   @Post()
   create(@Body() dto: CreateCountryDto) {
@@ -29,6 +33,12 @@ export class CountryController {
   @Get(':id')
   findOne(@Param('id', new ParseUUIDPipe()) id: string) {
     return this.service.findOne(id);
+  }
+
+  // Nested: /countries/:id/states
+  @Get(':id/states')
+  findStates(@Param('id', new ParseUUIDPipe()) id: string) {
+    return this.stateService.findAll(id);
   }
 
   @Patch(':id')

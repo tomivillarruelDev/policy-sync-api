@@ -26,7 +26,10 @@ export class CityService {
     }
   }
 
-  findAll(): Promise<City[]> {
+  findAll(stateId?: string): Promise<City[]> {
+    if (stateId) {
+      return this.repo.find({ where: { state: { id: stateId } } });
+    }
     return this.repo.find();
   }
 

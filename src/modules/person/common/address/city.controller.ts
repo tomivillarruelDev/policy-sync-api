@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   ParseUUIDPipe,
+  Query,
 } from '@nestjs/common';
 import { CityService } from './services/city.service';
 import { CreateCityDto } from './dto/create-city.dto';
@@ -22,8 +23,8 @@ export class CityController {
   }
 
   @Get()
-  findAll() {
-    return this.service.findAll();
+  findAll(@Query('stateId') stateId?: string) {
+    return this.service.findAll(stateId);
   }
 
   @Get(':id')

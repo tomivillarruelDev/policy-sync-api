@@ -10,14 +10,6 @@ import {
 export class CreateAddressDto {
   @IsUUID()
   @IsNotEmpty()
-  countryId: string;
-
-  @IsUUID()
-  @IsNotEmpty()
-  stateId: string;
-
-  @IsUUID()
-  @IsNotEmpty()
   cityId: string;
 
   @IsUUID()

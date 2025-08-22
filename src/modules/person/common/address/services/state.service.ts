@@ -29,7 +29,10 @@ export class StateService {
     }
   }
 
-  findAll(): Promise<State[]> {
+  findAll(countryId?: string): Promise<State[]> {
+    if (countryId) {
+      return this.repo.find({ where: { country: { id: countryId } } });
+    }
     return this.repo.find();
   }
 

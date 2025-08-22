@@ -3,9 +3,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AddressService } from './services/address.service';
 import { AddressController } from './address.controller';
 import { Address } from './entities/addresses.entity';
+import { City } from './entities/city.entity';
 import { Country } from './entities/country.entity';
 import { State } from './entities/state.entity';
-import { City } from './entities/city.entity';
 import { Person } from '../../entities/person.entity';
 import { CountryController } from './country.controller';
 import { CountryService } from './services/country.service';
@@ -15,7 +15,7 @@ import { CityController } from './city.controller';
 import { CityService } from './services/city.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Address, Country, State, City, Person])],
+  imports: [TypeOrmModule.forFeature([Address, City, Country, State, Person])],
   controllers: [
     AddressController,
     CountryController,

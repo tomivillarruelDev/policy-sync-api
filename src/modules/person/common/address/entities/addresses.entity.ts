@@ -1,19 +1,11 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Person } from '../../../entities/person.entity';
-import { Country } from './country.entity';
-import { State } from './state.entity';
 import { City } from './city.entity';
 
 @Entity()
 export class Address {
   @PrimaryGeneratedColumn('uuid')
   id: string;
-
-  @ManyToOne(() => Country, { eager: true, onDelete: 'CASCADE' })
-  country: Country;
-
-  @ManyToOne(() => State, { eager: true, onDelete: 'CASCADE' })
-  state: State;
 
   @ManyToOne(() => City, { eager: true, onDelete: 'CASCADE' })
   city: City;

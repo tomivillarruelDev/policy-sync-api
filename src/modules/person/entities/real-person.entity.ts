@@ -13,7 +13,7 @@ export class RealPerson {
   id: string;
 
   @OneToOne(() => Person, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'person_id' })
+  @JoinColumn({ name: 'personId' })
   person: Person;
 
   @Column()

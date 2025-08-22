@@ -10,6 +10,7 @@ import { LegalPersonService } from './services/legal-person.service';
 import { PhoneNumberModule } from './common/phone-number/phone-number.module';
 import { IdentificationModule } from './common/identification/identification.module';
 import { AddressModule } from './common/address/address.module';
+import { BusinessModule } from './roles/business/business.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { AddressModule } from './common/address/address.module';
     IdentificationModule,
     PhoneNumberModule,
     AddressModule,
+    BusinessModule,
   ],
   controllers: [PersonController],
   providers: [PersonService, RealPersonService, LegalPersonService],

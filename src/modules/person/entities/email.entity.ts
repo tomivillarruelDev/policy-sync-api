@@ -6,7 +6,7 @@ export class Email {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column()
+  @Column({ unique: true })
   account: string;
 
   @ManyToOne(() => Person, person => person.emails, { onDelete: "CASCADE" })

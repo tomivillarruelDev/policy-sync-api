@@ -1,19 +1,19 @@
-import { IsEmail, IsOptional, IsString, MinLength } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsUrl,
+  MaxLength,
+} from 'class-validator';
 import { CreatePersonDto } from './create-person.dto';
 
-export class CreateLegalPersonDto extends CreatePersonDto{
+export class CreateLegalPersonDto extends CreatePersonDto {
+  @IsNotEmpty()
+  @MaxLength(100)
   @IsString()
-  @MinLength(1)
-  name: string;
-
-  @IsEmail()
-  email: string;
+  organizationName: string;
 
   @IsOptional()
-  @IsString()
-  legalName?: string;
-
-  @IsOptional()
-  @IsString()
-  cuit?: string;
+  @IsUrl()
+  website?: string;
 }

@@ -16,12 +16,9 @@ export class RealPerson {
   @JoinColumn({ name: 'person_id' })
   person: Person;
 
-  @Column({ nullable: true })
-  firstName?: string;
+  @Column()
+  firstName: string;
 
-  @Column({ nullable: true })
-  lastName?: string;
-
-  @Column({ nullable: true })
-  dni?: string;
+  @Column()
+  lastName: string;
 }

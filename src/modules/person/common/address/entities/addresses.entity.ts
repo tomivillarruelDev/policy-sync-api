@@ -7,7 +7,7 @@ export class Address {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => City, { eager: true, onDelete: 'CASCADE' })
+  @ManyToOne(() => City, { eager: true, onDelete: 'CASCADE', nullable: false })
   city: City;
 
   @Column()
@@ -24,6 +24,7 @@ export class Address {
 
   @ManyToOne(() => Person, (person) => person.addresses, {
     onDelete: 'CASCADE',
+    nullable: false,
   })
   person: Person;
 }

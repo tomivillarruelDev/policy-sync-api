@@ -1,23 +1,13 @@
-import { IsEmail, IsOptional, IsString, MinLength } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsOptional, IsString, Min, MinLength } from 'class-validator';
 import { CreatePersonDto } from './create-person.dto';
 
-export class CreateRealPersonDto extends CreatePersonDto{
+export class CreateRealPersonDto extends CreatePersonDto {
+  @IsNotEmpty()
+  @MinLength(2)
   @IsString()
-  @MinLength(1)
-  name: string;
+  firstName: string;
 
-  @IsEmail()
-  email: string;
-
-  @IsOptional()
+  @IsNotEmpty()
   @IsString()
-  firstName?: string;
-
-  @IsOptional()
-  @IsString()
-  lastName?: string;
-
-  @IsOptional()
-  @IsString()
-  dni?: string;
+  lastName: string;
 }

@@ -5,6 +5,7 @@ import { Person } from '../entities/person.entity';
 import { RealPerson } from '../entities/real-person.entity';
 import { CreateRealPersonDto } from '../dto/create-real-person.dto';
 import { handleDBErrors } from '../../../common/utils/typeorm-errors.util';
+import { mapAddressDto, mapIdentificationDto } from '../common/mappers';
 
 @Injectable()
 export class RealPersonService {
@@ -25,9 +26,9 @@ export class RealPersonService {
       // 1. Crear persona base
       const person = qr.manager.getRepository(Person).create({
         emails: dto.emails,
-        addresses: dto.addresses,
         phoneNumbers: dto.phoneNumbers,
-        identifications: dto.identifications,
+        addresses: mapAddressDto(dto.addresses),
+        identifications: mapIdentificationDto(dto.identifications),
       });
       const savedPerson = await qr.manager.getRepository(Person).save(person);
 
@@ -66,4 +67,3 @@ export class RealPersonService {
     return entity;
   }
 }
-

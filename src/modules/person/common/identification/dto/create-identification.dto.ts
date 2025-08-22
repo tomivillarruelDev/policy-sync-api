@@ -3,7 +3,7 @@ import { IsNotEmpty, IsString, IsUUID } from 'class-validator';
 export class CreateIdentificationDto {
   @IsString()
   @IsNotEmpty()
-  number: string;
+  value: string;
 
   @IsUUID()
   @IsNotEmpty()

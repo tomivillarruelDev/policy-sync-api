@@ -4,8 +4,8 @@ import { DataSource, Repository } from 'typeorm';
 import { Person } from '../entities/person.entity';
 import { LegalPerson } from '../entities/legal-person.entity';
 import { CreateLegalPersonDto } from '../dto/create-legal-person.dto';
-import { PersonType } from '../enums/person-type.enum';
 import { handleDBErrors } from '../../../common/utils/typeorm-errors.util';
+import { mapAddressDto, mapIdentificationDto } from '../common/mappers';
 
 @Injectable()
 export class LegalPersonService {
@@ -17,7 +17,7 @@ export class LegalPersonService {
     private readonly dataSource: DataSource,
   ) {}
 
- async create(dto: CreateLegalPersonDto): Promise<Person> {
+  async create(dto: CreateLegalPersonDto): Promise<Person> {
     const qr = this.dataSource.createQueryRunner();
     await qr.connect();
     await qr.startTransaction();
@@ -26,9 +26,9 @@ export class LegalPersonService {
       // 1. Crear persona base
       const person = qr.manager.getRepository(Person).create({
         emails: dto.emails,
-        addresses: dto.addresses,
         phoneNumbers: dto.phoneNumbers,
-        identifications: dto.identifications,
+        addresses: mapAddressDto(dto.addresses),
+        identifications: mapIdentificationDto(dto.identifications),
       });
       const savedPerson = await qr.manager.getRepository(Person).save(person);
 
@@ -37,13 +37,17 @@ export class LegalPersonService {
         ...dto,
         person: savedPerson,
       });
-      const savedLegal = await qr.manager.getRepository(LegalPerson).save(legal);
+      const savedLegal = await qr.manager
+        .getRepository(LegalPerson)
+        .save(legal);
 
       // 3. Confirmar transacción
       await qr.commitTransaction();
 
       // 4. Retornar compuesto
-      return { ...savedPerson, legalPerson: savedLegal } as Person & { legalPerson: LegalPerson };
+      return { ...savedPerson, legalPerson: savedLegal } as Person & {
+        legalPerson: LegalPerson;
+      };
     } catch (error) {
       await qr.rollbackTransaction();
       handleDBErrors(error);

@@ -1,36 +1,54 @@
 import { Type } from 'class-transformer';
-import { IsArray, IsOptional, ValidateNested } from 'class-validator';
+import { IsArray, ValidateNested, ArrayMinSize } from 'class-validator';
+import { OmitType } from '@nestjs/swagger';
 import { CreatePhoneNumberDto } from '../common/phone-number/dto/create-phone-number.dto';
 import { CreateEmailDto } from './create-email.dto';
 import { CreateAddressDto } from '../common/address/dto/create-address.dto';
 import { CreateIdentificationDto } from '../common/identification/dto/create-identification.dto';
 
 export class CreatePersonDto {
+  // DTOs anidados sin personId (clases reales para que class-validator no exija personId)
+  static PhoneForPerson = class extends OmitType(CreatePhoneNumberDto, [
+    'personId',
+  ] as const) {};
+  static EmailForPerson = class extends OmitType(CreateEmailDto, [
+    'personId',
+  ] as const) {};
+  static AddressForPerson = class extends OmitType(CreateAddressDto, [
+    'personId',
+  ] as const) {};
+  static IdentificationForPerson = class extends OmitType(
+    CreateIdentificationDto,
+    ['personId'] as const,
+  ) {};
+
   // Relaciones en cascada opcionales
-  @IsOptional()
   @IsArray()
+  @ArrayMinSize(1)
   @ValidateNested({ each: true })
-  @Type(() => CreatePhoneNumberDto)
+  @Type(() => CreatePersonDto.PhoneForPerson)
   // personId se setea por el servicio al asociar la Person creada
-  phoneNumbers?: Omit<CreatePhoneNumberDto, 'personId'>[];
+  phoneNumbers: InstanceType<typeof CreatePersonDto.PhoneForPerson>[];
 
-  @IsOptional()
   @IsArray()
+  @ArrayMinSize(1)
   @ValidateNested({ each: true })
-  @Type(() => CreateEmailDto)
-  emails?: Omit<CreateEmailDto, 'personId'>[];
+  @Type(() => CreatePersonDto.EmailForPerson)
+  emails: InstanceType<typeof CreatePersonDto.EmailForPerson>[];
 
-  @IsOptional()
   @IsArray()
+  @ArrayMinSize(1)
   @ValidateNested({ each: true })
-  @Type(() => CreateAddressDto)
+  @Type(() => CreatePersonDto.AddressForPerson)
   // personId se setea por el servicio al asociar la Person creada
-  addresses?: Omit<CreateAddressDto, 'personId'>[];
+  addresses: InstanceType<typeof CreatePersonDto.AddressForPerson>[];
 
-  @IsOptional()
   @IsArray()
+  @ArrayMinSize(1)
   @ValidateNested({ each: true })
-  @Type(() => CreateIdentificationDto)
+  @Type(() => CreatePersonDto.IdentificationForPerson)
   // personId se setea por el servicio al asociar la Person creada
-  identifications?: Omit<CreateIdentificationDto, 'personId'>[];
+  identifications: InstanceType<
+    typeof CreatePersonDto.IdentificationForPerson
+  >[];
 }

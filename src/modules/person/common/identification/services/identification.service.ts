@@ -30,7 +30,7 @@ export class IdentificationService {
     if (!person) throw new NotFoundException('Person no encontrada');
 
     const identification = this.identificationRepo.create({
-      number: dto.number,
+      value: dto.value,
       type,
       person,
     });
@@ -68,7 +68,7 @@ export class IdentificationService {
   ): Promise<Identification> {
     const identification = await this.findOne(id);
 
-    if (dto.number !== undefined) identification.number = dto.number;
+    if (dto.value !== undefined) identification.value = dto.value;
 
     if (dto.typeId) {
       const type = await this.typeRepo.findOne({ where: { id: dto.typeId } });

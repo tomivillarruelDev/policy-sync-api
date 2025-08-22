@@ -9,6 +9,9 @@ export class IdentificationType {
   @Column()
   name: string;
 
+  @Column({ nullable: true })
+  nameEs: string;
+
   @OneToMany(() => Identification, (identification) => identification.type)
   identifications: Identification[];
 }

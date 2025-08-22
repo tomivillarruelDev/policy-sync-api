@@ -1,7 +1,6 @@
 import {
   PrimaryGeneratedColumn,
   OneToMany,
-  TableInheritance,
   Entity,
 } from 'typeorm';
 import { Identification } from '../common/identification/entity/identification.entity';

@@ -1,3 +1,4 @@
+import { Transform } from 'class-transformer';
 import {
   IsNotEmpty,
   IsString,
@@ -11,6 +12,9 @@ export class CreatePhoneNumberDto {
   @IsNotEmpty()
   @MinLength(5)
   @MaxLength(30)
+  @Transform(({ value }) =>
+    typeof value === 'string' ? value.replace(/\D+/g, '') : value,
+  )
   contactNumber: string;
 
   @IsUUID()

@@ -9,13 +9,13 @@ import { Person } from '../../../entities/person.entity';
 import { IdentificationType } from './identification-type.entity';
 
 @Entity()
-@Unique('UQ_ident_person_type_number', ['person', 'type', 'number'])
+@Unique('UQ_ident_type_value', ['type', 'value'])
 export class Identification {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
-  number: string;
+  value: string;
 
   @ManyToOne(() => IdentificationType, (type) => type.identifications, {
     eager: true,

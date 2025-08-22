@@ -5,6 +5,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { SeedLocationCommand } from './commands/seed-location.command';
 import { SeederModule } from '../seeder.module';
 import { EnvConfiguration, JoiValidation } from '../../common/config';
+import { SeedIdentificationCommand } from './commands/seed-identification.command';
 
 @Module({
   imports: [
@@ -13,7 +14,7 @@ import { EnvConfiguration, JoiValidation } from '../../common/config';
       load: [EnvConfiguration],
       validationSchema: JoiValidation,
     }),
-    TypeOrmModule.forRootAsync({
+  TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
@@ -23,13 +24,15 @@ import { EnvConfiguration, JoiValidation } from '../../common/config';
         username: configService.get<string>('DB_USERNAME'),
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_NAME'),
-        autoLoadEntities: true,
+    // Carga todas las entidades para resolver relaciones en seeders
+    entities: [__dirname + '/../../**/*.entity.{ts,js}'],
+    autoLoadEntities: false,
         synchronize: true, // ⚠️ solo en desarrollo
       }),
     }),
     SeederModule,
   ],
-  providers: [SeedLocationCommand],
+  providers: [SeedLocationCommand, SeedIdentificationCommand],
 })
 export class CliModule {}
 

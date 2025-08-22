@@ -18,7 +18,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "seed:location": "ts-node src/seeders/cli/cli.ts seed:location"
+    "seed:location": "ts-node src/seeders/cli/cli.ts seed:location",
+    "seed:identification": "ts-node src/seeders/cli/cli.ts seed:identification"
   },
   "dependencies": {
     "@nestjs/axios": "^4.0.1",

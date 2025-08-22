@@ -3,15 +3,15 @@ import { Injectable } from '@nestjs/common';
 import { SeederService } from '../../seeder.service';
 
 @Injectable()
-export class SeedLocationCommand {
+export class SeedIdentificationCommand {
   constructor(private readonly seederService: SeederService) {}
 
   @Command({
-    command: 'seed:location',
-    describe: 'Carga la base de datos con países, estados y ciudades',
+    command: 'seed:identification',
+    describe: 'Carga la base de datos con tipos de identificación',
   })
   async run() {
-    await this.seederService.seedLocation();
+    await this.seederService.seedIdentificationTypes();
     process.exit(0);
   }
 }

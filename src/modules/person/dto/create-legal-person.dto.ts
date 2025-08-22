@@ -9,9 +9,14 @@ import { CreatePersonDto } from './create-person.dto';
 
 export class CreateLegalPersonDto extends CreatePersonDto {
   @IsNotEmpty()
-  @MaxLength(100)
+  @MaxLength(50)
   @IsString()
   organizationName: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(100)
+  socialReason?: string;
 
   @IsOptional()
   @IsUrl()

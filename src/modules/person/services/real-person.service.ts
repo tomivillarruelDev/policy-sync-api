@@ -6,6 +6,7 @@ import { RealPerson } from '../entities/real-person.entity';
 import { CreateRealPersonDto } from '../dto/create-real-person.dto';
 import { handleDBErrors } from '../../../common/utils/typeorm-errors.util';
 import { mapAddressDto, mapIdentificationDto } from '../common/mappers';
+import { UpdateRealPersonDto } from '../dto/update-real-person.dto';
 
 @Injectable()
 export class RealPersonService {
@@ -65,5 +66,21 @@ export class RealPersonService {
     });
     if (!entity) throw new NotFoundException(`RealPerson ${id} no encontrada`);
     return entity;
+  }
+
+  async update(id: string, dto: UpdateRealPersonDto): Promise<RealPerson> {
+    const entity = await this.findOne(id);
+    // Actualizar propiedades de entity con los valores de dto
+    Object.assign(entity, dto);
+    try {
+      return await this.realRepo.save(entity);
+    } catch (error) {
+      handleDBErrors(error);
+    }
+  }
+
+  async remove(id: string): Promise<void> {
+    const entity = await this.findOne(id);
+    await this.realRepo.remove(entity);
   }
 }

@@ -20,5 +20,8 @@ export class LegalPerson {
   organizationName: string;
 
   @Column({ nullable: true })
+  socialReason?: string;
+
+  @Column({ nullable: true })
   website?: string;
 }

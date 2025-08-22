@@ -6,6 +6,7 @@ import { LegalPerson } from '../entities/legal-person.entity';
 import { CreateLegalPersonDto } from '../dto/create-legal-person.dto';
 import { handleDBErrors } from '../../../common/utils/typeorm-errors.util';
 import { mapAddressDto, mapIdentificationDto } from '../common/mappers';
+import { UpdateLegalPersonDto } from '../dto/update-legal-person.dto';
 
 @Injectable()
 export class LegalPersonService {
@@ -67,5 +68,21 @@ export class LegalPersonService {
     });
     if (!entity) throw new NotFoundException(`LegalPerson ${id} no encontrada`);
     return entity;
+  }
+
+  async update(id: string, dto: UpdateLegalPersonDto): Promise<LegalPerson> {
+    const entity = await this.findOne(id);
+    // Actualizar propiedades de entity con los valores de dto
+    Object.assign(entity, dto);
+    try {
+      return await this.legalRepo.save(entity);
+    } catch (error) {
+      handleDBErrors(error);
+    }
+  }
+
+  async remove(id: string): Promise<void> {
+    const entity = await this.findOne(id);
+    await this.legalRepo.remove(entity);
   }
 }

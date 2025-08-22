@@ -1,18 +1,30 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from "typeorm";
-import { Country } from "./country.entity";
-import { City } from "./city.entity";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
+import { Country } from './country.entity';
+import { City } from './city.entity';
 
 @Entity()
 export class State {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
   name: string;
 
-  @ManyToOne(() => Country, country => country.states, { onDelete: "CASCADE", eager: true })
+  @Column({ name: 'name_es', nullable: true })
+  nameEs: string;
+
+  @ManyToOne(() => Country, (country) => country.states, {
+    onDelete: 'CASCADE',
+    eager: true,
+  })
   country: Country;
 
-  @OneToMany(() => City, city => city.state)
+  @OneToMany(() => City, (city) => city.state)
   cities: City[];
 }

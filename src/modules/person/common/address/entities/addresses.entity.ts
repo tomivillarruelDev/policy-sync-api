@@ -9,13 +9,13 @@ export class Address {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => Country, { eager: true })
+  @ManyToOne(() => Country, { eager: true, onDelete: 'CASCADE' })
   country: Country;
 
-  @ManyToOne(() => State, { eager: true })
+  @ManyToOne(() => State, { eager: true, onDelete: 'CASCADE' })
   state: State;
 
-  @ManyToOne(() => City, { eager: true })
+  @ManyToOne(() => City, { eager: true, onDelete: 'CASCADE' })
   city: City;
 
   @Column()
@@ -30,6 +30,8 @@ export class Address {
   @Column({ nullable: true })
   apartment: string;
 
-  @ManyToOne(() => Person, (person) => person.addresses)
+  @ManyToOne(() => Person, (person) => person.addresses, {
+    onDelete: 'CASCADE',
+  })
   person: Person;
 }

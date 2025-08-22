@@ -17,7 +17,8 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "seed:location": "ts-node src/seeders/cli/cli.ts seed:location"
   },
   "dependencies": {
     "@nestjs/axios": "^4.0.1",
@@ -36,6 +37,7 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "cloudinary": "^2.6.0",
+    "countries-states-cities": "^1.0.6",
     "form-data": "^4.0.4",
     "joi": "^17.13.3",
     "mysql2": "^3.14.3",
@@ -68,7 +70,10 @@
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-prettier": "^5.2.2",
     "globals": "^15.14.0",
+    "i": "^0.3.7",
     "jest": "^29.7.0",
+    "nestjs-command": "^3.1.5",
+    "npm": "^11.5.2",
     "prettier": "^3.4.2",
     "source-map-support": "^0.5.21",
     "supertest": "^7.0.0",

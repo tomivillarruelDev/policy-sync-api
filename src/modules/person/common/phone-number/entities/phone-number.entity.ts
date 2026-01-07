@@ -6,7 +6,7 @@ export class PhoneNumber {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ name: 'contact_number' })
+  @Column()
   contactNumber: string;
 
   @ManyToOne(() => Person, (person) => person.phoneNumbers, {

@@ -5,8 +5,10 @@ import { Person } from '../entities/person.entity';
 import { LegalPerson } from '../entities/legal-person.entity';
 import { CreateLegalPersonDto } from '../dto/create-legal-person.dto';
 import { handleDBErrors } from '../../../common/utils/typeorm-errors.util';
-import { mapAddressDto, mapIdentificationDto } from '../common/mappers';
+import { mapPersonData } from '../common/mappers';
 import { UpdateLegalPersonDto } from '../dto/update-legal-person.dto';
+import { PersonType } from '../enums/person-type.enum';
+import { updatePersonFields } from '../common/utils/person-update.util';
 
 @Injectable()
 export class LegalPersonService {
@@ -16,39 +18,24 @@ export class LegalPersonService {
     @InjectRepository(LegalPerson)
     private readonly legalRepo: Repository<LegalPerson>,
     private readonly dataSource: DataSource,
-  ) {}
+  ) { }
 
-  async create(dto: CreateLegalPersonDto): Promise<Person> {
+  async create(dto: CreateLegalPersonDto): Promise<LegalPerson> {
     const qr = this.dataSource.createQueryRunner();
     await qr.connect();
     await qr.startTransaction();
 
     try {
-      // 1. Crear persona base
-      const person = qr.manager.getRepository(Person).create({
-        emails: dto.emails,
-        phoneNumbers: dto.phoneNumbers,
-        addresses: mapAddressDto(dto.addresses),
-        identifications: mapIdentificationDto(dto.identifications),
-      });
-      const savedPerson = await qr.manager.getRepository(Person).save(person);
-
-      // 2. Crear subtipo (LegalPerson)
-      const legal = qr.manager.getRepository(LegalPerson).create({
+      const repo = qr.manager.getRepository(LegalPerson);
+      const legal = repo.create({
         ...dto,
-        person: savedPerson,
-      });
-      const savedLegal = await qr.manager
-        .getRepository(LegalPerson)
-        .save(legal);
+        person: mapPersonData(dto, PersonType.LEGAL)
+      })
 
-      // 3. Confirmar transacción
+      const saved = await repo.save(legal);
       await qr.commitTransaction();
+      return saved;
 
-      // 4. Retornar compuesto
-      return { ...savedPerson, legalPerson: savedLegal } as Person & {
-        legalPerson: LegalPerson;
-      };
     } catch (error) {
       await qr.rollbackTransaction();
       handleDBErrors(error);
@@ -58,13 +45,12 @@ export class LegalPersonService {
   }
 
   async findAll(): Promise<LegalPerson[]> {
-    return this.legalRepo.find({ relations: ['person'] });
+    return this.legalRepo.find();
   }
 
   async findOne(id: string): Promise<LegalPerson> {
     const entity = await this.legalRepo.findOne({
       where: { id },
-      relations: ['person'],
     });
     if (!entity) throw new NotFoundException(`LegalPerson ${id} no encontrada`);
     return entity;
@@ -72,8 +58,15 @@ export class LegalPersonService {
 
   async update(id: string, dto: UpdateLegalPersonDto): Promise<LegalPerson> {
     const entity = await this.findOne(id);
-    // Actualizar propiedades de entity con los valores de dto
-    Object.assign(entity, dto);
+
+    // Update LegalPerson specific fields
+    if (dto.organizationName) entity.organizationName = dto.organizationName;
+    if (dto.socialReason !== undefined) entity.socialReason = dto.socialReason;
+    if (dto.website !== undefined) entity.website = dto.website;
+
+    // Update nested Person fields
+    updatePersonFields(entity.person, dto);
+
     try {
       return await this.legalRepo.save(entity);
     } catch (error) {

@@ -6,13 +6,14 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Person } from './person.entity';
+import { AuditableEntity } from 'src/common/entities/auditable.entity';
 
 @Entity({ name: 'real_people' })
-export class RealPerson {
+export class RealPerson extends AuditableEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @OneToOne(() => Person, { onDelete: 'CASCADE' })
+  @OneToOne(() => Person, { onDelete: 'CASCADE', cascade: ['insert', 'update'], eager: true })
   @JoinColumn({ name: 'personId' })
   person: Person;
 

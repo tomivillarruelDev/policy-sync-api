@@ -1,52 +1,40 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
-import { Person } from '../entities/person.entity';
 import { RealPerson } from '../entities/real-person.entity';
 import { CreateRealPersonDto } from '../dto/create-real-person.dto';
 import { handleDBErrors } from '../../../common/utils/typeorm-errors.util';
-import { mapAddressDto, mapIdentificationDto } from '../common/mappers';
+import { mapPersonData } from '../common/mappers';
 import { UpdateRealPersonDto } from '../dto/update-real-person.dto';
+import { PersonType } from '../enums/person-type.enum';
+import { updatePersonFields } from '../common/utils/person-update.util';
+
 
 @Injectable()
 export class RealPersonService {
   constructor(
-    @InjectRepository(Person)
-    private readonly personRepo: Repository<Person>,
     @InjectRepository(RealPerson)
     private readonly realRepo: Repository<RealPerson>,
     private readonly dataSource: DataSource,
-  ) {}
+  ) { }
 
-  async create(dto: CreateRealPersonDto): Promise<Person> {
+  async create(dto: CreateRealPersonDto): Promise<RealPerson> {
     const qr = this.dataSource.createQueryRunner();
     await qr.connect();
     await qr.startTransaction();
 
     try {
-      // 1. Crear persona base
-      const person = qr.manager.getRepository(Person).create({
-        emails: dto.emails,
-        phoneNumbers: dto.phoneNumbers,
-        addresses: mapAddressDto(dto.addresses),
-        identifications: mapIdentificationDto(dto.identifications),
-      });
-      const savedPerson = await qr.manager.getRepository(Person).save(person);
 
-      // 2. Crear subtipo real asociado
-      const real = qr.manager.getRepository(RealPerson).create({
+      const repo = qr.manager.getRepository(RealPerson);
+      const real = repo.create({
         ...dto,
-        person: savedPerson,
-      });
-      const savedReal = await qr.manager.getRepository(RealPerson).save(real);
+        person: mapPersonData(dto, PersonType.REAL)
+      })
 
-      // 3. Confirmar transacción
+      const saved = await repo.save(real);
       await qr.commitTransaction();
+      return saved;
 
-      // 4. Retornar compuesto
-      return { ...savedPerson, realPerson: savedReal } as Person & {
-        realPerson: RealPerson;
-      };
     } catch (error) {
       await qr.rollbackTransaction();
       handleDBErrors(error);
@@ -56,13 +44,12 @@ export class RealPersonService {
   }
 
   async findAll(): Promise<RealPerson[]> {
-    return this.realRepo.find({ relations: ['person'] });
+    return this.realRepo.find();
   }
 
   async findOne(id: string): Promise<RealPerson> {
     const entity = await this.realRepo.findOne({
       where: { id },
-      relations: ['person'],
     });
     if (!entity) throw new NotFoundException(`RealPerson ${id} no encontrada`);
     return entity;
@@ -70,14 +57,21 @@ export class RealPersonService {
 
   async update(id: string, dto: UpdateRealPersonDto): Promise<RealPerson> {
     const entity = await this.findOne(id);
-    // Actualizar propiedades de entity con los valores de dto
-    Object.assign(entity, dto);
+
+    // Update RealPerson specific fields
+    if (dto.firstName) entity.firstName = dto.firstName;
+    if (dto.lastName) entity.lastName = dto.lastName;
+
+    // Update nested Person fields
+    updatePersonFields(entity.person, dto);
+
     try {
       return await this.realRepo.save(entity);
     } catch (error) {
       handleDBErrors(error);
     }
   }
+
 
   async remove(id: string): Promise<void> {
     const entity = await this.findOne(id);

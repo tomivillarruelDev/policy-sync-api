@@ -6,10 +6,11 @@ import { Business } from './entities/business.entity';
 import { CreateBusinessFromScratchDto } from './dto/create-business-from-scratch.dto';
 import { mapAddressDto, mapIdentificationDto } from '../../common/mappers';
 import { handleDBErrors } from '../../../../common/utils/typeorm-errors.util';
+import { PersonType } from '../../enums/person-type.enum';
 
 @Injectable()
 export class BusinessOrchestrator {
-  constructor(private readonly dataSource: DataSource) {}
+  constructor(private readonly dataSource: DataSource) { }
 
   async createAll(dto: CreateBusinessFromScratchDto): Promise<Business> {
     const qr = this.dataSource.createQueryRunner();
@@ -17,6 +18,7 @@ export class BusinessOrchestrator {
     await qr.startTransaction();
     try {
       const person = qr.manager.getRepository(Person).create({
+        type: PersonType.LEGAL,
         emails: dto.legal.emails,
         phoneNumbers: dto.legal.phoneNumbers,
         addresses: mapAddressDto(dto.legal.addresses),

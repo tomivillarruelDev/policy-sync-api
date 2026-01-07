@@ -38,7 +38,7 @@ export class PersonController {
 
   // Métodos Real (rutas específicas primero)
   @Post('real')
-  createReal(@Body() dto: CreateRealPersonDto): Promise<Person> {
+  createReal(@Body() dto: CreateRealPersonDto): Promise<RealPerson> {
     return this.realService.create(dto);
   }
 
@@ -72,7 +72,7 @@ export class PersonController {
 
   // Métodos Legal
   @Post('legal')
-  createLegal(@Body() dto: CreateLegalPersonDto): Promise<Person> {
+  createLegal(@Body() dto: CreateLegalPersonDto): Promise<LegalPerson> {
     return this.legalService.create(dto);
   }
 

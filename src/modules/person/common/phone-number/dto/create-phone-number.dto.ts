@@ -15,7 +15,7 @@ export class CreatePhoneNumberDto {
   @Transform(({ value }) =>
     typeof value === 'string' ? value.replace(/\D+/g, '') : value,
   )
-  contactNumber: string;
+  number: string;
 
   @IsUUID()
   @IsNotEmpty()

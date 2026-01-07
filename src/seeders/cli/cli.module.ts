@@ -6,6 +6,7 @@ import { SeedLocationCommand } from './commands/seed-location.command';
 import { SeederModule } from '../seeder.module';
 import { EnvConfiguration, JoiValidation } from '../../common/config';
 import { SeedIdentificationCommand } from './commands/seed-identification.command';
+import { VerifyCatalogCommand } from './commands/verify-catalog.command';
 
 @Module({
   imports: [
@@ -14,7 +15,7 @@ import { SeedIdentificationCommand } from './commands/seed-identification.comman
       load: [EnvConfiguration],
       validationSchema: JoiValidation,
     }),
-  TypeOrmModule.forRootAsync({
+    TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
@@ -24,15 +25,15 @@ import { SeedIdentificationCommand } from './commands/seed-identification.comman
         username: configService.get<string>('DB_USERNAME'),
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_NAME'),
-    // Carga todas las entidades para resolver relaciones en seeders
-    entities: [__dirname + '/../../**/*.entity.{ts,js}'],
-    autoLoadEntities: false,
+        // Carga todas las entidades para resolver relaciones en seeders
+        entities: [__dirname + '/../../**/*.entity.{ts,js}'],
+        autoLoadEntities: false,
         synchronize: true, // ⚠️ solo en desarrollo
       }),
     }),
     SeederModule,
   ],
-  providers: [SeedLocationCommand, SeedIdentificationCommand],
+  providers: [SeedLocationCommand, SeedIdentificationCommand, VerifyCatalogCommand],
 })
-export class CliModule {}
+export class CliModule { }
 

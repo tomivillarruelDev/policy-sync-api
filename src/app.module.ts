@@ -9,6 +9,10 @@ import { AuthModule } from './auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CacheModule } from '@nestjs/cache-manager';
 import { PersonModule } from './modules/person/person.module';
+import { InsurerModule } from './modules/insurer/insurer.module';
+import { ProductModule } from './modules/product/product.module';
+import { PlanModule } from './modules/plan/plan.module';
+import { PolicyModule } from './modules/policy/policy.module';
 
 @Module({
   imports: [
@@ -35,8 +39,12 @@ import { PersonModule } from './modules/person/person.module';
     FilesModule,
     AuthModule,
     PersonModule,
+    InsurerModule,
+    ProductModule,
+    PlanModule,
+    PolicyModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }

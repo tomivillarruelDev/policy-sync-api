@@ -7,7 +7,7 @@ export class PhoneNumber {
   id: string;
 
   @Column()
-  contactNumber: string;
+  number: string;
 
   @ManyToOne(() => Person, (person) => person.phoneNumbers, {
     onDelete: 'CASCADE',

@@ -23,7 +23,7 @@ export function mapPersonData(dto: CreatePersonDto | UpdatePersonDto, type: Pers
   if (dto.phoneNumbers !== undefined) {
     // Para phoneNumbers, crear entidades que TypeORM pueda manejar
     result.phoneNumbers = dto.phoneNumbers.map(phoneDto => ({
-      contactNumber: phoneDto.contactNumber,
+      number: phoneDto.number,
       // Si el DTO tiene ID, preservarlo para actualización
       ...(phoneDto as any).id && { id: (phoneDto as any).id }
     }));

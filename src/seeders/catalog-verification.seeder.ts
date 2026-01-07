@@ -1,0 +1,198 @@
+import { Injectable, Logger } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { InsurerService } from '../modules/insurer/insurer.service';
+import { ProductService } from '../modules/product/product.service';
+import { PlanService } from '../modules/plan/plan.service';
+import { RealPersonService } from '../modules/person/services/real-person.service';
+import { AgentService } from '../modules/person/roles/agent/agent.service';
+import { PolicyService } from '../modules/policy/policy.service';
+import { PolicyStatus } from '../modules/policy/enums/policy-status.enum';
+import { BusinessType } from '../modules/policy/enums/business-type.enum';
+import { PaymentFrequency } from '../modules/policy/enums/payment-frequency.enum';
+import { PaymentMethod } from '../modules/policy/enums/payment-method.enum';
+import { RelationType } from '../modules/policy/enums/relation-type.enum';
+import { CivilStatus } from '../modules/person/enums/civil-status.enum';
+import { Gender } from '../modules/person/enums/gender.enum';
+import { IdentificationType } from '../modules/person/common/identification/entity/identification-type.entity';
+
+@Injectable()
+export class CatalogVerificationSeeder {
+    private readonly logger = new Logger(CatalogVerificationSeeder.name);
+
+    constructor(
+        private readonly insurerService: InsurerService,
+        private readonly productService: ProductService,
+        private readonly planService: PlanService,
+        private readonly realPersonService: RealPersonService,
+        private readonly agentService: AgentService,
+        private readonly policyService: PolicyService,
+        @InjectRepository(IdentificationType)
+        private readonly identificationTypeRepo: Repository<IdentificationType>,
+    ) { }
+
+    async seed() {
+        this.logger.log('--- Iniciando Verificación Completa del Sistema ---');
+
+        // PRELOAD: Obtener Tipos de Identificación
+        const dniType = await this.identificationTypeRepo.findOne({ where: { name: 'DNI' } });
+        const rucType = await this.identificationTypeRepo.findOne({ where: { name: 'RUC' } });
+
+        // Si no existen, usar el primero que encuentre o fallar controladametne (para MVP asumimos seeded)
+        const dniTypeId = dniType?.id;
+        const rucTypeId = rucType?.id || dniTypeId; // Fallback
+
+        if (!dniTypeId) {
+            this.logger.warn('WARNING: No se encontraron tipos de Identificación (DNI/RUC). Se omitirán identificaciones.');
+        }
+
+        // 1. CATALOGOS
+        this.logger.log('1. [CATALOG] Creando Aseguradora...');
+        const insurer = await this.insurerService.create({
+            name: 'Aseguradora Global MVP',
+            code: 'GLOB-MVP',
+            documentType: 'RUC',
+            documentNumber: '20987654321',
+            address: 'Centro Financiero',
+            email: 'global@mvp.com',
+            website: 'https://globalmvp.com',
+            phone: '+1234567890',
+        });
+        this.logger.log(`>> Aseguradora creada: ${insurer.name}`);
+
+        this.logger.log('2. [CATALOG] Creando Producto...');
+        const product = await this.productService.create({
+            name: 'Vida Individual Elite',
+            code: 'VID-ELITE',
+            branch: 'Vida',
+            insuredAmount: 100000,
+            insurerId: insurer.id,
+        });
+        this.logger.log(`>> Producto creado: ${product.name}`);
+
+        this.logger.log('3. [CATALOG] Creando Plan...');
+        const plan = await this.planService.create({
+            name: 'Plan Elite Plus',
+            code: 'PL-ELITE+',
+            deductibleOne: 100,
+            productId: product.id,
+        });
+        this.logger.log(`>> Plan creado: ${plan.name}`);
+
+        // 2. PERSONA (Cliente)
+        this.logger.log('4. [PERSON] Creando Cliente (RealPerson)...');
+        const clientPayload: any = {
+            firstName: 'Juan',
+            lastName: 'Perez',
+            emails: [{ account: 'juan.perez@test.com' }],
+            addresses: [
+                {
+                    street: 'Calle Falsa 123',
+                    streetNumber: '123',
+                    cityId: 'b83e13bb-b098-414b-8bb7-56b808a27225',
+                }
+            ],
+            phoneNumbers: [{ number: '555-1234' }],
+            birthDate: '1990-01-01',
+            gender: Gender.MALE,
+            civilStatus: CivilStatus.SINGLE,
+            nationality: 'AR'
+        };
+
+        if (dniTypeId) {
+            clientPayload.identifications = [{ typeId: dniTypeId, value: '11223344' }];
+        }
+
+        const client = await this.realPersonService.create(clientPayload);
+        this.logger.log(`>> Cliente creado: ${client.firstName} ${client.lastName} (ID: ${client.id})`);
+
+
+        // 3. AGENTE
+        this.logger.log('5. [AGENT] Creando Persona para Agente y Rol Agente...');
+        const agentPayload: any = {
+            firstName: 'Agente',
+            lastName: 'Smith',
+            emails: [{ account: 'agent.smith@matrix.com' }],
+            addresses: [
+                {
+                    street: 'Matrix St 1',
+                    streetNumber: '1',
+                    cityId: 'b83e13bb-b098-414b-8bb7-56b808a27225',
+                }
+            ],
+            phoneNumbers: [{ number: '555-9999' }],
+            birthDate: '1985-05-05',
+            gender: Gender.MALE,
+            civilStatus: CivilStatus.MARRIED,
+            nationality: 'US'
+        };
+
+        if (rucTypeId) {
+            agentPayload.identifications = [{ typeId: rucTypeId, value: '99887766' }];
+        }
+
+        const agentPerson = await this.realPersonService.create(agentPayload);
+
+        const agent = await this.agentService.create({
+            agentCode: 'AG-007',
+            licenseNumber: 'LIC-007',
+            isActive: true,
+            personId: agentPerson.person.id,
+        });
+        this.logger.log(`>> Agente creado: ${agent.agentCode} (ID: ${agent.id})`);
+
+
+        // 4. POLIZA
+        this.logger.log('6. [POLICY] Creando Póliza con Dependientes...');
+        const policy = await this.policyService.create({
+            policyNumber: 'POL-2024-001',
+            status: PolicyStatus.ACTIVE,
+            businessType: BusinessType.NEW,
+            issueDate: new Date(),
+            startDate: new Date(),
+            endDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)), // 1 año
+            insuredAmount: 100000,
+            premiumAmount: 1200,
+            currency: 'USD',
+            paymentFrequency: PaymentFrequency.ANNUAL,
+            paymentMethod: PaymentMethod.CREDIT_CARD,
+            installments: 1,
+            clientId: client.person.id,
+            agentId: agent.id,
+            planId: plan.id,
+            dependents: [
+                {
+                    firstName: 'Hijo',
+                    lastName: 'Perez',
+                    relationType: RelationType.CHILD,
+                    birthDate: new Date('2020-01-01'),
+                }
+            ]
+        });
+        this.logger.log(`>> Póliza creada: ${policy.policyNumber} (ID: ${policy.id})`);
+
+
+        // 5. UPDATES
+        this.logger.log('7. [UPDATE] Verificando Actualizaciones...');
+
+        // Update Plan
+        await this.planService.update(plan.id, { name: 'Plan Elite Plus (Updated)' });
+        const updatedPlan = await this.planService.findOne(plan.id);
+        if (updatedPlan.name !== 'Plan Elite Plus (Updated)') throw new Error('Update Plan falló');
+        this.logger.log('>> Plan actualizado correctamente');
+
+        // Update Agent
+        await this.agentService.update(agent.id, { isActive: false });
+        const updatedAgent = await this.agentService.findOne(agent.id);
+        if (updatedAgent.isActive !== false) throw new Error('Update Agent falló');
+        this.logger.log('>> Agente actualizado correctamente');
+
+        // Update Policy
+        await this.policyService.update(policy.id, { insuredAmount: 150000 });
+        const updatedPolicy = await this.policyService.findOne(policy.id);
+        if (Number(updatedPolicy.insuredAmount) !== 150000) throw new Error('Update Policy falló');
+        this.logger.log('>> Póliza actualizada correctamente');
+
+        this.logger.log('--- Verificación Completa Exitosamente ---');
+    }
+}

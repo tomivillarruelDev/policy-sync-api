@@ -9,6 +9,13 @@ import { City } from '../modules/person/common/address/entities/city.entity';
 import { IdentificationType } from '../modules/person/common/identification/entity/identification-type.entity';
 import { IdentificationSeeder } from './identification.seeder';
 import { Identification } from '../modules/person/common/identification/entity/identification.entity';
+import { CatalogVerificationSeeder } from './catalog-verification.seeder';
+import { InsurerModule } from '../modules/insurer/insurer.module';
+import { ProductModule } from '../modules/product/product.module';
+import { PlanModule } from '../modules/plan/plan.module';
+import { PersonModule } from '../modules/person/person.module';
+import { AgentModule } from '../modules/person/roles/agent/agent.module';
+import { PolicyModule } from '../modules/policy/policy.module';
 
 @Module({
   imports: [
@@ -19,8 +26,14 @@ import { Identification } from '../modules/person/common/identification/entity/i
       IdentificationType,
       Identification,
     ]),
+    InsurerModule,
+    ProductModule,
+    PlanModule,
+    PersonModule,
+    AgentModule,
+    PolicyModule,
   ],
-  providers: [LocationSeeder, SeederService, IdentificationSeeder],
+  providers: [LocationSeeder, SeederService, IdentificationSeeder, CatalogVerificationSeeder],
   exports: [SeederService],
 })
-export class SeederModule {}
+export class SeederModule { }

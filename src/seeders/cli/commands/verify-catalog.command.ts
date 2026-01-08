@@ -8,7 +8,7 @@ export class VerifyCatalogCommand {
 
     @Command({
         command: 'verify:catalog',
-        describe: 'Verifica la creación de catálogos (Aseguradora, Producto, Plan)',
+        describe: 'Verifica el flujo completo: Catálogos, Personas, Agentes y Pólizas',
     })
     async run() {
         await this.seederService.verifyCatalog();

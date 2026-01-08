@@ -63,7 +63,7 @@ Representa al productor de seguros.
 *   **Entity: Agent** (`agents`)
     *   Campos: `agentCode`, `licenseNumber`, `isActive`.
     *   Relación: OneToOne con `Person` (hereda datos personales).
-    *   Relación: OneToMany con `Policy` (historial de ventas).
+    *   Relación: OneToMany con `Policy` (historial de ventas - *implementado*).
 
 ---
 
@@ -103,4 +103,4 @@ Representa a los beneficiarios o asegurados adicionales (hijos, cónyuge).
 2.  **Fase 1: Catálogos** (Insurer, Product, Plan) - *Completado*.
 3.  **Fase 2: Personas** (Architecture Split: Person/Real/Legal/Agent) - *Completado*.
 4.  **Fase 3: Core** (Policy & Dependents) - *Completado*.
-5.  **Fase 4: Verificación** (Seeders y Scripts de Prueba) - *En Proceso*.
+5.  **Fase 4: Verificación** (Seeders y Scripts de Prueba) - *Completado*.

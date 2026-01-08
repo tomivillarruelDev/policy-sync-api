@@ -6,8 +6,8 @@ export class CreateAgentDto {
     agentCode: string;
 
     @IsString()
-    @IsOptional()
-    licenseNumber?: string;
+    @IsNotEmpty()
+    licenseNumber: string;
 
     @IsBoolean()
     @IsOptional()

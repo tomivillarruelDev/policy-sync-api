@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, DataSource } from 'typeorm';
 import { InsurerService } from '../modules/insurer/insurer.service';
 import { ProductService } from '../modules/product/product.service';
 import { PlanService } from '../modules/plan/plan.service';
@@ -15,6 +15,7 @@ import { RelationType } from '../modules/policy/enums/relation-type.enum';
 import { CivilStatus } from '../modules/person/enums/civil-status.enum';
 import { Gender } from '../modules/person/enums/gender.enum';
 import { IdentificationType } from '../modules/person/common/identification/entity/identification-type.entity';
+import { CreateRealPersonDto } from '../modules/person/dto/create-real-person.dto';
 
 @Injectable()
 export class CatalogVerificationSeeder {
@@ -27,12 +28,15 @@ export class CatalogVerificationSeeder {
         private readonly realPersonService: RealPersonService,
         private readonly agentService: AgentService,
         private readonly policyService: PolicyService,
+        private readonly dataSource: DataSource,
         @InjectRepository(IdentificationType)
         private readonly identificationTypeRepo: Repository<IdentificationType>,
     ) { }
 
     async seed() {
         this.logger.log('--- Iniciando Verificación Completa del Sistema ---');
+
+        await this.clearExistingData();
 
         // PRELOAD: Obtener Tipos de Identificación
         const dniType = await this.identificationTypeRepo.findOne({ where: { name: 'DNI' } });
@@ -81,7 +85,7 @@ export class CatalogVerificationSeeder {
 
         // 2. PERSONA (Cliente)
         this.logger.log('4. [PERSON] Creando Cliente (RealPerson)...');
-        const clientPayload: any = {
+        const clientPayload: CreateRealPersonDto = {
             firstName: 'Juan',
             lastName: 'Perez',
             emails: [{ account: 'juan.perez@test.com' }],
@@ -93,14 +97,16 @@ export class CatalogVerificationSeeder {
                 }
             ],
             phoneNumbers: [{ number: '555-1234' }],
-            birthDate: '1990-01-01',
+            birthDate: '1990-01-01', // Valid date string for DTO? Validation might expect Date or ISO string.
+            // Adjusting based on DTO expectation. If DTO has Reference to Enums, use them.
             gender: Gender.MALE,
             civilStatus: CivilStatus.SINGLE,
-            nationality: 'AR'
+            nationality: 'AR',
+            identifications: []
         };
 
         if (dniTypeId) {
-            clientPayload.identifications = [{ typeId: dniTypeId, value: '11223344' }];
+            clientPayload.identifications.push({ typeId: dniTypeId, value: '11223344' });
         }
 
         const client = await this.realPersonService.create(clientPayload);
@@ -109,7 +115,7 @@ export class CatalogVerificationSeeder {
 
         // 3. AGENTE
         this.logger.log('5. [AGENT] Creando Persona para Agente y Rol Agente...');
-        const agentPayload: any = {
+        const agentPayload: CreateRealPersonDto = {
             firstName: 'Agente',
             lastName: 'Smith',
             emails: [{ account: 'agent.smith@matrix.com' }],
@@ -124,15 +130,15 @@ export class CatalogVerificationSeeder {
             birthDate: '1985-05-05',
             gender: Gender.MALE,
             civilStatus: CivilStatus.MARRIED,
-            nationality: 'US'
+            nationality: 'US',
+            identifications: []
         };
 
         if (rucTypeId) {
-            agentPayload.identifications = [{ typeId: rucTypeId, value: '99887766' }];
+            agentPayload.identifications.push({ typeId: rucTypeId, value: '99887766' });
         }
 
         const agentPerson = await this.realPersonService.create(agentPayload);
-
         const agent = await this.agentService.create({
             agentCode: 'AG-007',
             licenseNumber: 'LIC-007',
@@ -194,5 +200,44 @@ export class CatalogVerificationSeeder {
         this.logger.log('>> Póliza actualizada correctamente');
 
         this.logger.log('--- Verificación Completa Exitosamente ---');
+    }
+    private async clearExistingData() {
+        this.logger.log('Limpiando datos de prueba anteriores...');
+
+        // 1. Dependencies of Policies and Agents
+        const policyRepo = this.dataSource.getRepository('Policy');
+        const agentRepo = this.dataSource.getRepository('Agent');
+        const planRepo = this.dataSource.getRepository('Plan');
+        const productRepo = this.dataSource.getRepository('Product');
+        const insurerRepo = this.dataSource.getRepository('Insurer');
+
+        // Delete Policy (fetching dependents for TypeORM cascade)
+        const policy = await policyRepo.findOne({
+            where: { policyNumber: 'POL-2024-001' },
+            relations: ['dependents']
+        });
+        if (policy) await policyRepo.remove(policy);
+
+        // Delete Agent
+        const agent = await agentRepo.findOne({ where: { agentCode: 'AG-007' } });
+        if (agent) await agentRepo.remove(agent);
+
+        // Delete Plan
+        const plan = await planRepo.findOne({ where: { code: 'PL-ELITE+' } });
+        if (plan) await planRepo.remove(plan);
+
+        // Delete Product
+        const product = await productRepo.findOne({ where: { code: 'VID-ELITE' } });
+        if (product) await productRepo.remove(product);
+
+        // Delete Insurer
+        const insurer = await insurerRepo.findOne({ where: { code: 'GLOB-MVP' } });
+        if (insurer) await insurerRepo.remove(insurer);
+
+        // Clean up Persons by email and ID (identities)
+        await this.dataSource.query(`DELETE FROM "email" WHERE account IN ('juan.perez@test.com', 'agent.smith@matrix.com')`);
+        await this.dataSource.query(`DELETE FROM "identification" WHERE value IN ('11223344', '99887766')`);
+
+        this.logger.log('Datos de prueba anteriores limpiados.');
     }
 }

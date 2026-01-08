@@ -13,6 +13,14 @@ export class CreateAddressDto {
   cityId: string;
 
   @IsUUID()
+  @IsOptional()
+  stateId?: string;
+
+  @IsUUID()
+  @IsOptional()
+  countryId?: string;
+
+  @IsUUID()
   @IsNotEmpty()
   personId: string;
 

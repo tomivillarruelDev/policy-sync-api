@@ -1,6 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, OneToMany } from 'typeorm';
 import { Person } from '../../../entities/person.entity';
-// Import Policy later when created
+import { Policy } from '../../../../policy/entities/policy.entity';
 
 @Entity('agents')
 export class Agent {
@@ -20,6 +20,6 @@ export class Agent {
     @JoinColumn()
     person: Person;
 
-    // @OneToMany(() => Policy, policy => policy.agent)
-    // policies: Policy[];
+    @OneToMany(() => Policy, policy => policy.agent)
+    policies: Policy[];
 }

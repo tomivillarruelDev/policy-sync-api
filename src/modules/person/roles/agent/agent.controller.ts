@@ -3,7 +3,7 @@ import { AgentService } from './agent.service';
 import { CreateAgentDto } from './dto/create-agent.dto';
 import { UpdateAgentDto } from './dto/update-agent.dto';
 
-@Controller('agent')
+@Controller('agents')
 export class AgentController {
     constructor(private readonly agentService: AgentService) { }
 

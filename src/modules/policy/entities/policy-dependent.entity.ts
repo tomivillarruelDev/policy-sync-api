@@ -19,6 +19,6 @@ export class PolicyDependent {
     @Column({ type: 'date' })
     birthDate: Date;
 
-    @ManyToOne(() => Policy, (policy) => policy.dependents)
+    @ManyToOne(() => Policy, (policy) => policy.dependents, { onDelete: 'CASCADE' })
     policy: Policy;
 }

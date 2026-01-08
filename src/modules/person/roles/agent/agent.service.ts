@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateAgentDto } from './dto/create-agent.dto';
@@ -7,6 +7,8 @@ import { Agent } from './entities/agent.entity';
 
 @Injectable()
 export class AgentService {
+    private readonly logger = new Logger(AgentService.name);
+
     constructor(
         @InjectRepository(Agent)
         private readonly agentRepository: Repository<Agent>,
@@ -74,7 +76,7 @@ export class AgentService {
         if (error.code === '23505')
             throw new BadRequestException(error.detail);
 
-        console.log(error);
+        this.logger.error(error);
         throw new BadRequestException('Please check server logs');
     }
 }

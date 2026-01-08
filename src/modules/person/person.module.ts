@@ -20,7 +20,6 @@ import { ContactModule } from './roles/contact/contact.module';
     IdentificationModule,
     PhoneNumberModule,
     AddressModule,
-    AddressModule,
     AgentModule,
     ContactModule,
   ],

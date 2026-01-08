@@ -1,48 +1,25 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
-import { Country } from '../../person/common/address/entities/country.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne, JoinColumn } from 'typeorm';
 import { Product } from '../../product/entities/product.entity';
+import { LegalPerson } from '../../person/entities/legal-person.entity';
+import { AuditableEntity } from 'src/common/entities/auditable.entity';
 
 @Entity('insurers')
-export class Insurer {
+export class Insurer extends AuditableEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
-  name: string;
+  @OneToOne(() => LegalPerson, { eager: true, cascade: ['insert'] })
+  @JoinColumn()
+  legalPerson: LegalPerson;
 
   @Column({ unique: true })
   code: string;
-
-  @Column()
-  documentType: string;
-
-  @Column({ unique: true })
-  documentNumber: string;
 
   @Column({ nullable: true })
   executive: string;
 
   @Column({ nullable: true })
   agencyNumber: string;
-
-  // Relación con entidad País existente
-  @ManyToOne(() => Country)
-  country: Country;
-
-  @Column()
-  address: string;
-
-  @Column({ nullable: true })
-  website: string;
-
-  @Column({ nullable: true })
-  phone: string;
-
-  @Column({ nullable: true })
-  landline: string;
-
-  @Column()
-  email: string;
 
   @Column({ nullable: true })
   logoUrl: string;

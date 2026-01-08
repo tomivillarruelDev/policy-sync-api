@@ -25,21 +25,6 @@ export class Person extends AuditableEntity {
   })
   type: PersonType;
 
-  @Column({ nullable: true })
-  facebook: string;
-
-  @Column({ nullable: true })
-  twitter: string;
-
-  @Column({ nullable: true })
-  linkedin: string;
-
-  @Column({ nullable: true })
-  instagram: string;
-
-  @Column({ nullable: true })
-  skype: string;
-
   @Column({ default: false })
   lopdp: boolean;
 

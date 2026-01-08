@@ -1,9 +1,10 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, OneToMany } from 'typeorm';
-import { Person } from '../../../entities/person.entity';
+import { RealPerson } from '../../../entities/real-person.entity';
+import { AuditableEntity } from 'src/common/entities/auditable.entity';
 import { Policy } from '../../../../policy/entities/policy.entity';
 
 @Entity('agents')
-export class Agent {
+export class Agent extends AuditableEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
@@ -16,9 +17,9 @@ export class Agent {
     @Column({ default: true })
     isActive: boolean;
 
-    @OneToOne(() => Person, { eager: true })
+    @OneToOne(() => RealPerson, { eager: true, cascade: ['insert'] })
     @JoinColumn()
-    person: Person;
+    realPerson: RealPerson;
 
     @OneToMany(() => Policy, policy => policy.agent)
     policies: Policy[];

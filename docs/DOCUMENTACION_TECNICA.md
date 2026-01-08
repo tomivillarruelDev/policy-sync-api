@@ -23,8 +23,9 @@ Para adaptar el proyecto a un desarrollo unipersonal viable para portfolio, se h
 
 #### 1. Entity: Insurer (Aseguradora)
 Representa la compañía que ofrece el seguro.
-*   **Campos:** `id`, `name` (Nombre comercial), `code` (Único), `documentType` (RUC/CUIT), `documentNumber`, `address`, `email`, `website`, `phone`.
-*   **Relaciones:** `country` (ManyToOne).
+*   **Relación:** `OneToOne` con `LegalPerson` (hereda datos fiscales y de contacto).
+*   **Campos propios:** `id`, `code` (Único), `executive`, `agencyNumber`, `logoUrl`.
+*   **Relaciones:** `products` (OneToMany).
 
 #### 2. Entity: Product (Producto)
 Un tipo de seguro ofrecido (ej: "Automóvil", "Vida").
@@ -45,7 +46,7 @@ Centraliza la información de cualquier entidad (física o jurídica) utilizando
 
 *   **Entity Base: Person** (`people`)
     *   Interactúa con: `emails`, `phoneNumbers`, `addresses`, `identifications`.
-    *   Campos universales: redes sociales, checks de privacidad (LOPDP).
+    *   Campos universales: checks de privacidad (LOPDP).
     
 *   **Subtipo: RealPerson (Persona Física)** (`real_people`)
     *   Datos biográficos: `firstName`, `lastName`, `birthDate`, `gender`, `civilStatus`, `nationality`.
@@ -62,7 +63,7 @@ Implementado principalmente como una `RealPerson` que actúa como "Tomador" de l
 Representa al productor de seguros.
 *   **Entity: Agent** (`agents`)
     *   Campos: `agentCode`, `licenseNumber`, `isActive`.
-    *   Relación: OneToOne con `Person` (hereda datos personales).
+    *   Relación: OneToOne con `RealPerson` (permite acceso directo a nombre y apellido).
     *   Relación: OneToMany con `Policy` (historial de ventas - *implementado*).
 
 ---

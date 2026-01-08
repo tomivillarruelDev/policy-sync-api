@@ -1,39 +1,73 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { CreateInsurerDto } from './dto/create-insurer.dto';
 import { UpdateInsurerDto } from './dto/update-insurer.dto';
 import { Insurer } from './entities/insurer.entity';
+import { LegalPerson } from '../person/entities/legal-person.entity';
+import { PersonType } from '../person/enums/person-type.enum';
+import { mapPersonData } from '../person/common/mappers';
+import { updatePersonFields } from '../person/common/utils/person-update.util';
+import { handleDBErrors } from 'src/common/utils/typeorm-errors.util';
 
 @Injectable()
 export class InsurerService {
     constructor(
         @InjectRepository(Insurer)
         private readonly insurerRepository: Repository<Insurer>,
+        private readonly dataSource: DataSource,
     ) { }
 
     async create(createInsurerDto: CreateInsurerDto) {
-        try {
-            const insurer = this.insurerRepository.create(createInsurerDto);
-            // Si viniera countryId, aquí haríamos la búsqueda del Country para asignarlo
-            // if (createInsurerDto.countryId) { ... }
+        if (createInsurerDto.legalPerson && createInsurerDto.legalPersonId) {
+            throw new BadRequestException('No se puede enviar legalPersonId y legalPerson a la vez');
+        }
 
-            return await this.insurerRepository.save(insurer);
+        if (!createInsurerDto.legalPerson && !createInsurerDto.legalPersonId) {
+            throw new BadRequestException('Debe enviar legalPerson (datos) o legalPersonId (existente)');
+        }
+
+        const qr = this.dataSource.createQueryRunner();
+        await qr.connect();
+        await qr.startTransaction();
+
+        try {
+            const insurerRepo = qr.manager.getRepository(Insurer);
+
+            const insurer = insurerRepo.create({
+                code: createInsurerDto.code,
+                executive: createInsurerDto.executive,
+                agencyNumber: createInsurerDto.agencyNumber,
+                logoUrl: createInsurerDto.logoUrl,
+                legalPerson: createInsurerDto.legalPersonId
+                    ? { id: createInsurerDto.legalPersonId }
+                    : {
+                        ...createInsurerDto.legalPerson,
+                        person: mapPersonData(createInsurerDto.legalPerson!, PersonType.LEGAL)
+                    }
+            });
+
+            const saved = await insurerRepo.save(insurer);
+            await qr.commitTransaction();
+            return saved;
         } catch (error) {
-            this.handleDBErrors(error);
+            await qr.rollbackTransaction();
+            handleDBErrors(error);
+        } finally {
+            await qr.release();
         }
     }
 
     async findAll() {
         return await this.insurerRepository.find({
-            relations: ['products'],
+            relations: ['legalPerson', 'legalPerson.person', 'products'],
         });
     }
 
     async findOne(id: string) {
         const insurer = await this.insurerRepository.findOne({
             where: { id },
-            relations: ['products'],
+            relations: ['legalPerson', 'legalPerson.person', 'products'],
         });
 
         if (!insurer) throw new NotFoundException(`Insurer with id ${id} not found`);
@@ -41,23 +75,49 @@ export class InsurerService {
     }
 
     async update(id: string, updateInsurerDto: UpdateInsurerDto) {
-        const insurer = await this.findOne(id);
-
-        // TypeORM's preload or merge is useful here, but simple object assign is clearest for partial updates 
-        // when we fetched the entity first.
-        // this.insurerRepository.merge(insurer, updateInsurerDto); 
-
-        const updatedInsurer = await this.insurerRepository.preload({
-            id: id,
-            ...updateInsurerDto,
-        });
-
-        if (!updatedInsurer) throw new NotFoundException(`Insurer with id ${id} not found`);
+        const qr = this.dataSource.createQueryRunner();
+        await qr.connect();
+        await qr.startTransaction();
 
         try {
-            return await this.insurerRepository.save(updatedInsurer);
+            const repo = qr.manager.getRepository(Insurer);
+            const insurer = await repo.findOne({
+                where: { id },
+                relations: ['legalPerson', 'legalPerson.person']
+            });
+
+            if (!insurer) throw new NotFoundException(`Insurer with id ${id} not found`);
+
+            // Update flat fields
+            if (updateInsurerDto.code) insurer.code = updateInsurerDto.code;
+            if (updateInsurerDto.executive !== undefined) insurer.executive = updateInsurerDto.executive;
+            if (updateInsurerDto.agencyNumber !== undefined) insurer.agencyNumber = updateInsurerDto.agencyNumber;
+            if (updateInsurerDto.logoUrl !== undefined) insurer.logoUrl = updateInsurerDto.logoUrl;
+
+            // Update LegalPerson
+            if (updateInsurerDto.legalPersonId) {
+                if (updateInsurerDto.legalPersonId !== insurer.legalPerson?.id) {
+                    const newLegal = await qr.manager.getRepository(LegalPerson).findOne({ where: { id: updateInsurerDto.legalPersonId } });
+                    if (!newLegal) throw new NotFoundException('LegalPerson not found');
+                    insurer.legalPerson = newLegal;
+                }
+            } else if (updateInsurerDto.legalPerson && insurer.legalPerson) {
+                if (updateInsurerDto.legalPerson.organizationName) insurer.legalPerson.organizationName = updateInsurerDto.legalPerson.organizationName;
+                if (updateInsurerDto.legalPerson.socialReason !== undefined) insurer.legalPerson.socialReason = updateInsurerDto.legalPerson.socialReason;
+                if (updateInsurerDto.legalPerson.website !== undefined) insurer.legalPerson.website = updateInsurerDto.legalPerson.website;
+
+                updatePersonFields(insurer.legalPerson.person, updateInsurerDto.legalPerson);
+                await qr.manager.getRepository(LegalPerson).save(insurer.legalPerson);
+            }
+
+            await repo.save(insurer);
+            await qr.commitTransaction();
+            return this.findOne(id);
         } catch (error) {
-            this.handleDBErrors(error);
+            await qr.rollbackTransaction();
+            handleDBErrors(error);
+        } finally {
+            await qr.release();
         }
     }
 
@@ -65,13 +125,5 @@ export class InsurerService {
         const insurer = await this.findOne(id);
         await this.insurerRepository.remove(insurer);
         return { message: `Insurer with id ${id} deleted successfully` };
-    }
-
-    private handleDBErrors(error: any): never {
-        if (error.code === '23505')
-            throw new BadRequestException(error.detail);
-
-        console.log(error);
-        throw new BadRequestException('Please check server logs');
     }
 }

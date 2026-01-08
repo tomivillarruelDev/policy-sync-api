@@ -2,6 +2,8 @@ import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Person } from '../../../entities/person.entity';
 import { City } from './city.entity';
 
+import { AuditableEntity } from 'src/common/entities/auditable.entity';
+
 @Entity()
 export class Address {
   @PrimaryGeneratedColumn('uuid')
@@ -27,4 +29,7 @@ export class Address {
     nullable: false,
   })
   person: Person;
+
+  @Column(() => AuditableEntity, { prefix: false })
+  audit: AuditableEntity;
 }

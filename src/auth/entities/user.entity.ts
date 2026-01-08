@@ -2,12 +2,11 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  CreateDateColumn,
-  UpdateDateColumn,
   BeforeInsert,
   BeforeUpdate,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { AuditableEntity } from 'src/common/entities/auditable.entity';
 
 @Entity('users')
 export class User {
@@ -29,11 +28,8 @@ export class User {
   @Column('text', { array: true, default: ['user'] })
   roles: string[];
 
-  @CreateDateColumn({ name: 'created_at' })
-  createdAt: Date;
-
-  @UpdateDateColumn({ name: 'updated_at' })
-  updatedAt: Date;
+  @Column(() => AuditableEntity, { prefix: false })
+  audit: AuditableEntity;
 
   @BeforeInsert()
   @BeforeUpdate()

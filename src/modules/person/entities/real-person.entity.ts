@@ -11,13 +11,9 @@ import { Gender } from '../enums/gender.enum';
 import { CivilStatus } from '../enums/civil-status.enum';
 
 @Entity({ name: 'real_people' })
-export class RealPerson extends AuditableEntity {
+export class RealPerson {
   @PrimaryGeneratedColumn('uuid')
   id: string;
-
-  @OneToOne(() => Person, { onDelete: 'CASCADE', cascade: ['insert', 'update'], eager: true })
-  @JoinColumn({ name: 'personId' })
-  person: Person;
 
   @Column()
   firstName: string;
@@ -42,4 +38,11 @@ export class RealPerson extends AuditableEntity {
 
   @Column({ type: 'enum', enum: CivilStatus, nullable: true })
   civilStatus: CivilStatus;
+
+  @OneToOne(() => Person, { onDelete: 'CASCADE', cascade: ['insert', 'update'], eager: true })
+  @JoinColumn({ name: 'personId' })
+  person: Person;
+
+  @Column(() => AuditableEntity, { prefix: false })
+  audit: AuditableEntity;
 }

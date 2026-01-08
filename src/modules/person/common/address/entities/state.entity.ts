@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 import { Country } from './country.entity';
 import { City } from './city.entity';
+import { AuditableEntity } from 'src/common/entities/auditable.entity';
 
 @Entity()
 export class State {
@@ -27,4 +28,7 @@ export class State {
 
   @OneToMany(() => City, (city) => city.state)
   cities: City[];
+
+  @Column(() => AuditableEntity, { prefix: false })
+  audit: AuditableEntity;
 }

@@ -8,6 +8,8 @@ import { BusinessType } from '../enums/business-type.enum';
 import { PaymentFrequency } from '../enums/payment-frequency.enum';
 import { PaymentMethod } from '../enums/payment-method.enum';
 
+import { AuditableEntity } from '../../../common/entities/auditable.entity';
+
 @Entity('policies')
 export class Policy {
     @PrimaryGeneratedColumn('uuid')
@@ -74,9 +76,6 @@ export class Policy {
     @OneToMany(() => PolicyDependent, (dependent) => dependent.policy, { cascade: true, eager: true })
     dependents: PolicyDependent[];
 
-    @CreateDateColumn()
-    createdAt: Date;
-
-    @UpdateDateColumn()
-    updatedAt: Date;
+    @Column(() => AuditableEntity, { prefix: false })
+    audit: AuditableEntity;
 }

@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { State } from './state.entity';
+import { AuditableEntity } from 'src/common/entities/auditable.entity';
 
 @Entity()
 export class City {
@@ -17,4 +18,7 @@ export class City {
     eager: true,
   })
   state: State;
+
+  @Column(() => AuditableEntity, { prefix: false })
+  audit: AuditableEntity;
 }

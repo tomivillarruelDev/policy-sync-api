@@ -2,6 +2,8 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'ty
 import { Insurer } from '../../insurer/entities/insurer.entity';
 import { Plan } from '../../plan/entities/plan.entity';
 
+import { AuditableEntity } from '../../../common/entities/auditable.entity';
+
 @Entity('products')
 export class Product {
     @PrimaryGeneratedColumn('uuid')
@@ -38,4 +40,7 @@ export class Product {
 
     @OneToMany(() => Plan, (plan) => plan.product)
     plans: Plan[];
+
+    @Column(() => AuditableEntity, { prefix: false })
+    audit: AuditableEntity;
 }

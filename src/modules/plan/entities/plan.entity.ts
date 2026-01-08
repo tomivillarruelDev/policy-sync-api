@@ -1,6 +1,8 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { Product } from '../../product/entities/product.entity';
 
+import { AuditableEntity } from '../../../common/entities/auditable.entity';
+
 @Entity('plans')
 export class Plan {
     @PrimaryGeneratedColumn('uuid')
@@ -12,6 +14,9 @@ export class Plan {
     @Column()
     code: string;
 
+    @Column({ nullable: true })
+    phoneNumber: string;
+
     @Column({ type: 'decimal', precision: 12, scale: 2, default: 0 })
     deductibleOne: number;
 
@@ -20,4 +25,7 @@ export class Plan {
 
     @ManyToOne(() => Product, (product) => product.plans)
     product: Product;
+
+    @Column(() => AuditableEntity, { prefix: false })
+    audit: AuditableEntity;
 }

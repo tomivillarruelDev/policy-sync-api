@@ -4,7 +4,7 @@ import { AuditableEntity } from 'src/common/entities/auditable.entity';
 import { Policy } from '../../../../policy/entities/policy.entity';
 
 @Entity('agents')
-export class Agent extends AuditableEntity {
+export class Agent {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
@@ -23,4 +23,7 @@ export class Agent extends AuditableEntity {
 
     @OneToMany(() => Policy, policy => policy.agent)
     policies: Policy[];
+
+    @Column(() => AuditableEntity, { prefix: false })
+    audit: AuditableEntity;
 }

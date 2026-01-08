@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { State } from './state.entity';
+import { AuditableEntity } from 'src/common/entities/auditable.entity';
 
 @Entity()
 export class Country {
@@ -20,4 +21,7 @@ export class Country {
 
   @OneToMany(() => State, (state) => state.country)
   states: State[];
+
+  @Column(() => AuditableEntity, { prefix: false })
+  audit: AuditableEntity;
 }

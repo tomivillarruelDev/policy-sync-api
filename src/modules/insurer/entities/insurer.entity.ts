@@ -4,13 +4,9 @@ import { LegalPerson } from '../../person/entities/legal-person.entity';
 import { AuditableEntity } from 'src/common/entities/auditable.entity';
 
 @Entity('insurers')
-export class Insurer extends AuditableEntity {
+export class Insurer {
   @PrimaryGeneratedColumn('uuid')
   id: string;
-
-  @OneToOne(() => LegalPerson, { eager: true, cascade: ['insert'] })
-  @JoinColumn()
-  legalPerson: LegalPerson;
 
   @Column({ unique: true })
   code: string;
@@ -24,6 +20,19 @@ export class Insurer extends AuditableEntity {
   @Column({ nullable: true })
   logoUrl: string;
 
+  @Column({ nullable: true })
+  identification: string;
+
+  @Column({ nullable: true })
+  identificationType: string;
+
+  @OneToOne(() => LegalPerson, { eager: true, cascade: ['insert'] })
+  @JoinColumn()
+  legalPerson: LegalPerson;
+
   @OneToMany(() => Product, (product) => product.insurer)
   products: Product[];
+
+  @Column(() => AuditableEntity, { prefix: false })
+  audit: AuditableEntity;
 }

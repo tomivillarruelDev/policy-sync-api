@@ -20,12 +20,6 @@ export class Insurer {
   @Column({ nullable: true })
   logoUrl: string;
 
-  @Column({ nullable: true })
-  identification: string;
-
-  @Column({ nullable: true })
-  identificationType: string;
-
   @OneToOne(() => LegalPerson, { eager: true, cascade: ['insert'] })
   @JoinColumn()
   legalPerson: LegalPerson;

@@ -6,11 +6,12 @@ import {
   OneToOne,
   ManyToOne,
   PrimaryGeneratedColumn,
+  Column,
 } from 'typeorm';
 import { AuditableEntity } from 'src/common/entities/auditable.entity';
 
 @Entity({ name: 'contacts' })
-export class Contact extends AuditableEntity {
+export class Contact {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -26,4 +27,7 @@ export class Contact extends AuditableEntity {
   })
   @JoinColumn({ name: 'legal_person_id' })
   legalPerson?: LegalPerson;
+
+  @Column(() => AuditableEntity, { prefix: false })
+  audit: AuditableEntity;
 }

@@ -11,7 +11,7 @@ import { PaymentMethod } from '../enums/payment-method.enum';
 import { AuditableEntity } from '../../../common/entities/auditable.entity';
 
 @Entity('policies')
-export class Policy extends AuditableEntity {
+export class Policy {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
@@ -75,4 +75,7 @@ export class Policy extends AuditableEntity {
 
     @OneToMany(() => PolicyDependent, (dependent) => dependent.policy, { cascade: true, eager: true })
     dependents: PolicyDependent[];
+
+    @Column(() => AuditableEntity, { prefix: false })
+    audit: AuditableEntity;
 }

@@ -3,7 +3,7 @@ import { State } from './state.entity';
 import { AuditableEntity } from 'src/common/entities/auditable.entity';
 
 @Entity()
-export class City extends AuditableEntity {
+export class City {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -18,4 +18,7 @@ export class City extends AuditableEntity {
     eager: true,
   })
   state: State;
+
+  @Column(() => AuditableEntity, { prefix: false })
+  audit: AuditableEntity;
 }

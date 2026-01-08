@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { Person } from '../../../entities/person.entity';
+import { AuditableEntity } from 'src/common/entities/auditable.entity';
 
 @Entity()
 export class PhoneNumber {
@@ -13,4 +14,7 @@ export class PhoneNumber {
     onDelete: 'CASCADE',
   })
   person: Person;
+
+  @Column(() => AuditableEntity, { prefix: false })
+  audit: AuditableEntity;
 }

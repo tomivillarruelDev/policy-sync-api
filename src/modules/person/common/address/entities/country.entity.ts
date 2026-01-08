@@ -3,7 +3,7 @@ import { State } from './state.entity';
 import { AuditableEntity } from 'src/common/entities/auditable.entity';
 
 @Entity()
-export class Country extends AuditableEntity {
+export class Country {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -21,4 +21,7 @@ export class Country extends AuditableEntity {
 
   @OneToMany(() => State, (state) => state.country)
   states: State[];
+
+  @Column(() => AuditableEntity, { prefix: false })
+  audit: AuditableEntity;
 }

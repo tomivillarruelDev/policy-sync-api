@@ -11,7 +11,7 @@ import { AuditableEntity } from 'src/common/entities/auditable.entity';
 
 @Entity()
 @Unique('UQ_ident_type_value', ['type', 'value'])
-export class Identification extends AuditableEntity {
+export class Identification {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -27,4 +27,7 @@ export class Identification extends AuditableEntity {
     onDelete: 'CASCADE',
   })
   person: Person;
+
+  @Column(() => AuditableEntity, { prefix: false })
+  audit: AuditableEntity;
 }

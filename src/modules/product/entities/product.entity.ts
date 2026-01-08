@@ -5,7 +5,7 @@ import { Plan } from '../../plan/entities/plan.entity';
 import { AuditableEntity } from '../../../common/entities/auditable.entity';
 
 @Entity('products')
-export class Product extends AuditableEntity {
+export class Product {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
@@ -40,4 +40,7 @@ export class Product extends AuditableEntity {
 
     @OneToMany(() => Plan, (plan) => plan.product)
     plans: Plan[];
+
+    @Column(() => AuditableEntity, { prefix: false })
+    audit: AuditableEntity;
 }

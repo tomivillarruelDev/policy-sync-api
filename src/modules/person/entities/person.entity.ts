@@ -13,7 +13,7 @@ import { PersonType } from '../enums/person-type.enum';
 import { AuditableEntity } from 'src/common/entities/auditable.entity';
 
 @Entity({ name: 'people' })
-export class Person extends AuditableEntity {
+export class Person {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -56,4 +56,7 @@ export class Person extends AuditableEntity {
     orphanedRowAction: 'delete',
   })
   identifications: Identification[];
+
+  @Column(() => AuditableEntity, { prefix: false })
+  audit: AuditableEntity;
 }

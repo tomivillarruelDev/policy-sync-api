@@ -9,7 +9,7 @@ import { Person } from './person.entity';
 import { AuditableEntity } from 'src/common/entities/auditable.entity';
 
 @Entity({ name: 'legal_people' })
-export class LegalPerson extends AuditableEntity {
+export class LegalPerson {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -25,4 +25,7 @@ export class LegalPerson extends AuditableEntity {
   @OneToOne(() => Person, { onDelete: 'CASCADE', cascade: ['insert', 'update'], eager: true })
   @JoinColumn({ name: 'personId' })
   person: Person;
+
+  @Column(() => AuditableEntity, { prefix: false })
+  audit: AuditableEntity;
 }

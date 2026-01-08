@@ -3,7 +3,7 @@ import { Identification } from './identification.entity';
 import { AuditableEntity } from 'src/common/entities/auditable.entity';
 
 @Entity()
-export class IdentificationType extends AuditableEntity {
+export class IdentificationType {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -15,4 +15,7 @@ export class IdentificationType extends AuditableEntity {
 
   @OneToMany(() => Identification, (identification) => identification.type)
   identifications: Identification[];
+
+  @Column(() => AuditableEntity, { prefix: false })
+  audit: AuditableEntity;
 }

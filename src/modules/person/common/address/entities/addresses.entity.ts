@@ -5,7 +5,7 @@ import { City } from './city.entity';
 import { AuditableEntity } from 'src/common/entities/auditable.entity';
 
 @Entity()
-export class Address extends AuditableEntity {
+export class Address {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -29,4 +29,7 @@ export class Address extends AuditableEntity {
     nullable: false,
   })
   person: Person;
+
+  @Column(() => AuditableEntity, { prefix: false })
+  audit: AuditableEntity;
 }

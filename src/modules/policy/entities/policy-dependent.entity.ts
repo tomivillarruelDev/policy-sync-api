@@ -6,7 +6,7 @@ import { Person } from '../../person/entities/person.entity';
 import { AuditableEntity } from '../../../common/entities/auditable.entity';
 
 @Entity('policy_dependents')
-export class PolicyDependent extends AuditableEntity {
+export class PolicyDependent {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
@@ -18,4 +18,7 @@ export class PolicyDependent extends AuditableEntity {
 
     @ManyToOne(() => Policy, (policy) => policy.dependents, { onDelete: 'CASCADE' })
     policy: Policy;
+
+    @Column(() => AuditableEntity, { prefix: false })
+    audit: AuditableEntity;
 }

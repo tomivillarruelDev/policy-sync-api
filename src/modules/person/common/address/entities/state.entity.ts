@@ -10,7 +10,7 @@ import { City } from './city.entity';
 import { AuditableEntity } from 'src/common/entities/auditable.entity';
 
 @Entity()
-export class State extends AuditableEntity {
+export class State {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -28,4 +28,7 @@ export class State extends AuditableEntity {
 
   @OneToMany(() => City, (city) => city.state)
   cities: City[];
+
+  @Column(() => AuditableEntity, { prefix: false })
+  audit: AuditableEntity;
 }

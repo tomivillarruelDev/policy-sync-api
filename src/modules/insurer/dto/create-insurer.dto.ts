@@ -1,21 +1,11 @@
-import { IsEmail, IsNotEmpty, IsOptional, IsString, IsUrl } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString, IsUrl, IsUUID, ValidateNested } from 'class-validator';
+import { Type } from 'class-transformer';
+import { CreateLegalPersonDto } from '../../person/dto/create-legal-person.dto';
 
 export class CreateInsurerDto {
     @IsString()
     @IsNotEmpty()
-    name: string;
-
-    @IsString()
-    @IsNotEmpty()
     code: string;
-
-    @IsString()
-    @IsNotEmpty()
-    documentType: string;
-
-    @IsString()
-    @IsNotEmpty()
-    documentNumber: string;
 
     @IsString()
     @IsOptional()
@@ -25,32 +15,16 @@ export class CreateInsurerDto {
     @IsOptional()
     agencyNumber?: string;
 
-    // Se recibe el ID del pais, se validará en el servicio o pipe
-    @IsString()
-    @IsOptional()
-    countryId?: string;
-
-    @IsString()
-    @IsNotEmpty()
-    address: string;
-
-    @IsUrl()
-    @IsOptional()
-    website?: string;
-
-    @IsString()
-    @IsOptional()
-    phone?: string;
-
-    @IsString()
-    @IsOptional()
-    landline?: string;
-
-    @IsEmail()
-    @IsNotEmpty()
-    email: string;
-
     @IsUrl()
     @IsOptional()
     logoUrl?: string;
+
+    @IsOptional()
+    @ValidateNested()
+    @Type(() => CreateLegalPersonDto)
+    legalPerson?: CreateLegalPersonDto;
+
+    @IsOptional()
+    @IsUUID()
+    legalPersonId?: string;
 }

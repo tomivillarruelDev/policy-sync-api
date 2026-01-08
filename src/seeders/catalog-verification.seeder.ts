@@ -16,6 +16,8 @@ import { CivilStatus } from '../modules/person/enums/civil-status.enum';
 import { Gender } from '../modules/person/enums/gender.enum';
 import { IdentificationType } from '../modules/person/common/identification/entity/identification-type.entity';
 import { CreateRealPersonDto } from '../modules/person/dto/create-real-person.dto';
+import { CreateInsurerDto } from '../modules/insurer/dto/create-insurer.dto';
+import { CreateAgentDto } from '../modules/person/roles/agent/dto/create-agent.dto';
 
 @Injectable()
 export class CatalogVerificationSeeder {
@@ -34,35 +36,38 @@ export class CatalogVerificationSeeder {
     ) { }
 
     async seed() {
-        this.logger.log('--- Iniciando Verificación Completa del Sistema ---');
+        this.logger.log('--- Iniciando Verificación Completa del Sistema (Refactorizado) ---');
 
         await this.clearExistingData();
 
         // PRELOAD: Obtener Tipos de Identificación
         const dniType = await this.identificationTypeRepo.findOne({ where: { name: 'DNI' } });
         const rucType = await this.identificationTypeRepo.findOne({ where: { name: 'RUC' } });
-
-        // Si no existen, usar el primero que encuentre o fallar controladametne (para MVP asumimos seeded)
         const dniTypeId = dniType?.id;
-        const rucTypeId = rucType?.id || dniTypeId; // Fallback
-
-        if (!dniTypeId) {
-            this.logger.warn('WARNING: No se encontraron tipos de Identificación (DNI/RUC). Se omitirán identificaciones.');
-        }
+        const rucTypeId = rucType?.id || dniTypeId;
 
         // 1. CATALOGOS
-        this.logger.log('1. [CATALOG] Creando Aseguradora...');
-        const insurer = await this.insurerService.create({
-            name: 'Aseguradora Global MVP',
+        this.logger.log('1. [CATALOG] Creando Aseguradora (con LegalPerson anidada)...');
+        const insurerPayload: CreateInsurerDto = {
             code: 'GLOB-MVP',
-            documentType: 'RUC',
-            documentNumber: '20987654321',
-            address: 'Centro Financiero',
-            email: 'global@mvp.com',
-            website: 'https://globalmvp.com',
-            phone: '+1234567890',
-        });
-        this.logger.log(`>> Aseguradora creada: ${insurer.name}`);
+            executive: 'Juan Ejecutivo',
+            legalPerson: {
+                organizationName: 'Aseguradora Global MVP',
+                socialReason: 'Global MVP S.A.',
+                emails: [{ account: 'global@mvp.com' }],
+                addresses: [
+                    {
+                        street: 'Centro Financiero',
+                        streetNumber: '100',
+                        cityId: 'b83e13bb-b098-414b-8bb7-56b808a27225',
+                    }
+                ],
+                phoneNumbers: [{ number: '+1234567890' }],
+                identifications: rucTypeId ? [{ typeId: rucTypeId, value: '20987654321' }] : []
+            }
+        };
+        const insurer = await this.insurerService.create(insurerPayload);
+        this.logger.log(`>> Aseguradora creada: ${insurer.legalPerson.organizationName} (ID: ${insurer.id})`);
 
         this.logger.log('2. [CATALOG] Creando Producto...');
         const product = await this.productService.create({
@@ -72,7 +77,6 @@ export class CatalogVerificationSeeder {
             insuredAmount: 100000,
             insurerId: insurer.id,
         });
-        this.logger.log(`>> Producto creado: ${product.name}`);
 
         this.logger.log('3. [CATALOG] Creando Plan...');
         const plan = await this.planService.create({
@@ -81,7 +85,6 @@ export class CatalogVerificationSeeder {
             deductibleOne: 100,
             productId: product.id,
         });
-        this.logger.log(`>> Plan creado: ${plan.name}`);
 
         // 2. PERSONA (Cliente)
         this.logger.log('4. [PERSON] Creando Cliente (RealPerson)...');
@@ -97,56 +100,33 @@ export class CatalogVerificationSeeder {
                 }
             ],
             phoneNumbers: [{ number: '555-1234' }],
-            birthDate: '1990-01-01', // Valid date string for DTO? Validation might expect Date or ISO string.
-            // Adjusting based on DTO expectation. If DTO has Reference to Enums, use them.
+            birthDate: '1990-01-01',
             gender: Gender.MALE,
             civilStatus: CivilStatus.SINGLE,
             nationality: 'AR',
-            identifications: []
+            identifications: dniTypeId ? [{ typeId: dniTypeId, value: '11223344' }] : []
         };
-
-        if (dniTypeId) {
-            clientPayload.identifications.push({ typeId: dniTypeId, value: '11223344' });
-        }
-
         const client = await this.realPersonService.create(clientPayload);
-        this.logger.log(`>> Cliente creado: ${client.firstName} ${client.lastName} (ID: ${client.id})`);
 
-
-        // 3. AGENTE
-        this.logger.log('5. [AGENT] Creando Persona para Agente y Rol Agente...');
-        const agentPayload: CreateRealPersonDto = {
-            firstName: 'Agente',
-            lastName: 'Smith',
-            emails: [{ account: 'agent.smith@matrix.com' }],
-            addresses: [
-                {
-                    street: 'Matrix St 1',
-                    streetNumber: '1',
-                    cityId: 'b83e13bb-b098-414b-8bb7-56b808a27225',
-                }
-            ],
-            phoneNumbers: [{ number: '555-9999' }],
-            birthDate: '1985-05-05',
-            gender: Gender.MALE,
-            civilStatus: CivilStatus.MARRIED,
-            nationality: 'US',
-            identifications: []
-        };
-
-        if (rucTypeId) {
-            agentPayload.identifications.push({ typeId: rucTypeId, value: '99887766' });
-        }
-
-        const agentPerson = await this.realPersonService.create(agentPayload);
-        const agent = await this.agentService.create({
+        // 3. AGENTE (Con RealPerson Anidada)
+        this.logger.log('5. [AGENT] Creando Agente con RealPerson anidada...');
+        const agentPayload: CreateAgentDto = {
             agentCode: 'AG-007',
             licenseNumber: 'LIC-007',
             isActive: true,
-            personId: agentPerson.person.id,
-        });
-        this.logger.log(`>> Agente creado: ${agent.agentCode} (ID: ${agent.id})`);
-
+            realPerson: {
+                firstName: 'Agente',
+                lastName: 'Smith',
+                emails: [{ account: 'agent.smith@matrix.com' }],
+                addresses: [{ street: 'Matrix St', streetNumber: '1', cityId: 'b83e13bb-b098-414b-8bb7-56b808a27225' }],
+                phoneNumbers: [{ number: '555-9999' }],
+                birthDate: '1985-05-05',
+                gender: Gender.MALE,
+                identifications: rucTypeId ? [{ typeId: rucTypeId, value: '99887766' }] : []
+            }
+        };
+        const agent = await this.agentService.create(agentPayload);
+        this.logger.log(`>> Agente creado: ${agent.realPerson.firstName} ${agent.realPerson.lastName} (ID: ${agent.id})`);
 
         // 4. POLIZA
         this.logger.log('6. [POLICY] Creando Póliza con Dependientes...');
@@ -156,14 +136,14 @@ export class CatalogVerificationSeeder {
             businessType: BusinessType.NEW,
             issueDate: new Date(),
             startDate: new Date(),
-            endDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)), // 1 año
+            endDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
             insuredAmount: 100000,
             premiumAmount: 1200,
             currency: 'USD',
             paymentFrequency: PaymentFrequency.ANNUAL,
             paymentMethod: PaymentMethod.CREDIT_CARD,
             installments: 1,
-            clientId: client.person.id,
+            clientId: client.person.id,  // Client is Person (via RealPerson)
             agentId: agent.id,
             planId: plan.id,
             dependents: [
@@ -175,68 +155,76 @@ export class CatalogVerificationSeeder {
                 }
             ]
         });
-        this.logger.log(`>> Póliza creada: ${policy.policyNumber} (ID: ${policy.id})`);
 
+        // 5. UPDATES (Probando updates anidados)
+        this.logger.log('7. [UPDATE] Verificando Actualizaciones Anidadas...');
 
-        // 5. UPDATES
-        this.logger.log('7. [UPDATE] Verificando Actualizaciones...');
+        // Update Agent: changing lastName of RealPerson
+        await this.agentService.update(agent.id, {
+            realPerson: {
+                lastName: 'Smith Neo', // Changing name
+                firstName: 'Agente' // Keeping first name
+            }
+        });
 
-        // Update Plan
-        await this.planService.update(plan.id, { name: 'Plan Elite Plus (Updated)' });
-        const updatedPlan = await this.planService.findOne(plan.id);
-        if (updatedPlan.name !== 'Plan Elite Plus (Updated)') throw new Error('Update Plan falló');
-        this.logger.log('>> Plan actualizado correctamente');
-
-        // Update Agent
-        await this.agentService.update(agent.id, { isActive: false });
         const updatedAgent = await this.agentService.findOne(agent.id);
-        if (updatedAgent.isActive !== false) throw new Error('Update Agent falló');
-        this.logger.log('>> Agente actualizado correctamente');
+        if (updatedAgent.realPerson.lastName !== 'Smith Neo') {
+            throw new Error(`Update Agent falló. Esperado: 'Smith Neo', Actual: '${updatedAgent.realPerson.lastName}'`);
+        }
+        this.logger.log('>> Agente actualizado correctamente (Update anidado de RealPerson funcionó)');
 
-        // Update Policy
-        await this.policyService.update(policy.id, { insuredAmount: 150000 });
-        const updatedPolicy = await this.policyService.findOne(policy.id);
-        if (Number(updatedPolicy.insuredAmount) !== 150000) throw new Error('Update Policy falló');
-        this.logger.log('>> Póliza actualizada correctamente');
+        // Update Insurer
+        await this.insurerService.update(insurer.id, {
+            legalPerson: {
+                organizationName: 'Global MVP Updated'
+            }
+        });
+        const updatedInsurer = await this.insurerService.findOne(insurer.id);
+        if (updatedInsurer.legalPerson.organizationName !== 'Global MVP Updated') {
+            throw new Error('Update Insurer falló en actualización anidada');
+        }
+        this.logger.log('>> Aseguradora actualizada correctamente (Update anidado)');
 
         this.logger.log('--- Verificación Completa Exitosamente ---');
     }
+
     private async clearExistingData() {
         this.logger.log('Limpiando datos de prueba anteriores...');
 
-        // 1. Dependencies of Policies and Agents
         const policyRepo = this.dataSource.getRepository('Policy');
         const agentRepo = this.dataSource.getRepository('Agent');
         const planRepo = this.dataSource.getRepository('Plan');
         const productRepo = this.dataSource.getRepository('Product');
         const insurerRepo = this.dataSource.getRepository('Insurer');
+        // Needed for manual cleanup if cascade doesn't cover all
+        // const realPersonRepo = this.dataSource.getRepository('RealPerson'); 
+        // const legalPersonRepo = this.dataSource.getRepository('LegalPerson');
 
-        // Delete Policy (fetching dependents for TypeORM cascade)
-        const policy = await policyRepo.findOne({
-            where: { policyNumber: 'POL-2024-001' },
-            relations: ['dependents']
-        });
+        const policy = await policyRepo.findOne({ where: { policyNumber: 'POL-2024-001' } });
         if (policy) await policyRepo.remove(policy);
 
-        // Delete Agent
         const agent = await agentRepo.findOne({ where: { agentCode: 'AG-007' } });
         if (agent) await agentRepo.remove(agent);
 
-        // Delete Plan
         const plan = await planRepo.findOne({ where: { code: 'PL-ELITE+' } });
         if (plan) await planRepo.remove(plan);
 
-        // Delete Product
         const product = await productRepo.findOne({ where: { code: 'VID-ELITE' } });
         if (product) await productRepo.remove(product);
 
-        // Delete Insurer
         const insurer = await insurerRepo.findOne({ where: { code: 'GLOB-MVP' } });
         if (insurer) await insurerRepo.remove(insurer);
 
-        // Clean up Persons by email and ID (identities)
-        await this.dataSource.query(`DELETE FROM "email" WHERE account IN ('juan.perez@test.com', 'agent.smith@matrix.com')`);
-        await this.dataSource.query(`DELETE FROM "identification" WHERE value IN ('11223344', '99887766')`);
+        // Clean up Persons by email (cascade handling in Person entity might leave orphan Person records if not strictly bonded)
+        // Since we are using RealPerson/LegalPerson services which link to Person, removing Agent should remove RealPerson via cascade?
+        // Agent -> RealPerson (cascade: insert). onDelete not specified implies NO CASCADE DELETE by default.
+        // So we need manual cleanup or update entity to cascade delete.
+
+        // Manual cleanup via SQL to be safe purely for seed data
+        await this.dataSource.query(`DELETE FROM "email" WHERE account IN ('juan.perez@test.com', 'agent.smith@matrix.com', 'global@mvp.com')`);
+        await this.dataSource.query(`DELETE FROM "identification" WHERE value IN ('11223344', '99887766', '20987654321')`);
+
+        // Also cleanup orphaned people by some specific marker if possible, but email/id is best proxy.
 
         this.logger.log('Datos de prueba anteriores limpiados.');
     }

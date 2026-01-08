@@ -3,12 +3,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { CreateInsurerDto } from './dto/create-insurer.dto';
 import { UpdateInsurerDto } from './dto/update-insurer.dto';
+import { InsurerDto } from './dto/insurer.dto';
 import { Insurer } from './entities/insurer.entity';
 import { LegalPerson } from '../person/entities/legal-person.entity';
 import { PersonType } from '../person/enums/person-type.enum';
 import { mapPersonData } from '../person/common/mappers';
 import { updatePersonFields } from '../person/common/utils/person-update.util';
 import { handleDBErrors } from 'src/common/utils/typeorm-errors.util';
+import { plainToInstance } from 'class-transformer';
 
 @Injectable()
 export class InsurerService {
@@ -18,15 +20,7 @@ export class InsurerService {
         private readonly dataSource: DataSource,
     ) { }
 
-    async create(createInsurerDto: CreateInsurerDto) {
-        if (createInsurerDto.legalPerson && createInsurerDto.legalPersonId) {
-            throw new BadRequestException('No se puede enviar legalPersonId y legalPerson a la vez');
-        }
-
-        if (!createInsurerDto.legalPerson && !createInsurerDto.legalPersonId) {
-            throw new BadRequestException('Debe enviar legalPerson (datos) o legalPersonId (existente)');
-        }
-
+    async create(createInsurerDto: CreateInsurerDto): Promise<InsurerDto> {
         const qr = this.dataSource.createQueryRunner();
         await qr.connect();
         await qr.startTransaction();
@@ -34,22 +28,25 @@ export class InsurerService {
         try {
             const insurerRepo = qr.manager.getRepository(Insurer);
 
+            // Extract person data
+            const personData = mapPersonData(createInsurerDto, PersonType.LEGAL);
+
             const insurer = insurerRepo.create({
                 code: createInsurerDto.code,
                 executive: createInsurerDto.executive,
                 agencyNumber: createInsurerDto.agencyNumber,
                 logoUrl: createInsurerDto.logoUrl,
-                legalPerson: createInsurerDto.legalPersonId
-                    ? { id: createInsurerDto.legalPersonId }
-                    : {
-                        ...createInsurerDto.legalPerson,
-                        person: mapPersonData(createInsurerDto.legalPerson!, PersonType.LEGAL)
-                    }
+                legalPerson: {
+                    organizationName: createInsurerDto.organizationName,
+                    socialReason: createInsurerDto.socialReason,
+                    website: createInsurerDto.website,
+                    person: personData
+                }
             });
 
             const saved = await insurerRepo.save(insurer);
             await qr.commitTransaction();
-            return saved;
+            return this.toDto(saved);
         } catch (error) {
             await qr.rollbackTransaction();
             handleDBErrors(error);
@@ -58,20 +55,21 @@ export class InsurerService {
         }
     }
 
-    async findAll() {
-        return await this.insurerRepository.find({
+    async findAll(): Promise<InsurerDto[]> {
+        const insurers = await this.insurerRepository.find({
             relations: ['legalPerson', 'legalPerson.person', 'products'],
         });
+        return insurers.map(i => this.toDto(i));
     }
 
-    async findOne(id: string) {
+    async findOne(id: string): Promise<InsurerDto> {
         const insurer = await this.insurerRepository.findOne({
             where: { id },
             relations: ['legalPerson', 'legalPerson.person', 'products'],
         });
 
         if (!insurer) throw new NotFoundException(`Insurer with id ${id} not found`);
-        return insurer;
+        return this.toDto(insurer);
     }
 
     async update(id: string, updateInsurerDto: UpdateInsurerDto) {
@@ -96,17 +94,18 @@ export class InsurerService {
 
             // Update LegalPerson
             if (updateInsurerDto.legalPersonId) {
+                // Logic for switching legal person (if needed)
                 if (updateInsurerDto.legalPersonId !== insurer.legalPerson?.id) {
                     const newLegal = await qr.manager.getRepository(LegalPerson).findOne({ where: { id: updateInsurerDto.legalPersonId } });
                     if (!newLegal) throw new NotFoundException('LegalPerson not found');
                     insurer.legalPerson = newLegal;
                 }
-            } else if (updateInsurerDto.legalPerson && insurer.legalPerson) {
-                if (updateInsurerDto.legalPerson.organizationName) insurer.legalPerson.organizationName = updateInsurerDto.legalPerson.organizationName;
-                if (updateInsurerDto.legalPerson.socialReason !== undefined) insurer.legalPerson.socialReason = updateInsurerDto.legalPerson.socialReason;
-                if (updateInsurerDto.legalPerson.website !== undefined) insurer.legalPerson.website = updateInsurerDto.legalPerson.website;
+            } else if (insurer.legalPerson) {
+                if (updateInsurerDto.organizationName) insurer.legalPerson.organizationName = updateInsurerDto.organizationName;
+                if (updateInsurerDto.socialReason !== undefined) insurer.legalPerson.socialReason = updateInsurerDto.socialReason;
+                if (updateInsurerDto.website !== undefined) insurer.legalPerson.website = updateInsurerDto.website;
 
-                updatePersonFields(insurer.legalPerson.person, updateInsurerDto.legalPerson);
+                updatePersonFields(insurer.legalPerson.person, updateInsurerDto);
                 await qr.manager.getRepository(LegalPerson).save(insurer.legalPerson);
             }
 
@@ -122,8 +121,26 @@ export class InsurerService {
     }
 
     async remove(id: string) {
-        const insurer = await this.findOne(id);
+        const insurer = await this.insurerRepository.findOne({ where: { id } });
+        if (!insurer) throw new NotFoundException(`Insurer with id ${id} not found`);
         await this.insurerRepository.remove(insurer);
         return { message: `Insurer with id ${id} deleted successfully` };
+    }
+
+    private toDto(insurer: Insurer): InsurerDto {
+        return plainToInstance(InsurerDto, {
+            id: insurer.id,
+            code: insurer.code,
+            executive: insurer.executive,
+            agencyNumber: insurer.agencyNumber,
+            logoUrl: insurer.logoUrl,
+            organizationName: insurer.legalPerson?.organizationName,
+            socialReason: insurer.legalPerson?.socialReason,
+            website: insurer.legalPerson?.website,
+            emails: insurer.legalPerson?.person?.emails || [],
+            phoneNumbers: insurer.legalPerson?.person?.phoneNumbers || [],
+            addresses: insurer.legalPerson?.person?.addresses || [],
+            identifications: insurer.legalPerson?.person?.identifications || [],
+        }, { excludeExtraneousValues: true });
     }
 }

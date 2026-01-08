@@ -1,7 +1,7 @@
 import { IsBoolean, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { CreateRealPersonDto } from '../../../dto/create-real-person.dto';
 
-export class CreateAgentDto extends CreateRealPersonDto {
+export class CreateAgentFlatDto extends CreateRealPersonDto {
     @IsString()
     @IsNotEmpty()
     agentCode: string;

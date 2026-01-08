@@ -3,12 +3,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { CreateAgentDto } from './dto/create-agent.dto';
 import { UpdateAgentDto } from './dto/update-agent.dto';
+import { AgentDto } from './dto/agent.dto';
 import { Agent } from './entities/agent.entity';
 import { RealPerson } from '../../entities/real-person.entity';
 import { PersonType } from '../../enums/person-type.enum';
 import { mapPersonData } from '../../common/mappers';
 import { updatePersonFields } from '../../common/utils/person-update.util';
 import { handleDBErrors } from 'src/common/utils/typeorm-errors.util';
+import { plainToInstance } from 'class-transformer';
 
 @Injectable()
 export class AgentService {
@@ -20,15 +22,7 @@ export class AgentService {
         private readonly dataSource: DataSource,
     ) { }
 
-    async create(createAgentDto: CreateAgentDto) {
-        if (createAgentDto.realPerson && createAgentDto.realPersonId) {
-            throw new BadRequestException('No se puede enviar realPersonId y realPerson a la vez');
-        }
-
-        if (!createAgentDto.realPerson && !createAgentDto.realPersonId) {
-            throw new BadRequestException('Debe enviar realPerson (datos) o realPersonId (existente)');
-        }
-
+    async create(createAgentDto: CreateAgentDto): Promise<AgentDto> {
         const qr = this.dataSource.createQueryRunner();
         await qr.connect();
         await qr.startTransaction();
@@ -36,21 +30,28 @@ export class AgentService {
         try {
             const agentRepo = qr.manager.getRepository(Agent);
 
+            const personData = mapPersonData(createAgentDto, PersonType.REAL);
+
             const agent = agentRepo.create({
                 agentCode: createAgentDto.agentCode,
                 licenseNumber: createAgentDto.licenseNumber,
                 isActive: createAgentDto.isActive,
-                realPerson: createAgentDto.realPersonId
-                    ? { id: createAgentDto.realPersonId }
-                    : {
-                        ...createAgentDto.realPerson,
-                        person: mapPersonData(createAgentDto.realPerson!, PersonType.REAL)
-                    },
+                realPerson: {
+                    firstName: createAgentDto.firstName,
+                    lastName: createAgentDto.lastName,
+                    middleName: createAgentDto.middleName,
+                    maternalLastName: createAgentDto.maternalLastName,
+                    nationality: createAgentDto.nationality,
+                    birthDate: createAgentDto.birthDate ? new Date(createAgentDto.birthDate) : undefined,
+                    gender: createAgentDto.gender,
+                    civilStatus: createAgentDto.civilStatus,
+                    person: personData
+                } as any, // Cast to any to bypass strict DeepPartial checks on cascaded relation
             });
 
             const saved = await agentRepo.save(agent);
             await qr.commitTransaction();
-            return saved;
+            return this.toDto(saved);
         } catch (error) {
             await qr.rollbackTransaction();
             handleDBErrors(error);
@@ -59,20 +60,21 @@ export class AgentService {
         }
     }
 
-    async findAll() {
-        return await this.agentRepository.find({
+    async findAll(): Promise<AgentDto[]> {
+        const agents = await this.agentRepository.find({
             relations: ['realPerson', 'realPerson.person'],
         });
+        return agents.map(a => this.toDto(a));
     }
 
-    async findOne(id: string) {
+    async findOne(id: string): Promise<AgentDto> {
         const agent = await this.agentRepository.findOne({
             where: { id },
             relations: ['realPerson', 'realPerson.person'],
         });
 
         if (!agent) throw new NotFoundException(`Agent with id ${id} not found`);
-        return agent;
+        return this.toDto(agent);
     }
 
     async update(id: string, updateAgentDto: UpdateAgentDto) {
@@ -100,15 +102,17 @@ export class AgentService {
                     if (!newReal) throw new NotFoundException('RealPerson not found');
                     agent.realPerson = newReal;
                 }
-            } else if (updateAgentDto.realPerson && agent.realPerson) {
-                if (updateAgentDto.realPerson.firstName) agent.realPerson.firstName = updateAgentDto.realPerson.firstName;
-                if (updateAgentDto.realPerson.lastName) agent.realPerson.lastName = updateAgentDto.realPerson.lastName;
-                if (updateAgentDto.realPerson.birthDate) agent.realPerson.birthDate = new Date(updateAgentDto.realPerson.birthDate);
-                if (updateAgentDto.realPerson.gender) agent.realPerson.gender = updateAgentDto.realPerson.gender;
-                if (updateAgentDto.realPerson.civilStatus) agent.realPerson.civilStatus = updateAgentDto.realPerson.civilStatus;
-                if (updateAgentDto.realPerson.nationality) agent.realPerson.nationality = updateAgentDto.realPerson.nationality;
+            } else if (agent.realPerson) {
+                if (updateAgentDto.firstName) agent.realPerson.firstName = updateAgentDto.firstName;
+                if (updateAgentDto.lastName) agent.realPerson.lastName = updateAgentDto.lastName;
+                if (updateAgentDto.birthDate) agent.realPerson.birthDate = new Date(updateAgentDto.birthDate);
+                if (updateAgentDto.gender) agent.realPerson.gender = updateAgentDto.gender;
+                if (updateAgentDto.civilStatus) agent.realPerson.civilStatus = updateAgentDto.civilStatus;
+                if (updateAgentDto.nationality) agent.realPerson.nationality = updateAgentDto.nationality;
+                if (updateAgentDto.middleName !== undefined) agent.realPerson.middleName = updateAgentDto.middleName;
+                if (updateAgentDto.maternalLastName !== undefined) agent.realPerson.maternalLastName = updateAgentDto.maternalLastName;
 
-                updatePersonFields(agent.realPerson.person, updateAgentDto.realPerson);
+                updatePersonFields(agent.realPerson.person, updateAgentDto);
                 await qr.manager.getRepository(RealPerson).save(agent.realPerson);
             }
 
@@ -124,8 +128,30 @@ export class AgentService {
     }
 
     async remove(id: string) {
-        const agent = await this.findOne(id);
+        const agent = await this.agentRepository.findOne({ where: { id } });
+        if (!agent) throw new NotFoundException(`Agent with id ${id} not found`);
         await this.agentRepository.remove(agent);
         return { message: `Agent with id ${id} deleted successfully` };
+    }
+
+    private toDto(agent: Agent): AgentDto {
+        return plainToInstance(AgentDto, {
+            id: agent.id,
+            agentCode: agent.agentCode,
+            licenseNumber: agent.licenseNumber,
+            isActive: agent.isActive,
+            firstName: agent.realPerson?.firstName,
+            lastName: agent.realPerson?.lastName,
+            middleName: agent.realPerson?.middleName,
+            maternalLastName: agent.realPerson?.maternalLastName,
+            nationality: agent.realPerson?.nationality,
+            birthDate: agent.realPerson?.birthDate,
+            gender: agent.realPerson?.gender,
+            civilStatus: agent.realPerson?.civilStatus,
+            emails: agent.realPerson?.person?.emails || [],
+            phoneNumbers: agent.realPerson?.person?.phoneNumbers || [],
+            addresses: agent.realPerson?.person?.addresses || [],
+            identifications: agent.realPerson?.person?.identifications || [],
+        }, { excludeExtraneousValues: true });
     }
 }

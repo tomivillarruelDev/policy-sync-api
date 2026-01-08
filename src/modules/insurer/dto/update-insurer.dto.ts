@@ -1,12 +1,9 @@
-import { PartialType, OmitType } from '@nestjs/mapped-types';
+import { PartialType } from '@nestjs/mapped-types';
 import { CreateInsurerDto } from './create-insurer.dto';
-import { ValidateNested, IsOptional } from 'class-validator';
-import { Type } from 'class-transformer';
-import { UpdateLegalPersonDto } from '../../person/dto/update-legal-person.dto';
+import { IsOptional, IsUUID } from 'class-validator';
 
-export class UpdateInsurerDto extends PartialType(OmitType(CreateInsurerDto, ['legalPerson'])) {
+export class UpdateInsurerDto extends PartialType(CreateInsurerDto) {
     @IsOptional()
-    @ValidateNested()
-    @Type(() => UpdateLegalPersonDto)
-    legalPerson?: UpdateLegalPersonDto;
+    @IsUUID()
+    legalPersonId?: string;
 }

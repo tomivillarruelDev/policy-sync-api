@@ -15,6 +15,14 @@ export class CreateRealPersonDto extends CreatePersonDto {
 
   @IsOptional()
   @IsString()
+  middleName?: string;
+
+  @IsOptional()
+  @IsString()
+  maternalLastName?: string;
+
+  @IsOptional()
+  @IsString()
   nationality?: string;
 
   @IsOptional()

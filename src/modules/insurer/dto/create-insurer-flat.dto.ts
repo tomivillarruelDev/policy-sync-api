@@ -1,7 +1,7 @@
 import { IsNotEmpty, IsOptional, IsString, IsUrl } from 'class-validator';
 import { CreateLegalPersonDto } from '../../person/dto/create-legal-person.dto';
 
-export class CreateInsurerDto extends CreateLegalPersonDto {
+export class CreateInsurerFlatDto extends CreateLegalPersonDto {
     @IsString()
     @IsNotEmpty()
     code: string;

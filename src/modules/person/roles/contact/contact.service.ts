@@ -1,20 +1,17 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { CreateContactDto } from './dto/create-contact.dto';
 import { UpdateContactDto } from './dto/update-contact.dto';
+import { ContactDto } from './dto/contact.dto';
 import { Contact } from './entities/contact.entity';
-import { LegalPerson } from 'src/modules/person/entities/legal-person.entity';
+import { LegalPerson } from '../../entities/legal-person.entity';
 import { handleDBErrors } from 'src/common/utils/typeorm-errors.util';
-import { RealPersonService } from '../../services/real-person.service';
-import { RealPerson } from 'src/modules/person/entities/real-person.entity';
-import { mapAddressDto, mapIdentificationDto, mapPersonData } from '../../common/mappers';
+import { RealPerson } from '../../entities/real-person.entity';
+import { mapPersonData } from '../../common/mappers';
 import { PersonType } from '../../enums/person-type.enum';
 import { updatePersonFields } from '../../common/utils/person-update.util';
+import { plainToInstance } from 'class-transformer';
 
 @Injectable()
 export class ContactService {
@@ -24,45 +21,36 @@ export class ContactService {
     private readonly dataSource: DataSource,
   ) { }
 
-  async create(dto: CreateContactDto): Promise<Contact> {
-    if (dto.legalPerson && dto.legalPersonId) {
-      throw new BadRequestException(
-        'No se puede enviar legalPersonId y legalPerson a la vez',
-      );
-    }
-
+  async create(createContactDto: CreateContactDto): Promise<ContactDto> {
     const qr = this.dataSource.createQueryRunner();
     await qr.connect();
     await qr.startTransaction();
 
     try {
       const repo = qr.manager.getRepository(Contact);
+
+      const personData = mapPersonData(createContactDto, PersonType.REAL);
+
       const contact = repo.create({
         realPerson: {
-          ...dto.realPerson,
-          person: mapPersonData(dto.realPerson, PersonType.REAL),
+          firstName: createContactDto.firstName,
+          lastName: createContactDto.lastName,
+          middleName: createContactDto.middleName,
+          maternalLastName: createContactDto.maternalLastName,
+          nationality: createContactDto.nationality,
+          birthDate: createContactDto.birthDate ? new Date(createContactDto.birthDate) : undefined,
+          gender: createContactDto.gender,
+          civilStatus: createContactDto.civilStatus,
+          person: personData
         },
-        legalPerson: dto.legalPersonId
-          ? { id: dto.legalPersonId }
-          : dto.legalPerson
-            ? {
-              ...dto.legalPerson,
-              person: {
-                type: PersonType.LEGAL,
-                emails: dto.legalPerson.emails,
-                phoneNumbers: dto.legalPerson.phoneNumbers,
-                addresses: mapAddressDto(dto.legalPerson.addresses),
-                identifications: mapIdentificationDto(
-                  dto.legalPerson.identifications,
-                ),
-              },
-            }
-            : undefined,
+        legalPerson: createContactDto.legalPersonId
+          ? { id: createContactDto.legalPersonId }
+          : undefined,
       });
 
-      const saved = await repo.save(contact); // guarda todo gracias al cascade
+      const saved = await repo.save(contact);
       await qr.commitTransaction();
-      return saved;
+      return this.toDto(saved);
     } catch (e) {
       await qr.rollbackTransaction();
       handleDBErrors(e);
@@ -71,15 +59,20 @@ export class ContactService {
     }
   }
 
-  findAll(): Promise<Contact[]> {
-    // Eager ya carga relaciones, find() es suficiente
-    return this.contactRepository.find();
+  async findAll(): Promise<ContactDto[]> {
+    const contacts = await this.contactRepository.find({
+      relations: ['realPerson', 'realPerson.person', 'legalPerson']
+    });
+    return contacts.map(c => this.toDto(c));
   }
 
-  async findOne(id: string): Promise<Contact> {
-    const entity = await this.contactRepository.findOne({ where: { id } });
+  async findOne(id: string): Promise<ContactDto> {
+    const entity = await this.contactRepository.findOne({
+      where: { id },
+      relations: ['realPerson', 'realPerson.person', 'legalPerson']
+    });
     if (!entity) throw new NotFoundException('Contact no encontrado');
-    return entity;
+    return this.toDto(entity);
   }
 
   async remove(id: string): Promise<{ deleted: boolean }> {
@@ -99,10 +92,9 @@ export class ContactService {
 
       const realId = entity.realPerson?.id;
 
-      // 1) Borrar Contact primero para liberar la FK hacia RealPerson
       await contactRepo.remove(entity);
 
-      // 2) Borrar explícitamente RealPerson (por si el cascade de remove no se dispara)
+      // Borrar explícitamente RealPerson 
       if (realId) {
         await realRepo.delete(realId);
       }
@@ -117,7 +109,7 @@ export class ContactService {
     }
   }
 
-  async update(id: string, dto: UpdateContactDto): Promise<Contact> {
+  async update(id: string, dto: UpdateContactDto): Promise<ContactDto> {
     const qr = this.dataSource.createQueryRunner();
     await qr.connect();
     await qr.startTransaction();
@@ -126,34 +118,38 @@ export class ContactService {
       const repo = qr.manager.getRepository(Contact);
       const entity = await repo.findOne({
         where: { id },
-        relations: ['realPerson', 'realPerson.person', 'legalPerson', 'legalPerson.person']
+        relations: ['realPerson', 'realPerson.person', 'legalPerson']
       });
       if (!entity) throw new NotFoundException('Contact no encontrado');
 
       // Update RealPerson (always exists on Contact)
-      if (dto.realPerson) {
-        if (dto.realPerson.firstName) entity.realPerson.firstName = dto.realPerson.firstName;
-        if (dto.realPerson.lastName) entity.realPerson.lastName = dto.realPerson.lastName;
-        updatePersonFields(entity.realPerson.person, dto.realPerson);
+      if (dto.realPersonId) {
+        if (dto.realPersonId !== entity.realPerson?.id) {
+          const newReal = await qr.manager.getRepository(RealPerson).findOne({ where: { id: dto.realPersonId } });
+          if (!newReal) throw new NotFoundException('Real Person not found');
+          entity.realPerson = newReal;
+        }
+      } else if (entity.realPerson) {
+        if (dto.firstName) entity.realPerson.firstName = dto.firstName;
+        if (dto.lastName) entity.realPerson.lastName = dto.lastName;
+        if (dto.middleName !== undefined) entity.realPerson.middleName = dto.middleName;
+        if (dto.maternalLastName !== undefined) entity.realPerson.maternalLastName = dto.maternalLastName;
+        if (dto.birthDate) entity.realPerson.birthDate = new Date(dto.birthDate);
+        if (dto.gender) entity.realPerson.gender = dto.gender;
+        if (dto.civilStatus) entity.realPerson.civilStatus = dto.civilStatus;
+        if (dto.nationality) entity.realPerson.nationality = dto.nationality;
+
+        updatePersonFields(entity.realPerson.person, dto);
         await qr.manager.getRepository(RealPerson).save(entity.realPerson);
       }
 
-      // Update LegalPerson (optional on Contact)
+      // Update LegalPerson
       if (dto.legalPersonId) {
-        // Switching legal person
         if (dto.legalPersonId !== entity.legalPerson?.id) {
           const newLegal = await qr.manager.getRepository(LegalPerson).findOne({ where: { id: dto.legalPersonId } });
           if (!newLegal) throw new NotFoundException('LegalPerson no encontrada');
           entity.legalPerson = newLegal;
         }
-      } else if (dto.legalPerson && entity.legalPerson) {
-        // Updating existing attached legal person
-        if (dto.legalPerson.organizationName) entity.legalPerson.organizationName = dto.legalPerson.organizationName;
-        if (dto.legalPerson.socialReason !== undefined) entity.legalPerson.socialReason = dto.legalPerson.socialReason;
-        if (dto.legalPerson.website !== undefined) entity.legalPerson.website = dto.legalPerson.website;
-
-        updatePersonFields(entity.legalPerson.person, dto.legalPerson);
-        await qr.manager.getRepository(LegalPerson).save(entity.legalPerson);
       }
 
       await repo.save(entity);
@@ -165,5 +161,24 @@ export class ContactService {
     } finally {
       await qr.release();
     }
+  }
+
+  private toDto(contact: Contact): ContactDto {
+    return plainToInstance(ContactDto, {
+      id: contact.id,
+      organizationName: contact.legalPerson?.organizationName,
+      firstName: contact.realPerson?.firstName,
+      lastName: contact.realPerson?.lastName,
+      middleName: contact.realPerson?.middleName,
+      maternalLastName: contact.realPerson?.maternalLastName,
+      nationality: contact.realPerson?.nationality,
+      birthDate: contact.realPerson?.birthDate,
+      gender: contact.realPerson?.gender,
+      civilStatus: contact.realPerson?.civilStatus,
+      emails: contact.realPerson?.person?.emails || [],
+      phoneNumbers: contact.realPerson?.person?.phoneNumbers || [],
+      addresses: contact.realPerson?.person?.addresses || [],
+      identifications: contact.realPerson?.person?.identifications || [],
+    }, { excludeExtraneousValues: true });
   }
 }

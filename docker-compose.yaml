@@ -11,7 +11,7 @@ services:
       POSTGRES_PASSWORD: rootroot
       POSTGRES_DB: POLICY_SYNC_DEMO
     volumes:
-      - ./postgres:/var/lib/postgresql/data
+      - db_data:/var/lib/postgresql/data
 
   pgadmin:
     image: dpage/pgadmin4
@@ -23,3 +23,7 @@ services:
       PGADMIN_DEFAULT_PASSWORD: root
     depends_on:
       - postgres
+
+# --- ESTO ES LO QUE TE FALTABA ---
+volumes:
+  db_data:

@@ -1,8 +1,9 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { State } from './state.entity';
+import { AuditableEntity } from 'src/common/entities/auditable.entity';
 
 @Entity()
-export class Country {
+export class Country extends AuditableEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

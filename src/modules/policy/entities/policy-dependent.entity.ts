@@ -2,22 +2,19 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { Policy } from './policy.entity';
 import { RelationType } from '../enums/relation-type.enum';
 
+import { Person } from '../../person/entities/person.entity';
+import { AuditableEntity } from '../../../common/entities/auditable.entity';
+
 @Entity('policy_dependents')
-export class PolicyDependent {
+export class PolicyDependent extends AuditableEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;
-
-    @Column()
-    firstName: string;
-
-    @Column()
-    lastName: string;
 
     @Column({ type: 'enum', enum: RelationType })
     relationType: RelationType;
 
-    @Column({ type: 'date' })
-    birthDate: Date;
+    @ManyToOne(() => Person)
+    person: Person;
 
     @ManyToOne(() => Policy, (policy) => policy.dependents, { onDelete: 'CASCADE' })
     policy: Policy;

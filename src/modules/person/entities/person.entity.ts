@@ -25,6 +25,7 @@ export class Person extends AuditableEntity {
   })
   type: PersonType;
 
+  // Configuration / Legal
   @Column({ default: false })
   lopdp: boolean;
 

@@ -2,8 +2,10 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'ty
 import { Insurer } from '../../insurer/entities/insurer.entity';
 import { Plan } from '../../plan/entities/plan.entity';
 
+import { AuditableEntity } from '../../../common/entities/auditable.entity';
+
 @Entity('products')
-export class Product {
+export class Product extends AuditableEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 

@@ -15,10 +15,6 @@ export class RealPerson extends AuditableEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @OneToOne(() => Person, { onDelete: 'CASCADE', cascade: ['insert', 'update'], eager: true })
-  @JoinColumn({ name: 'personId' })
-  person: Person;
-
   @Column()
   firstName: string;
 
@@ -42,4 +38,8 @@ export class RealPerson extends AuditableEntity {
 
   @Column({ type: 'enum', enum: CivilStatus, nullable: true })
   civilStatus: CivilStatus;
+
+  @OneToOne(() => Person, { onDelete: 'CASCADE', cascade: ['insert', 'update'], eager: true })
+  @JoinColumn({ name: 'personId' })
+  person: Person;
 }

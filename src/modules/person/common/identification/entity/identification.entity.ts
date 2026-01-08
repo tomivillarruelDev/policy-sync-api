@@ -7,10 +7,11 @@ import {
 } from 'typeorm';
 import { Person } from '../../../entities/person.entity';
 import { IdentificationType } from './identification-type.entity';
+import { AuditableEntity } from 'src/common/entities/auditable.entity';
 
 @Entity()
 @Unique('UQ_ident_type_value', ['type', 'value'])
-export class Identification {
+export class Identification extends AuditableEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

@@ -1,7 +1,7 @@
 
 services:
   postgres:
-    container_name: policy-sync-demo
+    container_name: policy-sync-master-api
     image: postgres
     restart: always
     ports:
@@ -9,7 +9,7 @@ services:
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: rootroot
-      POSTGRES_DB: POLICY_SYNC_DEMO
+      POSTGRES_DB: POLICY_SYNC_MASTER_API
     volumes:
       - ./postgres:/var/lib/postgresql/data
 

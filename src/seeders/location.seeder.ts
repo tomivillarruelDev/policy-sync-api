@@ -21,7 +21,7 @@ export class LocationSeeder {
 
     @InjectRepository(City)
     private readonly cityRepo: Repository<City>,
-  ) {}
+  ) { }
 
   async seed() {
     this.logger.log('Iniciando la carga de datos de localización...');
@@ -139,16 +139,41 @@ export class LocationSeeder {
     return clean.substring(0, 2).padEnd(2, 'X');
   }
 
-  // Heurística simple para “españolizar”/capitalizar nombres sin dataset
+  // Heurística mejorada para “españolizar” nombres
   private toTitleEs(text: string): string {
     if (!text) return text;
-    const lower = text.toLowerCase();
-    return lower
+
+    // 1. Eliminar sufijos administrativos comunes en inglés
+    let clean = text
       .replace(
-        /\b(of|the|and)\b/g,
-        (m) => ({ of: 'de', the: '', and: 'y' })[m] as string,
+        /\b(Province|State|Region|Department|District|County)\b/gi,
+        '',
       )
-      .replace(/\b\w/g, (c) => c.toUpperCase())
+      .replace(/,\s*D\.C\./gi, '')
+      .trim();
+
+    // 2. Traducir conectores
+    clean = clean.replace(/\b(of|the|and)\b/gi, (m) => {
+      const map: any = { of: 'de', the: '', and: 'y' };
+      return map[m.toLowerCase()] || m;
+    });
+
+    // 3. Capitalizar correctamente, respetando acentos.
+    return clean
+      .split(/\s+/)
+      .map((word, index) => {
+        if (!word) return '';
+        const lower = word.toLowerCase();
+        // Mantener minúsculas para conectores si no es la primera palabra
+        if (
+          index > 0 &&
+          ['de', 'y', 'del', 'la', 'lo', 'los', 'las', 'en'].includes(lower)
+        ) {
+          return lower;
+        }
+        return lower.charAt(0).toUpperCase() + lower.slice(1);
+      })
+      .join(' ')
       .replace(/\s+/g, ' ')
       .trim();
   }

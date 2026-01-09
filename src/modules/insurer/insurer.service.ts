@@ -11,6 +11,7 @@ import { mapPersonData } from '../person/common/mappers';
 import { updatePersonFields } from '../person/common/utils/person-update.util';
 import { handleDBErrors } from 'src/common/utils/typeorm-errors.util';
 import { plainToInstance } from 'class-transformer';
+import { PersonDtoMapper } from '../person/common/mappers/person-dto.mapper';
 
 @Injectable()
 export class InsurerService {
@@ -128,19 +129,23 @@ export class InsurerService {
     }
 
     private toDto(insurer: Insurer): InsurerDto {
+        const flatPerson = PersonDtoMapper.toFlatDto(insurer.legalPerson);
+
         return plainToInstance(InsurerDto, {
             id: insurer.id,
             code: insurer.code,
             executive: insurer.executive,
             agencyNumber: insurer.agencyNumber,
             logoUrl: insurer.logoUrl,
-            organizationName: insurer.legalPerson?.organizationName,
-            socialReason: insurer.legalPerson?.socialReason,
-            website: insurer.legalPerson?.website,
-            emails: insurer.legalPerson?.person?.emails || [],
-            phoneNumbers: insurer.legalPerson?.person?.phoneNumbers || [],
-            addresses: insurer.legalPerson?.person?.addresses || [],
-            identifications: insurer.legalPerson?.person?.identifications || [],
+
+            // Mapped via PersonDtoMapper
+            organizationName: flatPerson.organizationName,
+            socialReason: flatPerson.socialReason,
+            website: flatPerson.website,
+            emails: flatPerson.emails,
+            phoneNumbers: flatPerson.phoneNumbers,
+            addresses: flatPerson.addresses,
+            identifications: flatPerson.identifications,
         }, { excludeExtraneousValues: true });
     }
 }

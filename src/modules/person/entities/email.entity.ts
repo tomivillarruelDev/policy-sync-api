@@ -1,12 +1,14 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
 import { Person } from "./person.entity";
 import { AuditableEntity } from "src/common/entities/auditable.entity";
+import { Expose } from "class-transformer";
 
 @Entity()
 export class Email {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
+  @Expose()
   @Column({ unique: true })
   account: string;
 

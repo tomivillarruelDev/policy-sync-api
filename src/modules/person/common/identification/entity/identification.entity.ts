@@ -8,6 +8,7 @@ import {
 import { Person } from '../../../entities/person.entity';
 import { IdentificationType } from './identification-type.entity';
 import { AuditableEntity } from 'src/common/entities/auditable.entity';
+import { Expose } from 'class-transformer';
 
 @Entity()
 @Unique('UQ_ident_type_value', ['type', 'value'])
@@ -15,6 +16,7 @@ export class Identification {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Expose()
   @Column()
   value: string;
 

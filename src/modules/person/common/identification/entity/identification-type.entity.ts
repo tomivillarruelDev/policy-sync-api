@@ -1,15 +1,19 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { Identification } from './identification.entity';
 import { AuditableEntity } from 'src/common/entities/auditable.entity';
+import { Expose } from 'class-transformer';
 
 @Entity()
 export class IdentificationType {
+  @Expose()
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Expose()
   @Column()
   name: string;
 
+  @Expose()
   @Column({ nullable: true })
   nameEs: string;
 

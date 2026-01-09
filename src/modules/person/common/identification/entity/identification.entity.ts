@@ -13,6 +13,7 @@ import { Expose } from 'class-transformer';
 @Entity()
 @Unique('UQ_ident_type_value', ['type', 'value'])
 export class Identification {
+  @Expose()
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -20,6 +21,7 @@ export class Identification {
   @Column()
   value: string;
 
+  @Expose()
   @ManyToOne(() => IdentificationType, (type) => type.identifications, {
     eager: true,
   })

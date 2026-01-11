@@ -27,10 +27,21 @@ export class PersonDtoMapper {
         const person = entity.person;
 
         const base = {
-            emails: person?.emails || [],
-            phoneNumbers: person?.phoneNumbers || [],
-            addresses: person?.addresses || [],
-            identifications: person?.identifications || [],
+            emails: person?.emails?.map(e => ({ id: e.id, account: e.account })) || [],
+            phoneNumbers: person?.phoneNumbers?.map(p => ({ id: p.id, number: p.number })) || [],
+            addresses: person?.addresses?.map(a => ({
+                id: a.id,
+                street: a.street,
+                streetNumber: a.streetNumber,
+                apartment: a.apartment,
+                zipCode: a.zipCode,
+                city: a.city ? { id: a.city.id, name: a.city.name } : null
+            })) || [],
+            identifications: person?.identifications?.map(i => ({
+                id: i.id,
+                value: i.value,
+                type: i.type ? { id: i.type.id, name: i.type.name } : null
+            })) || [],
         };
 
         if (entity instanceof LegalPerson) {

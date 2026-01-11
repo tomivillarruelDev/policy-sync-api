@@ -32,18 +32,22 @@ export class InsurerService {
             // Extract person data
             const personData = mapPersonData(createInsurerDto, PersonType.LEGAL);
 
-            const insurer = insurerRepo.create({
-                code: createInsurerDto.code,
-                executive: createInsurerDto.executive,
-                agencyNumber: createInsurerDto.agencyNumber,
-                logoUrl: createInsurerDto.logoUrl,
-                legalPerson: {
-                    organizationName: createInsurerDto.organizationName,
-                    socialReason: createInsurerDto.socialReason,
-                    website: createInsurerDto.website,
-                    person: personData
-                }
-            });
+            // Manually instantiate to avoid circular JSON error in repository.create() due to Person->Address->Person link
+            const insurer = new Insurer();
+            insurer.code = createInsurerDto.code;
+            insurer.executive = createInsurerDto.executive || '';
+            insurer.agencyNumber = createInsurerDto.agencyNumber || '';
+            insurer.logoUrl = createInsurerDto.logoUrl || '';
+
+            if (!personData) {
+                throw new BadRequestException('Person data is required');
+            }
+
+            insurer.legalPerson = new LegalPerson();
+            insurer.legalPerson.organizationName = createInsurerDto.organizationName;
+            insurer.legalPerson.socialReason = createInsurerDto.socialReason;
+            insurer.legalPerson.website = createInsurerDto.website;
+            insurer.legalPerson.person = personData;
 
             const saved = await insurerRepo.save(insurer);
             await qr.commitTransaction();
@@ -66,7 +70,7 @@ export class InsurerService {
     async findOne(id: string): Promise<InsurerDto> {
         const insurer = await this.insurerRepository.findOne({
             where: { id },
-            relations: ['legalPerson', 'legalPerson.person', 'products'],
+            relations: ['legalPerson', 'legalPerson.person', 'legalPerson.person.emails', 'legalPerson.person.phoneNumbers', 'legalPerson.person.addresses', 'legalPerson.person.identifications', 'products'],
         });
 
         if (!insurer) throw new NotFoundException(`Insurer with id ${id} not found`);
@@ -82,7 +86,7 @@ export class InsurerService {
             const repo = qr.manager.getRepository(Insurer);
             const insurer = await repo.findOne({
                 where: { id },
-                relations: ['legalPerson', 'legalPerson.person']
+                relations: ['legalPerson', 'legalPerson.person', 'legalPerson.person.emails', 'legalPerson.person.phoneNumbers', 'legalPerson.person.addresses', 'legalPerson.person.identifications']
             });
 
             if (!insurer) throw new NotFoundException(`Insurer with id ${id} not found`);
@@ -106,7 +110,22 @@ export class InsurerService {
                 if (updateInsurerDto.socialReason !== undefined) insurer.legalPerson.socialReason = updateInsurerDto.socialReason;
                 if (updateInsurerDto.website !== undefined) insurer.legalPerson.website = updateInsurerDto.website;
 
-                updatePersonFields(insurer.legalPerson.person, updateInsurerDto);
+                // Use mapPersonData to handle nested updates cleanly
+                // Passing existingPersonId allows child entities (Addresses) to link correctly
+                const updatedPerson = mapPersonData(
+                    updateInsurerDto,
+                    PersonType.LEGAL,
+                    insurer.legalPerson.person.id
+                );
+
+                // Assign nested relations if they exist in the update
+                if (updatedPerson) {
+                    if (updatedPerson.emails?.length) insurer.legalPerson.person.emails = updatedPerson.emails;
+                    if (updatedPerson.phoneNumbers?.length) insurer.legalPerson.person.phoneNumbers = updatedPerson.phoneNumbers;
+                    if (updatedPerson.addresses?.length) insurer.legalPerson.person.addresses = updatedPerson.addresses;
+                    if (updatedPerson.identifications?.length) insurer.legalPerson.person.identifications = updatedPerson.identifications;
+                }
+
                 await qr.manager.getRepository(LegalPerson).save(insurer.legalPerson);
             }
 

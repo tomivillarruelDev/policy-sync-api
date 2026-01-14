@@ -141,7 +141,7 @@ export class CatalogVerificationSeeder {
         {
           street: 'Calle Falsa 123',
           streetNumber: '123',
-          cityId: 'bdf40ec3-1ef2-4a93-a557-69a6a1f66e18',
+          cityId: cityId,
         },
       ],
       phoneNumbers: [{ number: '555-1234' }],
@@ -168,7 +168,7 @@ export class CatalogVerificationSeeder {
         {
           street: 'Matrix St',
           streetNumber: '1',
-          cityId: 'bdf40ec3-1ef2-4a93-a557-69a6a1f66e18',
+          cityId: cityId,
         },
       ],
       phoneNumbers: [{ number: '555-9999' }],

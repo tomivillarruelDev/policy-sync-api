@@ -4,6 +4,7 @@ import {
   Column,
   ManyToOne,
   OneToMany,
+  JoinColumn,
 } from 'typeorm';
 import { Country } from './country.entity';
 import { City } from './city.entity';
@@ -28,6 +29,7 @@ export class State {
     onDelete: 'CASCADE',
     eager: true,
   })
+  @JoinColumn({ name: 'country_id' })
   country: Country;
 
   @OneToMany(() => City, (city) => city.state)

@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { State } from './state.entity';
 import { AuditableEntity } from 'src/common/entities/auditable.entity';
 import { Expose } from 'class-transformer';
@@ -21,6 +21,7 @@ export class City {
     onDelete: 'CASCADE',
     eager: true,
   })
+  @JoinColumn({ name: 'state_id' })
   state: State;
 
   @Column(() => AuditableEntity, { prefix: false })

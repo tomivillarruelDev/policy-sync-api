@@ -18,16 +18,25 @@ import { handleDBErrors } from 'src/common/utils/typeorm-errors.util';
 import { plainToInstance } from 'class-transformer';
 import { PersonDtoMapper } from '../person/common/mappers/person-dto.mapper';
 import { validatePersonUniqueConstraints } from '../person/common/utils/person-validation.util';
+import { BaseService } from 'src/common/services/base.service';
 
 import { INSURER_RELATIONS } from '../person/common/constants/relations.constant';
 
+/**
+ * Service for managing Insurers.
+ * Extends BaseService to inherit generic Soft Delete functionality.
+ * Note: Soft Delete does NOT cascade to related entities (e.g. LegalPerson, Products) by default.
+ * Use specific logic if cascading is required.
+ */
 @Injectable()
-export class InsurerService {
+export class InsurerService extends BaseService<Insurer> {
   constructor(
     @InjectRepository(Insurer)
     private readonly insurerRepository: Repository<Insurer>,
     private readonly dataSource: DataSource,
-  ) { }
+  ) {
+    super(insurerRepository);
+  }
 
   async create(createInsurerDto: CreateInsurerDto): Promise<InsurerDto> {
     const qr = this.dataSource.createQueryRunner();
@@ -166,13 +175,7 @@ export class InsurerService {
     }
   }
 
-  async remove(id: string) {
-    const insurer = await this.insurerRepository.findOne({ where: { id } });
-    if (!insurer)
-      throw new NotFoundException(`Insurer with id ${id} not found`);
-    await this.insurerRepository.remove(insurer);
-    return { message: `Insurer with id ${id} deleted successfully` };
-  }
+
 
   private toDto(insurer: Insurer): InsurerDto {
     const flatPerson = PersonDtoMapper.toFlatDto(insurer.legalPerson);

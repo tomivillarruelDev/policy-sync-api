@@ -4,6 +4,7 @@ import {
   Column,
   ManyToOne,
   Unique,
+  JoinColumn,
 } from 'typeorm';
 import { Person } from '../../../entities/person.entity';
 import { IdentificationType } from './identification-type.entity';
@@ -25,11 +26,13 @@ export class Identification {
   @ManyToOne(() => IdentificationType, (type) => type.identifications, {
     eager: true,
   })
+  @JoinColumn({ name: 'type_id' })
   type: IdentificationType;
 
   @ManyToOne(() => Person, (person) => person.identifications, {
     onDelete: 'CASCADE',
   })
+  @JoinColumn({ name: 'person_id' })
   person: Person;
 
   @Column(() => AuditableEntity, { prefix: false })

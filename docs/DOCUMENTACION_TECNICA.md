@@ -24,17 +24,17 @@ Para adaptar el proyecto a un desarrollo unipersonal viable para portfolio, se h
 #### 1. Entity: Insurer (Aseguradora)
 Representa la compañía que ofrece el seguro.
 *   **Relación:** `OneToOne` con `LegalPerson` (hereda datos fiscales y de contacto).
-*   **Campos propios:** `id`, `code` (Único), `executive`, `agencyNumber`, `logoUrl`.
+*   **Campos propios:** `id`, `code` (Único), `executive`, `agency_number`, `logo_url`.
 *   **Relaciones:** `products` (OneToMany).
 
 #### 2. Entity: Product (Producto)
 Un tipo de seguro ofrecido (ej: "Automóvil", "Vida").
-*   **Campos:** `id`, `name`, `code`, `branch` (Ramo), `insuredAmount` (Suma Orientativa), `specialBenefits`, `adminExpenses`.
+*   **Campos:** `id`, `name`, `code`, `branch` (Ramo), `insured_amount` (Suma Orientativa), `special_benefits`, `admin_expenses`.
 *   **Relaciones:** `insurer` (ManyToOne).
 
 #### 3. Entity: Plan (Plan)
 Una variante comercial específica de un producto (ej: "Todo Riesgo con Franquicia").
-*   **Campos:** `id`, `name`, `code`, `deductibleOne`, `deductibleTwo`.
+*   **Campos:** `id`, `name`, `code`, `deductible_one`, `deductible_two`.
 *   **Relaciones:** `product` (ManyToOne).
 
 ---
@@ -45,16 +45,33 @@ Una variante comercial específica de un producto (ej: "Todo Riesgo con Franquic
 Centraliza la información de cualquier entidad (física o jurídica) utilizando un patrón de composición.
 
 *   **Entity Base: Person** (`people`)
-    *   Interactúa con: `emails`, `phoneNumbers`, `addresses`, `identifications`.
+    *   Interactúa con: `emails`, `phone_numbers`, `addresses`, `identifications`.
     *   Campos universales: checks de privacidad (LOPDP).
     
 *   **Subtipo: RealPerson (Persona Física)** (`real_people`)
-    *   Datos biográficos: `firstName`, `lastName`, `birthDate`, `gender`, `civilStatus`, `nationality`.
+    *   Datos biográficos: `first_name`, `last_name`, `birth_date`, `gender`, `civil_status`, `nationality`.
     *   Relación: OneToOne con `Person`.
 
 *   **Subtipo: LegalPerson (Persona Jurídica)** (`legal_people`)
-    *   Datos empresariales: `organizationName`, `socialReason`, `website`.
+    *   Datos empresariales: `organization_name`, `social_reason`, `website`.
     *   Relación: OneToOne con `Person`.
+
+##### 4.1 Detalles de Entidades Auxiliares (Person)
+Documentación detallada de estructuras compuestas:
+
+**Address (Direcciones)** (`addresses`)
+*   **Campos:** `id`, `street`, `street_number`, `zip_code`, `apartment`, `person_id`.
+*   **Relaciones:** `city_id` (ManyToOne -> City).
+
+**Email (Correos)** (`emails`)
+*   **Campos:** `id`, `account` (Único), `person_id`.
+
+**Identification (Documentos)** (`identifications`)
+*   **Campos:** `id`, `value`, `person_id`.
+*   **Relaciones:** `type_id` (ManyToOne -> IdentificationType).
+
+**PhoneNumber (Teléfonos)** (`phone_number`)
+*   **Campos:** `id`, `number`, `person_id`.
 
 #### 5. Actor: Client (El Asegurado)
 Implementado principalmente como una `RealPerson` que actúa como "Tomador" de la póliza.
@@ -62,7 +79,7 @@ Implementado principalmente como una `RealPerson` que actúa como "Tomador" de l
 #### 6. Actor: Agent (El Vendedor)
 Representa al productor de seguros.
 *   **Entity: Agent** (`agents`)
-    *   Campos: `agentCode`, `licenseNumber`, `isActive`.
+    *   Campos: `agent_code`, `license_number`, `is_active`.
     *   Relación: OneToOne con `RealPerson` (permite acceso directo a nombre y apellido).
     *   Relación: OneToMany con `Policy` (historial de ventas - *implementado*).
 
@@ -73,18 +90,18 @@ Representa al productor de seguros.
 Es la entidad central que consolida la información comercial, financiera y de cobertura.
 
 #### 7. Entity: Policy (`policies`)
-*   **Identificación:** `policyNumber` (Único), `status` (PENDING, ACTIVE, etc.), `businessType` (NEW, RENEWAL).
+*   **Identificación:** `policy_number` (Único), `status` (PENDING, ACTIVE, etc.), `business_type` (NEW, RENEWAL).
 *   **Relaciones:**
     *   `client` (ManyToOne -> Person)
     *   `agent` (ManyToOne -> Agent)
     *   `plan` (ManyToOne -> Plan)
-*   **Vigencia:** `issueDate`, `startDate`, `endDate`, `renewalDate`.
-*   **Financiero:** `insuredAmount`, `premiumAmount`, `currency`, `paymentFrequency`, `paymentMethod`, `installments`.
-*   **Overrides:** `deductibleOne`, `deductibleTwo` (Personalización por póliza).
+*   **Vigencia:** `issue_date`, `start_date`, `end_date`, `renewal_date`.
+*   **Financiero:** `insured_amount`, `premium_amount`, `currency`, `payment_frequency`, `payment_method`, `installments`.
+*   **Overrides:** `deductible_one`, `deductible_two` (Personalización por póliza).
 
 #### 8. Sub-Entidad: PolicyDependent (`policy_dependents`)
 Representa a los beneficiarios o asegurados adicionales (hijos, cónyuge).
-*   **Campos:** `firstName`, `lastName`, `relationType` (SPOUSE, CHILD), `birthDate`.
+*   **Campos:** `first_name`, `last_name`, `relation_type` (SPOUSE, CHILD), `birth_date`.
 *   **Relación:** ManyToOne -> Policy (Cascade).
 
 ---
@@ -92,7 +109,7 @@ Representa a los beneficiarios o asegurados adicionales (hijos, cónyuge).
 ## 4. Puntos Fuertes del Diseño
 
 1.  **Modelo Visual Completo:** Cubre todos los campos críticos visibles en interfaces de seguros reales (Primas, Vigencias, Deducibles).
-2.  **Abstracción Financiera:** Simplifica la contabilidad manteniendo solo los valores finales (`premiumAmount`) necesarios para la venta, evitando la complejidad de un sistema contable completo.
+2.  **Abstracción Financiera:** Simplifica la contabilidad manteniendo solo los valores finales (`premium_amount`) necesarios para la venta, evitando la complejidad de un sistema contable completo.
 3.  **Dependientes en Cascada:** Maneja correctamente relaciones complejas editables dentro de un mismo formulario (Padre-Hijo).
 4.  **Patrón Persona:** Separa limpiamente la identidad (quién es) del rol (qué hace), permitiendo que una misma persona pueda ser Cliente, Agente o ambos sin duplicar datos.
 

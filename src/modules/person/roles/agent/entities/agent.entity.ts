@@ -15,17 +15,17 @@ export class Agent {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ unique: true })
+  @Column({ name: 'agent_code', unique: true })
   agentCode: string;
 
-  @Column({ unique: true })
+  @Column({ name: 'license_number', unique: true })
   licenseNumber: string;
 
-  @Column({ default: true })
+  @Column({ name: 'is_active', default: true })
   isActive: boolean;
 
   @OneToOne(() => RealPerson, { eager: true, cascade: ['insert'] })
-  @JoinColumn()
+  @JoinColumn({ name: 'real_person_id' })
   realPerson: RealPerson;
 
   @OneToMany(() => Policy, (policy) => policy.agent)

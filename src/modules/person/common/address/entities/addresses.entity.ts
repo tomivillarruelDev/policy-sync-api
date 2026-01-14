@@ -12,6 +12,7 @@ export class Address {
 
   @Expose()
   @ManyToOne(() => City, { eager: true, onDelete: 'CASCADE', nullable: false })
+  @JoinColumn({ name: 'city_id' })
   city: City;
 
   @Expose()
@@ -19,25 +20,25 @@ export class Address {
   street: string;
 
   @Expose()
-  @Column({ nullable: true })
+  @Column({ name: 'street_number', nullable: true })
   streetNumber: string;
 
   @Expose()
-  @Column({ nullable: true })
+  @Column({ name: 'zip_code', nullable: true })
   zipCode: string;
 
   @Expose()
   @Column({ nullable: true })
   apartment: string;
 
-  @Column({ nullable: true })
+  @Column({ name: 'person_id', nullable: true })
   personId: string;
 
   @ManyToOne(() => Person, (person) => person.addresses, {
     onDelete: 'CASCADE',
     nullable: false,
   })
-  @JoinColumn({ name: 'personId' })
+  @JoinColumn({ name: 'person_id' })
   person: Person;
 
   @Column(() => AuditableEntity, { prefix: false })

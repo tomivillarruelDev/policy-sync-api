@@ -13,10 +13,10 @@ export class LegalPerson {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({ name: 'organization_name' })
   organizationName: string;
 
-  @Column({ nullable: true })
+  @Column({ name: 'social_reason', nullable: true })
   socialReason?: string;
 
   @Column({ nullable: true })
@@ -27,7 +27,7 @@ export class LegalPerson {
     cascade: ['insert', 'update'],
     eager: true,
   })
-  @JoinColumn({ name: 'personId' })
+  @JoinColumn({ name: 'person_id' })
   person: Person;
 
   @Column(() => AuditableEntity, { prefix: false })

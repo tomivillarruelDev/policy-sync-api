@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { Person } from '../../../entities/person.entity';
 import { AuditableEntity } from 'src/common/entities/auditable.entity';
 import { Expose } from 'class-transformer';
@@ -15,6 +15,7 @@ export class PhoneNumber {
   @ManyToOne(() => Person, (person) => person.phoneNumbers, {
     onDelete: 'CASCADE',
   })
+  @JoinColumn({ name: 'person_id' })
   person: Person;
 
   @Column(() => AuditableEntity, { prefix: false })

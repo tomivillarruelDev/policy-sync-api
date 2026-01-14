@@ -14,7 +14,7 @@ export class IdentificationType {
   name: string;
 
   @Expose()
-  @Column({ nullable: true })
+  @Column({ name: 'name_es', nullable: true })
   nameEs: string;
 
   @OneToMany(() => Identification, (identification) => identification.type)

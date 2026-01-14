@@ -6,6 +6,7 @@ import {
   OneToMany,
   CreateDateColumn,
   UpdateDateColumn,
+  JoinColumn,
 } from 'typeorm';
 import { Person } from '../../person/entities/person.entity';
 import { Agent } from '../../person/roles/agent/entities/agent.entity';
@@ -23,62 +24,65 @@ export class Policy {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ unique: true })
+  @Column({ name: 'policy_number', unique: true })
   policyNumber: string;
 
   @Column({ type: 'enum', enum: PolicyStatus, default: PolicyStatus.PENDING })
   status: PolicyStatus;
 
-  @Column({ type: 'enum', enum: BusinessType, default: BusinessType.NEW })
+  @Column({ name: 'business_type', type: 'enum', enum: BusinessType, default: BusinessType.NEW })
   businessType: BusinessType;
 
   // --- Fechas ---
-  @Column({ type: 'date' })
+  @Column({ name: 'issue_date', type: 'date' })
   issueDate: Date;
 
-  @Column({ type: 'date' })
+  @Column({ name: 'start_date', type: 'date' })
   startDate: Date;
 
-  @Column({ type: 'date' })
+  @Column({ name: 'end_date', type: 'date' })
   endDate: Date;
 
-  @Column({ type: 'date', nullable: true })
+  @Column({ name: 'renewal_date', type: 'date', nullable: true })
   renewalDate: Date;
 
   // --- Financiero ---
-  @Column({ type: 'decimal', precision: 12, scale: 2 })
+  @Column({ name: 'insured_amount', type: 'decimal', precision: 12, scale: 2 })
   insuredAmount: number;
 
-  @Column({ type: 'decimal', precision: 12, scale: 2 })
+  @Column({ name: 'premium_amount', type: 'decimal', precision: 12, scale: 2 })
   premiumAmount: number;
 
   @Column({ default: 'USD' })
   currency: string;
 
-  @Column({ type: 'enum', enum: PaymentFrequency })
+  @Column({ name: 'payment_frequency', type: 'enum', enum: PaymentFrequency })
   paymentFrequency: PaymentFrequency;
 
-  @Column({ type: 'enum', enum: PaymentMethod, nullable: true })
+  @Column({ name: 'payment_method', type: 'enum', enum: PaymentMethod, nullable: true })
   paymentMethod: PaymentMethod;
 
   @Column({ nullable: true })
   installments: number;
 
   // --- Condiciones Específicas (Overrides) ---
-  @Column({ type: 'decimal', precision: 12, scale: 2, nullable: true })
+  @Column({ name: 'deductible_one', type: 'decimal', precision: 12, scale: 2, nullable: true })
   deductibleOne: number;
 
-  @Column({ type: 'decimal', precision: 12, scale: 2, nullable: true })
+  @Column({ name: 'deductible_two', type: 'decimal', precision: 12, scale: 2, nullable: true })
   deductibleTwo: number;
 
   // --- Relaciones ---
   @ManyToOne(() => Person, { eager: true })
+  @JoinColumn({ name: 'client_id' })
   client: Person;
 
   @ManyToOne(() => Agent, { eager: true })
+  @JoinColumn({ name: 'agent_id' })
   agent: Agent;
 
   @ManyToOne(() => Plan, { eager: true })
+  @JoinColumn({ name: 'plan_id' })
   plan: Plan;
 
   @OneToMany(() => PolicyDependent, (dependent) => dependent.policy, {

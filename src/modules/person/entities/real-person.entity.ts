@@ -15,28 +15,28 @@ export class RealPerson {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({ name: 'first_name' })
   firstName: string;
 
-  @Column({ nullable: true })
+  @Column({ name: 'middle_name', nullable: true })
   middleName: string;
 
-  @Column()
+  @Column({ name: 'last_name' })
   lastName: string;
 
-  @Column({ nullable: true })
+  @Column({ name: 'maternal_last_name', nullable: true })
   maternalLastName: string;
 
   @Column({ nullable: true })
   nationality: string;
 
-  @Column({ type: 'date', nullable: true })
+  @Column({ name: 'birth_date', type: 'date', nullable: true })
   birthDate: Date;
 
   @Column({ type: 'enum', enum: Gender, nullable: true })
   gender: Gender;
 
-  @Column({ type: 'enum', enum: CivilStatus, nullable: true })
+  @Column({ name: 'civil_status', type: 'enum', enum: CivilStatus, nullable: true })
   civilStatus: CivilStatus;
 
   @OneToOne(() => Person, {
@@ -44,7 +44,7 @@ export class RealPerson {
     cascade: ['insert', 'update'],
     eager: true,
   })
-  @JoinColumn({ name: 'personId' })
+  @JoinColumn({ name: 'person_id' })
   person: Person;
 
   @Column(() => AuditableEntity, { prefix: false })

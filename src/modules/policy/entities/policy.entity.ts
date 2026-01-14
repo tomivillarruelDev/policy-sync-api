@@ -9,7 +9,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { Person } from '../../person/entities/person.entity';
-import { Agent } from '../../person/roles/agent/entities/agent.entity';
+import { Agent } from '../../agent/entities/agent.entity';
 import { Plan } from '../../plan/entities/plan.entity';
 import { PolicyDependent } from './policy-dependent.entity';
 import { PolicyStatus } from '../enums/policy-status.enum';

@@ -13,6 +13,7 @@ import { InsurerModule } from './modules/insurer/insurer.module';
 import { ProductModule } from './modules/product/product.module';
 import { PlanModule } from './modules/plan/plan.module';
 import { PolicyModule } from './modules/policy/policy.module';
+import { AgentModule } from './modules/agent/agent.module';
 
 @Module({
   imports: [
@@ -43,8 +44,9 @@ import { PolicyModule } from './modules/policy/policy.module';
     ProductModule,
     PlanModule,
     PolicyModule,
+    AgentModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }

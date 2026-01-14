@@ -5,7 +5,7 @@ import { InsurerService } from '../modules/insurer/insurer.service';
 import { ProductService } from '../modules/product/product.service';
 import { PlanService } from '../modules/plan/plan.service';
 import { RealPersonService } from '../modules/person/services/real-person.service';
-import { AgentService } from '../modules/person/roles/agent/agent.service';
+import { AgentService } from '../modules/agent/agent.service';
 import { PolicyService } from '../modules/policy/policy.service';
 import { PolicyStatus } from '../modules/policy/enums/policy-status.enum';
 import { BusinessType } from '../modules/policy/enums/business-type.enum';
@@ -16,7 +16,7 @@ import { CivilStatus } from '../modules/person/enums/civil-status.enum';
 import { Gender } from '../modules/person/enums/gender.enum';
 import { CreateRealPersonDto } from '../modules/person/dto/create-real-person.dto';
 import { CreateInsurerDto } from '../modules/insurer/dto/create-insurer.dto';
-import { CreateAgentDto } from '../modules/person/roles/agent/dto/create-agent.dto';
+import { CreateAgentDto } from '../modules/agent/dto/create-agent.dto';
 import { IdentificationSeeder } from './identification.seeder';
 import { IdentificationType } from '../modules/person/common/identification/entity/identification-type.entity';
 import { City } from '../modules/person/common/address/entities/city.entity';
@@ -160,23 +160,24 @@ export class CatalogVerificationSeeder {
     const agentPayload: CreateAgentDto = {
       agentCode: 'AG-007',
       licenseNumber: 'LIC-007',
-      isActive: true,
-      firstName: 'Agente',
-      lastName: 'Smith',
-      emails: [{ account: 'agent.smith@matrix.com' }],
-      addresses: [
-        {
-          street: 'Matrix St',
-          streetNumber: '1',
-          cityId: cityId,
-        },
-      ],
-      phoneNumbers: [{ number: '555-9999' }],
-      birthDate: '1985-05-05',
-      gender: Gender.MALE,
-      identifications: rucTypeId
-        ? [{ typeId: rucTypeId, value: '99887766' }]
-        : [],
+      person: {
+        firstName: 'Agente',
+        lastName: 'Smith',
+        emails: [{ account: 'agent.smith@matrix.com' }],
+        addresses: [
+          {
+            street: 'Matrix St',
+            streetNumber: '1',
+            cityId: cityId,
+          },
+        ],
+        phoneNumbers: [{ number: '555-9999' }],
+        birthDate: '1985-05-05',
+        gender: Gender.MALE,
+        identifications: rucTypeId
+          ? [{ typeId: rucTypeId, value: '99887766' }]
+          : [],
+      }
     };
     const agent = await this.agentService.create(agentPayload);
     // Note: AgentService now returns AgentDto (flat)
@@ -215,19 +216,19 @@ export class CatalogVerificationSeeder {
     // 5. UPDATES
     this.logger.log('7. [UPDATE] Verificando Actualizaciones...');
 
-    // Update Agent: changing lastName (Flattened)
+    // Update Agent: changing licenseNumber
     await this.agentService.update(agent.id, {
-      lastName: 'Smith Neo', // Flattened update
+      licenseNumber: 'LIC-007-UPDATED',
     });
 
     const updatedAgent = await this.agentService.findOne(agent.id);
-    if (updatedAgent.lastName !== 'Smith Neo') {
+    if (updatedAgent.licenseNumber !== 'LIC-007-UPDATED') {
       throw new Error(
-        `Update Agent falló. Esperado: 'Smith Neo', Actual: '${updatedAgent.lastName}'`,
+        `Update Agent falló. Esperado: 'LIC-007-UPDATED', Actual: '${updatedAgent.licenseNumber}'`,
       );
     }
     this.logger.log(
-      '>> Agente actualizado correctamente (Update plano funcionó)',
+      '>> Agente actualizado correctamente (Update simple funcionó)',
     );
 
     // Update Insurer

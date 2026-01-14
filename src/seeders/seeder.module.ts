@@ -14,7 +14,7 @@ import { InsurerModule } from '../modules/insurer/insurer.module';
 import { ProductModule } from '../modules/product/product.module';
 import { PlanModule } from '../modules/plan/plan.module';
 import { PersonModule } from '../modules/person/person.module';
-import { AgentModule } from '../modules/person/roles/agent/agent.module';
+import { AgentModule } from '../modules/agent/agent.module';
 import { PolicyModule } from '../modules/policy/policy.module';
 
 @Module({
@@ -41,4 +41,4 @@ import { PolicyModule } from '../modules/policy/policy.module';
   ],
   exports: [SeederService],
 })
-export class SeederModule {}
+export class SeederModule { }

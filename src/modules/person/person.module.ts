@@ -10,7 +10,6 @@ import { LegalPersonService } from './services/legal-person.service';
 import { PhoneNumberModule } from './common/phone-number/phone-number.module';
 import { IdentificationModule } from './common/identification/identification.module';
 import { AddressModule } from './common/address/address.module';
-import { AgentModule } from './roles/agent/agent.module';
 import { ContactModule } from './roles/contact/contact.module';
 
 @Module({
@@ -19,11 +18,10 @@ import { ContactModule } from './roles/contact/contact.module';
     IdentificationModule,
     PhoneNumberModule,
     AddressModule,
-    AgentModule,
     ContactModule,
   ],
   controllers: [PersonController],
   providers: [PersonService, RealPersonService, LegalPersonService],
   exports: [PersonService, RealPersonService, LegalPersonService],
 })
-export class PersonModule {}
+export class PersonModule { }

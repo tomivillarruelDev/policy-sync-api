@@ -7,18 +7,20 @@ import { AuditableEntity } from '../../../common/entities/auditable.entity';
 
 @Entity('policy_dependents')
 export class PolicyDependent {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-    @Column({ type: 'enum', enum: RelationType })
-    relationType: RelationType;
+  @Column({ type: 'enum', enum: RelationType })
+  relationType: RelationType;
 
-    @ManyToOne(() => Person)
-    person: Person;
+  @ManyToOne(() => Person)
+  person: Person;
 
-    @ManyToOne(() => Policy, (policy) => policy.dependents, { onDelete: 'CASCADE' })
-    policy: Policy;
+  @ManyToOne(() => Policy, (policy) => policy.dependents, {
+    onDelete: 'CASCADE',
+  })
+  policy: Policy;
 
-    @Column(() => AuditableEntity, { prefix: false })
-    audit: AuditableEntity;
+  @Column(() => AuditableEntity, { prefix: false })
+  audit: AuditableEntity;
 }

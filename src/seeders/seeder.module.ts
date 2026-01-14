@@ -33,7 +33,12 @@ import { PolicyModule } from '../modules/policy/policy.module';
     AgentModule,
     PolicyModule,
   ],
-  providers: [LocationSeeder, SeederService, IdentificationSeeder, CatalogVerificationSeeder],
+  providers: [
+    LocationSeeder,
+    SeederService,
+    IdentificationSeeder,
+    CatalogVerificationSeeder,
+  ],
   exports: [SeederService],
 })
-export class SeederModule { }
+export class SeederModule {}

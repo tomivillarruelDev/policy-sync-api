@@ -19,6 +19,14 @@ import { RealPerson } from './entities/real-person.entity';
 import { LegalPerson } from './entities/legal-person.entity';
 import { UpdateRealPersonDto } from './dto/update-real-person.dto';
 import { UpdateLegalPersonDto } from './dto/update-legal-person.dto';
+import { mapAddressToResponseDto } from './common/mappers/address.mapper';
+
+function flattenAddresses(entity: any) {
+  if (entity?.person?.addresses) {
+    entity.person.addresses = entity.person.addresses.map(mapAddressToResponseDto);
+  }
+  return entity;
+}
 
 @Controller('people')
 export class PersonController {
@@ -26,7 +34,7 @@ export class PersonController {
     private readonly personService: PersonService,
     private readonly realService: RealPersonService,
     private readonly legalService: LegalPersonService,
-  ) {}
+  ) { }
 
   // Deshabilitado para forzar uso de subtipos
   @Post()
@@ -38,28 +46,32 @@ export class PersonController {
 
   // Métodos Real (rutas específicas primero)
   @Post('real')
-  createReal(@Body() dto: CreateRealPersonDto): Promise<RealPerson> {
-    return this.realService.create(dto);
+  async createReal(@Body() dto: CreateRealPersonDto): Promise<RealPerson> {
+    const result = await this.realService.create(dto);
+    return flattenAddresses(result);
   }
 
   @Get('real')
-  findAllReal(): Promise<RealPerson[]> {
-    return this.realService.findAll();
+  async findAllReal(): Promise<RealPerson[]> {
+    const results = await this.realService.findAll();
+    return results.map(flattenAddresses);
   }
 
   @Get('real/:id')
-  findOneReal(
+  async findOneReal(
     @Param('id', new ParseUUIDPipe()) id: string,
   ): Promise<RealPerson> {
-    return this.realService.findOne(id);
+    const result = await this.realService.findOne(id);
+    return flattenAddresses(result);
   }
 
   @Patch('real/:id')
-  updateReal(
+  async updateReal(
     @Param('id', new ParseUUIDPipe()) id: string,
     @Body() updateRealPersonDto: UpdateRealPersonDto,
   ): Promise<RealPerson> {
-    return this.realService.update(id, updateRealPersonDto);
+    const result = await this.realService.update(id, updateRealPersonDto);
+    return flattenAddresses(result);
   }
 
   @Delete('real/:id')
@@ -72,28 +84,32 @@ export class PersonController {
 
   // Métodos Legal
   @Post('legal')
-  createLegal(@Body() dto: CreateLegalPersonDto): Promise<LegalPerson> {
-    return this.legalService.create(dto);
+  async createLegal(@Body() dto: CreateLegalPersonDto): Promise<LegalPerson> {
+    const result = await this.legalService.create(dto);
+    return flattenAddresses(result);
   }
 
   @Get('legal')
-  findAllLegal(): Promise<LegalPerson[]> {
-    return this.legalService.findAll();
+  async findAllLegal(): Promise<LegalPerson[]> {
+    const results = await this.legalService.findAll();
+    return results.map(flattenAddresses);
   }
 
   @Get('legal/:id')
-  findOneLegal(
+  async findOneLegal(
     @Param('id', new ParseUUIDPipe()) id: string,
   ): Promise<LegalPerson> {
-    return this.legalService.findOne(id);
+    const result = await this.legalService.findOne(id);
+    return flattenAddresses(result);
   }
 
   @Patch('legal/:id')
-  updateLegal(
+  async updateLegal(
     @Param('id', new ParseUUIDPipe()) id: string,
     @Body() updateLegalPersonDto: UpdateLegalPersonDto,
   ): Promise<LegalPerson> {
-    return this.legalService.update(id, updateLegalPersonDto);
+    const result = await this.legalService.update(id, updateLegalPersonDto);
+    return flattenAddresses(result);
   }
 
   @Delete('legal/:id')

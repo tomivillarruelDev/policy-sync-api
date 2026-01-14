@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Person } from '../../../entities/person.entity';
 import { City } from './city.entity';
 
@@ -30,10 +30,14 @@ export class Address {
   @Column({ nullable: true })
   apartment: string;
 
+  @Column({ nullable: true })
+  personId: string;
+
   @ManyToOne(() => Person, (person) => person.addresses, {
     onDelete: 'CASCADE',
     nullable: false,
   })
+  @JoinColumn({ name: 'personId' })
   person: Person;
 
   @Column(() => AuditableEntity, { prefix: false })

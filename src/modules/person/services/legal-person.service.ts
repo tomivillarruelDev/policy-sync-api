@@ -10,6 +10,8 @@ import { UpdateLegalPersonDto } from '../dto/update-legal-person.dto';
 import { PersonType } from '../enums/person-type.enum';
 import { updatePersonFields } from '../common/utils/person-update.util';
 
+import { LEGAL_PERSON_RELATIONS } from '../common/constants/relations.constant';
+
 @Injectable()
 export class LegalPersonService {
   constructor(
@@ -29,13 +31,12 @@ export class LegalPersonService {
       const repo = qr.manager.getRepository(LegalPerson);
       const legal = repo.create({
         ...dto,
-        person: mapPersonData(dto, PersonType.LEGAL)
-      })
+        person: mapPersonData(dto, PersonType.LEGAL),
+      });
 
       const saved = await repo.save(legal);
       await qr.commitTransaction();
       return saved;
-
     } catch (error) {
       await qr.rollbackTransaction();
       handleDBErrors(error);
@@ -45,12 +46,15 @@ export class LegalPersonService {
   }
 
   async findAll(): Promise<LegalPerson[]> {
-    return this.legalRepo.find();
+    return this.legalRepo.find({
+      relations: LEGAL_PERSON_RELATIONS,
+    });
   }
 
   async findOne(id: string): Promise<LegalPerson> {
     const entity = await this.legalRepo.findOne({
       where: { id },
+      relations: LEGAL_PERSON_RELATIONS,
     });
     if (!entity) throw new NotFoundException(`LegalPerson ${id} no encontrada`);
     return entity;
@@ -59,12 +63,10 @@ export class LegalPersonService {
   async update(id: string, dto: UpdateLegalPersonDto): Promise<LegalPerson> {
     const entity = await this.findOne(id);
 
-    // Update LegalPerson specific fields
     if (dto.organizationName) entity.organizationName = dto.organizationName;
     if (dto.socialReason !== undefined) entity.socialReason = dto.socialReason;
     if (dto.website !== undefined) entity.website = dto.website;
 
-    // Update nested Person fields
     updatePersonFields(entity.person, dto);
 
     try {

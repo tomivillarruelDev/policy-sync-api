@@ -78,6 +78,7 @@
     "npm": "^11.5.2",
     "prettier": "^3.4.2",
     "source-map-support": "^0.5.21",
+    "sqlite3": "^5.1.7",
     "supertest": "^7.0.0",
     "ts-jest": "^29.2.5",
     "ts-loader": "^9.5.2",
@@ -101,6 +102,9 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "^src/(.*)$": "<rootDir>/$1"
+    }
   }
 }

@@ -1,9 +1,4 @@
-import {
-  PrimaryGeneratedColumn,
-  OneToMany,
-  Entity,
-  Column,
-} from 'typeorm';
+import { PrimaryGeneratedColumn, OneToMany, Entity, Column } from 'typeorm';
 import { Identification } from '../common/identification/entity/identification.entity';
 import { Address } from '../common/address/entities/addresses.entity';
 import { PhoneNumber } from '../common/phone-number/entities/phone-number.entity';
@@ -29,28 +24,28 @@ export class Person {
   @Column({ default: false })
   lopdp: boolean;
 
-  @OneToMany(() => PhoneNumber, phone => phone.person, {
+  @OneToMany(() => PhoneNumber, (phone) => phone.person, {
     cascade: true,
     eager: true,
     orphanedRowAction: 'delete',
   })
   phoneNumbers: PhoneNumber[];
 
-  @OneToMany(() => Email, email => email.person, {
+  @OneToMany(() => Email, (email) => email.person, {
     cascade: true,
     eager: true,
     orphanedRowAction: 'delete',
   })
   emails: Email[];
 
-  @OneToMany(() => Address, address => address.person, {
+  @OneToMany(() => Address, (address) => address.person, {
     cascade: true,
     eager: true,
     orphanedRowAction: 'delete',
   })
   addresses: Address[];
 
-  @OneToMany(() => Identification, identification => identification.person, {
+  @OneToMany(() => Identification, (identification) => identification.person, {
     cascade: true,
     eager: true,
     orphanedRowAction: 'delete',

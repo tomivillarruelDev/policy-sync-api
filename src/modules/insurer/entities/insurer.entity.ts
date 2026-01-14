@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  OneToOne,
+  JoinColumn,
+} from 'typeorm';
 import { Product } from '../../product/entities/product.entity';
 import { LegalPerson } from '../../person/entities/legal-person.entity';
 import { AuditableEntity } from 'src/common/entities/auditable.entity';

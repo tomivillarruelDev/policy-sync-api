@@ -39,7 +39,11 @@ export class RealPerson {
   @Column({ type: 'enum', enum: CivilStatus, nullable: true })
   civilStatus: CivilStatus;
 
-  @OneToOne(() => Person, { onDelete: 'CASCADE', cascade: ['insert', 'update'], eager: true })
+  @OneToOne(() => Person, {
+    onDelete: 'CASCADE',
+    cascade: ['insert', 'update'],
+    eager: true,
+  })
   @JoinColumn({ name: 'personId' })
   person: Person;
 

@@ -1,5 +1,8 @@
-
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -16,7 +19,7 @@ export class ProductService {
   async create(createProductDto: CreateProductDto) {
     try {
       const { insurerId, ...productData } = createProductDto;
-      
+
       const product = this.productRepository.create({
         ...productData,
         insurer: { id: insurerId },
@@ -40,21 +43,22 @@ export class ProductService {
       relations: ['insurer', 'plans'],
     });
 
-    if (!product) throw new NotFoundException(`Product with id ${ id } not found`);
+    if (!product)
+      throw new NotFoundException(`Product with id ${id} not found`);
     return product;
   }
 
   async update(id: string, updateProductDto: UpdateProductDto) {
     const { insurerId, ...toUpdate } = updateProductDto;
-    
-    // We preload with partial data. If insurerId comes, we attach it as object
+
     const product = await this.productRepository.preload({
       id,
       ...toUpdate,
       ...(insurerId ? { insurer: { id: insurerId } } : {}),
     });
 
-    if (!product) throw new NotFoundException(`Product with id ${ id } not found`);
+    if (!product)
+      throw new NotFoundException(`Product with id ${id} not found`);
 
     try {
       return await this.productRepository.save(product);
@@ -66,15 +70,15 @@ export class ProductService {
   async remove(id: string) {
     const product = await this.findOne(id);
     await this.productRepository.remove(product);
-    return { message: `Product with id ${ id } deleted successfully` };
+    return { message: `Product with id ${id} deleted successfully` };
   }
 
   private handleDBErrors(error: any): never {
-    // Check for foreign key violation
-    if (error.code === '23503') 
-      throw new BadRequestException('Insurer ID not found or referenced record is invalid');
-    if (error.code === '23505')
-      throw new BadRequestException(error.detail);
+    if (error.code === '23503')
+      throw new BadRequestException(
+        'Insurer ID not found or referenced record is invalid',
+      );
+    if (error.code === '23505') throw new BadRequestException(error.detail);
 
     console.log(error);
     throw new BadRequestException('Please check server logs');

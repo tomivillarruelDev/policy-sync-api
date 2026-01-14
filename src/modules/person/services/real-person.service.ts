@@ -8,11 +8,14 @@ import { mapPersonData } from '../common/mappers';
 import { UpdateRealPersonDto } from '../dto/update-real-person.dto';
 import { PersonType } from '../enums/person-type.enum';
 import { updatePersonFields } from '../common/utils/person-update.util';
-
+import { Person } from '../../person/entities/person.entity';
+import { REAL_PERSON_RELATIONS } from '../common/constants/relations.constant';
 
 @Injectable()
 export class RealPersonService {
   constructor(
+    @InjectRepository(Person)
+    private readonly personRepo: Repository<Person>,
     @InjectRepository(RealPerson)
     private readonly realRepo: Repository<RealPerson>,
     private readonly dataSource: DataSource,
@@ -24,17 +27,15 @@ export class RealPersonService {
     await qr.startTransaction();
 
     try {
-
       const repo = qr.manager.getRepository(RealPerson);
       const real = repo.create({
         ...dto,
-        person: mapPersonData(dto, PersonType.REAL)
-      })
+        person: mapPersonData(dto, PersonType.REAL),
+      });
 
       const saved = await repo.save(real);
       await qr.commitTransaction();
       return saved;
-
     } catch (error) {
       await qr.rollbackTransaction();
       handleDBErrors(error);
@@ -44,12 +45,15 @@ export class RealPersonService {
   }
 
   async findAll(): Promise<RealPerson[]> {
-    return this.realRepo.find();
+    return this.realRepo.find({
+      relations: REAL_PERSON_RELATIONS,
+    });
   }
 
   async findOne(id: string): Promise<RealPerson> {
     const entity = await this.realRepo.findOne({
       where: { id },
+      relations: REAL_PERSON_RELATIONS,
     });
     if (!entity) throw new NotFoundException(`RealPerson ${id} no encontrada`);
     return entity;
@@ -58,11 +62,9 @@ export class RealPersonService {
   async update(id: string, dto: UpdateRealPersonDto): Promise<RealPerson> {
     const entity = await this.findOne(id);
 
-    // Update RealPerson specific fields
     if (dto.firstName) entity.firstName = dto.firstName;
     if (dto.lastName) entity.lastName = dto.lastName;
 
-    // Update nested Person fields
     updatePersonFields(entity.person, dto);
 
     try {
@@ -71,7 +73,6 @@ export class RealPersonService {
       handleDBErrors(error);
     }
   }
-
 
   async remove(id: string): Promise<void> {
     const entity = await this.findOne(id);

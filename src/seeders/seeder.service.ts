@@ -11,7 +11,7 @@ export class SeederService {
     private readonly locationSeeder: LocationSeeder,
     private readonly identificationSeeder: IdentificationSeeder,
     private readonly catalogVerificationSeeder: CatalogVerificationSeeder,
-  ) { }
+  ) {}
 
   async seedLocation() {
     try {

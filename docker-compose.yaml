@@ -11,7 +11,7 @@ services:
       POSTGRES_PASSWORD: rootroot
       POSTGRES_DB: POLICY_SYNC_MASTER
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - db_data:/var/lib/postgresql
 
   pgadmin:
     image: dpage/pgadmin4

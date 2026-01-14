@@ -1,4 +1,12 @@
-import { IsEmail, IsNotEmpty, IsOptional, IsString, Min, MinLength, IsEnum } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  Min,
+  MinLength,
+  IsEnum,
+} from 'class-validator';
 import { CreatePersonDto } from './create-person.dto';
 import { Gender } from '../enums/gender.enum';
 import { CivilStatus } from '../enums/civil-status.enum';

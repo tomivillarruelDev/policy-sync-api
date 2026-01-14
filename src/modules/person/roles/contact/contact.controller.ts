@@ -14,7 +14,7 @@ import { UpdateContactDto } from './dto/update-contact.dto';
 
 @Controller('contact')
 export class ContactController {
-  constructor(private readonly contactService: ContactService) { }
+  constructor(private readonly contactService: ContactService) {}
 
   @Post()
   create(@Body() createContactDto: CreateContactDto) {
@@ -44,5 +44,4 @@ export class ContactController {
     return this.contactService.remove(id);
   }
 
-  // Endpoint from-scratch removido para simplificar flujo
 }

@@ -3,7 +3,7 @@ import { CreateAgentDto } from './create-agent.dto';
 import { IsOptional, IsUUID } from 'class-validator';
 
 export class UpdateAgentDto extends PartialType(CreateAgentDto) {
-    @IsOptional()
-    @IsUUID()
-    realPersonId?: string;
+  @IsOptional()
+  @IsUUID()
+  realPersonId?: string;
 }

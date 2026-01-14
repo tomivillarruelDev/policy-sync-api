@@ -145,16 +145,13 @@ export class LocationSeeder {
 
     // 1. Eliminar sufijos administrativos comunes en inglés
     let clean = text
-      .replace(
-        /\b(Province|State|Region|Department|District|County)\b/gi,
-        '',
-      )
+      .replace(/\b(Province|State|Region|Department|District|County)\b/gi, '')
       .replace(/,\s*D\.C\./gi, '')
       .trim();
 
     // 2. Traducir conectores
     clean = clean.replace(/\b(of|the|and)\b/gi, (m) => {
-      const map: any = { of: 'de', the: '', and: 'y' };
+      const map: Record<string, string> = { of: 'de', the: '', and: 'y' };
       return map[m.toLowerCase()] || m;
     });
 

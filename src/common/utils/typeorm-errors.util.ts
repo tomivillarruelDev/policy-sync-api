@@ -71,7 +71,7 @@ export function handleDBErrors(error: any): never {
         acc[k] = vals[i] ?? '';
         return acc;
       }, {});
-  //todo: los errores deberian avisar el tipo de persona y el campo que falla exactamente
+      //todo: los errores deberian avisar el tipo de persona y el campo que falla exactamente
       response = {
         ...response,
         message:
@@ -130,7 +130,7 @@ export function handleDBErrors(error: any): never {
       table: error?.driverError?.table ?? error?.table,
       schema: error?.driverError?.schema ?? error?.schema,
     };
-    // eslint-disable-next-line no-console
+
     console.error('[DB ERROR UNMAPPED]', diag);
   } catch {}
   throw new InternalServerErrorException('Unexpected database error');

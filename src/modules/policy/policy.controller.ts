@@ -1,34 +1,46 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseUUIDPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  ParseUUIDPipe,
+} from '@nestjs/common';
 import { PolicyService } from './policy.service';
 import { CreatePolicyDto } from './dto/create-policy.dto';
 import { UpdatePolicyDto } from './dto/update-policy.dto';
 
 @Controller('policies')
 export class PolicyController {
-    constructor(private readonly policyService: PolicyService) { }
+  constructor(private readonly policyService: PolicyService) {}
 
-    @Post()
-    create(@Body() createPolicyDto: CreatePolicyDto) {
-        return this.policyService.create(createPolicyDto);
-    }
+  @Post()
+  create(@Body() createPolicyDto: CreatePolicyDto) {
+    return this.policyService.create(createPolicyDto);
+  }
 
-    @Get()
-    findAll() {
-        return this.policyService.findAll();
-    }
+  @Get()
+  findAll() {
+    return this.policyService.findAll();
+  }
 
-    @Get(':id')
-    findOne(@Param('id', ParseUUIDPipe) id: string) {
-        return this.policyService.findOne(id);
-    }
+  @Get(':id')
+  findOne(@Param('id', ParseUUIDPipe) id: string) {
+    return this.policyService.findOne(id);
+  }
 
-    @Patch(':id')
-    update(@Param('id', ParseUUIDPipe) id: string, @Body() updatePolicyDto: UpdatePolicyDto) {
-        return this.policyService.update(id, updatePolicyDto);
-    }
+  @Patch(':id')
+  update(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() updatePolicyDto: UpdatePolicyDto,
+  ) {
+    return this.policyService.update(id, updatePolicyDto);
+  }
 
-    @Delete(':id')
-    remove(@Param('id', ParseUUIDPipe) id: string) {
-        return this.policyService.remove(id);
-    }
+  @Delete(':id')
+  remove(@Param('id', ParseUUIDPipe) id: string) {
+    return this.policyService.remove(id);
+  }
 }

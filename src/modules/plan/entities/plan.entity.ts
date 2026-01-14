@@ -5,24 +5,24 @@ import { AuditableEntity } from '../../../common/entities/auditable.entity';
 
 @Entity('plans')
 export class Plan {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-    @Column()
-    name: string;
+  @Column()
+  name: string;
 
-    @Column()
-    code: string;
+  @Column()
+  code: string;
 
-    @Column({ type: 'decimal', precision: 12, scale: 2, default: 0 })
-    deductibleOne: number;
+  @Column({ type: 'decimal', precision: 12, scale: 2, default: 0 })
+  deductibleOne: number;
 
-    @Column({ type: 'decimal', precision: 12, scale: 2, default: 0 })
-    deductibleTwo: number;
+  @Column({ type: 'decimal', precision: 12, scale: 2, default: 0 })
+  deductibleTwo: number;
 
-    @ManyToOne(() => Product, (product) => product.plans)
-    product: Product;
+  @ManyToOne(() => Product, (product) => product.plans)
+  product: Product;
 
-    @Column(() => AuditableEntity, { prefix: false })
-    audit: AuditableEntity;
+  @Column(() => AuditableEntity, { prefix: false })
+  audit: AuditableEntity;
 }

@@ -13,7 +13,6 @@ import { AddressModule } from './common/address/address.module';
 import { AgentModule } from './roles/agent/agent.module';
 import { ContactModule } from './roles/contact/contact.module';
 
-
 @Module({
   imports: [
     TypeOrmModule.forFeature([Person, RealPerson, LegalPerson]),
@@ -27,4 +26,4 @@ import { ContactModule } from './roles/contact/contact.module';
   providers: [PersonService, RealPersonService, LegalPersonService],
   exports: [PersonService, RealPersonService, LegalPersonService],
 })
-export class PersonModule { }
+export class PersonModule {}

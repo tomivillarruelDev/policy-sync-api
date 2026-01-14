@@ -33,7 +33,10 @@ import { VerifyCatalogCommand } from './commands/verify-catalog.command';
     }),
     SeederModule,
   ],
-  providers: [SeedLocationCommand, SeedIdentificationCommand, VerifyCatalogCommand],
+  providers: [
+    SeedLocationCommand,
+    SeedIdentificationCommand,
+    VerifyCatalogCommand,
+  ],
 })
-export class CliModule { }
-
+export class CliModule {}

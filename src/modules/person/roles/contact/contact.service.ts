@@ -19,7 +19,7 @@ export class ContactService {
     @InjectRepository(Contact)
     private readonly contactRepository: Repository<Contact>,
     private readonly dataSource: DataSource,
-  ) { }
+  ) {}
 
   async create(createContactDto: CreateContactDto): Promise<ContactDto> {
     const qr = this.dataSource.createQueryRunner();
@@ -38,10 +38,12 @@ export class ContactService {
           middleName: createContactDto.middleName,
           maternalLastName: createContactDto.maternalLastName,
           nationality: createContactDto.nationality,
-          birthDate: createContactDto.birthDate ? new Date(createContactDto.birthDate) : undefined,
+          birthDate: createContactDto.birthDate
+            ? new Date(createContactDto.birthDate)
+            : undefined,
           gender: createContactDto.gender,
           civilStatus: createContactDto.civilStatus,
-          person: personData
+          person: personData,
         },
         legalPerson: createContactDto.legalPersonId
           ? { id: createContactDto.legalPersonId }
@@ -61,15 +63,15 @@ export class ContactService {
 
   async findAll(): Promise<ContactDto[]> {
     const contacts = await this.contactRepository.find({
-      relations: ['realPerson', 'realPerson.person', 'legalPerson']
+      relations: ['realPerson', 'realPerson.person', 'legalPerson'],
     });
-    return contacts.map(c => this.toDto(c));
+    return contacts.map((c) => this.toDto(c));
   }
 
   async findOne(id: string): Promise<ContactDto> {
     const entity = await this.contactRepository.findOne({
       where: { id },
-      relations: ['realPerson', 'realPerson.person', 'legalPerson']
+      relations: ['realPerson', 'realPerson.person', 'legalPerson'],
     });
     if (!entity) throw new NotFoundException('Contact no encontrado');
     return this.toDto(entity);
@@ -94,7 +96,6 @@ export class ContactService {
 
       await contactRepo.remove(entity);
 
-      // Borrar explícitamente RealPerson 
       if (realId) {
         await realRepo.delete(realId);
       }
@@ -118,23 +119,27 @@ export class ContactService {
       const repo = qr.manager.getRepository(Contact);
       const entity = await repo.findOne({
         where: { id },
-        relations: ['realPerson', 'realPerson.person', 'legalPerson']
+        relations: ['realPerson', 'realPerson.person', 'legalPerson'],
       });
       if (!entity) throw new NotFoundException('Contact no encontrado');
 
-      // Update RealPerson (always exists on Contact)
       if (dto.realPersonId) {
         if (dto.realPersonId !== entity.realPerson?.id) {
-          const newReal = await qr.manager.getRepository(RealPerson).findOne({ where: { id: dto.realPersonId } });
+          const newReal = await qr.manager
+            .getRepository(RealPerson)
+            .findOne({ where: { id: dto.realPersonId } });
           if (!newReal) throw new NotFoundException('Real Person not found');
           entity.realPerson = newReal;
         }
       } else if (entity.realPerson) {
         if (dto.firstName) entity.realPerson.firstName = dto.firstName;
         if (dto.lastName) entity.realPerson.lastName = dto.lastName;
-        if (dto.middleName !== undefined) entity.realPerson.middleName = dto.middleName;
-        if (dto.maternalLastName !== undefined) entity.realPerson.maternalLastName = dto.maternalLastName;
-        if (dto.birthDate) entity.realPerson.birthDate = new Date(dto.birthDate);
+        if (dto.middleName !== undefined)
+          entity.realPerson.middleName = dto.middleName;
+        if (dto.maternalLastName !== undefined)
+          entity.realPerson.maternalLastName = dto.maternalLastName;
+        if (dto.birthDate)
+          entity.realPerson.birthDate = new Date(dto.birthDate);
         if (dto.gender) entity.realPerson.gender = dto.gender;
         if (dto.civilStatus) entity.realPerson.civilStatus = dto.civilStatus;
         if (dto.nationality) entity.realPerson.nationality = dto.nationality;
@@ -143,11 +148,13 @@ export class ContactService {
         await qr.manager.getRepository(RealPerson).save(entity.realPerson);
       }
 
-      // Update LegalPerson
       if (dto.legalPersonId) {
         if (dto.legalPersonId !== entity.legalPerson?.id) {
-          const newLegal = await qr.manager.getRepository(LegalPerson).findOne({ where: { id: dto.legalPersonId } });
-          if (!newLegal) throw new NotFoundException('LegalPerson no encontrada');
+          const newLegal = await qr.manager
+            .getRepository(LegalPerson)
+            .findOne({ where: { id: dto.legalPersonId } });
+          if (!newLegal)
+            throw new NotFoundException('LegalPerson no encontrada');
           entity.legalPerson = newLegal;
         }
       }
@@ -164,21 +171,25 @@ export class ContactService {
   }
 
   private toDto(contact: Contact): ContactDto {
-    return plainToInstance(ContactDto, {
-      id: contact.id,
-      organizationName: contact.legalPerson?.organizationName,
-      firstName: contact.realPerson?.firstName,
-      lastName: contact.realPerson?.lastName,
-      middleName: contact.realPerson?.middleName,
-      maternalLastName: contact.realPerson?.maternalLastName,
-      nationality: contact.realPerson?.nationality,
-      birthDate: contact.realPerson?.birthDate,
-      gender: contact.realPerson?.gender,
-      civilStatus: contact.realPerson?.civilStatus,
-      emails: contact.realPerson?.person?.emails || [],
-      phoneNumbers: contact.realPerson?.person?.phoneNumbers || [],
-      addresses: contact.realPerson?.person?.addresses || [],
-      identifications: contact.realPerson?.person?.identifications || [],
-    }, { excludeExtraneousValues: true });
+    return plainToInstance(
+      ContactDto,
+      {
+        id: contact.id,
+        organizationName: contact.legalPerson?.organizationName,
+        firstName: contact.realPerson?.firstName,
+        lastName: contact.realPerson?.lastName,
+        middleName: contact.realPerson?.middleName,
+        maternalLastName: contact.realPerson?.maternalLastName,
+        nationality: contact.realPerson?.nationality,
+        birthDate: contact.realPerson?.birthDate,
+        gender: contact.realPerson?.gender,
+        civilStatus: contact.realPerson?.civilStatus,
+        emails: contact.realPerson?.person?.emails || [],
+        phoneNumbers: contact.realPerson?.person?.phoneNumbers || [],
+        addresses: contact.realPerson?.person?.addresses || [],
+        identifications: contact.realPerson?.person?.identifications || [],
+      },
+      { excludeExtraneousValues: true },
+    );
   }
 }

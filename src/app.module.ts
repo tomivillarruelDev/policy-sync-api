@@ -47,4 +47,4 @@ import { PolicyModule } from './modules/policy/policy.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

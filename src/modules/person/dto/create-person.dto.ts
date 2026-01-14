@@ -10,17 +10,17 @@ export class CreatePersonDto {
   // DTOs anidados sin personId (clases reales para que class-validator no exija personId)
   static PhoneForPerson = class extends OmitType(CreatePhoneNumberDto, [
     'personId',
-  ] as const) { };
+  ] as const) {};
   static EmailForPerson = class extends OmitType(CreateEmailDto, [
     'personId',
-  ] as const) { };
+  ] as const) {};
   static AddressForPerson = class extends OmitType(CreateAddressDto, [
     'personId',
-  ] as const) { };
+  ] as const) {};
   static IdentificationForPerson = class extends OmitType(
     CreateIdentificationDto,
     ['personId'] as const,
-  ) { };
+  ) {};
 
   // Relaciones en cascada opcionales
   @IsArray()

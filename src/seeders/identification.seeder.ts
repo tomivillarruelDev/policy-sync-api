@@ -27,6 +27,7 @@ export class IdentificationSeeder {
 
   async clearData() {
     this.logger.log('Eliminando datos existentes...');
+    await this.identificationTypeRepo.query('DELETE FROM "identification"');
     await this.identificationTypeRepo
       .createQueryBuilder()
       .delete()

@@ -14,7 +14,7 @@ export class PhoneNumberService {
     private readonly phoneRepo: Repository<PhoneNumber>,
     @InjectRepository(Person)
     private readonly personRepo: Repository<Person>,
-  ) { }
+  ) {}
 
   async create(dto: CreatePhoneNumberDto): Promise<PhoneNumber> {
     const person = await this.personRepo.findOne({
@@ -49,8 +49,7 @@ export class PhoneNumberService {
 
   async update(id: string, dto: UpdatePhoneNumberDto): Promise<PhoneNumber> {
     const entity = await this.findOne(id);
-    if (dto.number !== undefined)
-      entity.number = dto.number;
+    if (dto.number !== undefined) entity.number = dto.number;
     if (dto.personId) {
       const person = await this.personRepo.findOne({
         where: { id: dto.personId },

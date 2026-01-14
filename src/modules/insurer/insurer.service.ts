@@ -18,18 +18,18 @@ import { handleDBErrors } from 'src/common/utils/typeorm-errors.util';
 import { plainToInstance } from 'class-transformer';
 import { PersonDtoMapper } from '../person/common/mappers/person-dto.mapper';
 import { validatePersonUniqueConstraints } from '../person/common/utils/person-validation.util';
-import { BaseService } from 'src/common/services/base.service';
+import { BaseService } from 'src/common/base/base.service';
 
 import { INSURER_RELATIONS } from '../person/common/constants/relations.constant';
 
 /**
- * Service for managing Insurers.
- * Extends BaseService to inherit generic Soft Delete functionality.
- * Note: Soft Delete does NOT cascade to related entities (e.g. LegalPerson, Products) by default.
- * Use specific logic if cascading is required.
+ * Servicio para gestionar Aseguradoras.
+ * Extiende BaseService para heredar la funcionalidad genérica de Borrado Lógico.
+ * Nota: El Borrado Lógico NO se propaga a entidades relacionadas (ej. LegalPerson, Products) por defecto.
+ * Usar lógica específica si se requiere cascada.
  */
 @Injectable()
-export class InsurerService extends BaseService<Insurer> {
+export class InsurerService extends BaseService<Insurer, InsurerDto> {
   constructor(
     @InjectRepository(Insurer)
     private readonly insurerRepository: Repository<Insurer>,
@@ -76,21 +76,17 @@ export class InsurerService extends BaseService<Insurer> {
   }
 
   async findAll(): Promise<InsurerDto[]> {
-    const insurers = await this.insurerRepository.find({
+    const insurers = await super.findAll({
       relations: INSURER_RELATIONS,
     });
-    return insurers.map((i) => this.toDto(i));
+    return insurers.map((i) => this.toDto(i as unknown as Insurer));
   }
 
   async findOne(id: string): Promise<InsurerDto> {
-    const insurer = await this.insurerRepository.findOne({
-      where: { id },
+    const insurer = await super.findOne(id, {
       relations: INSURER_RELATIONS,
     });
-
-    if (!insurer)
-      throw new NotFoundException(`Insurer with id ${id} not found`);
-    return this.toDto(insurer);
+    return this.toDto(insurer as unknown as Insurer);
   }
 
   async update(id: string, updateInsurerDto: UpdateInsurerDto) {
@@ -189,7 +185,7 @@ export class InsurerService extends BaseService<Insurer> {
         agencyNumber: insurer.agencyNumber,
         logoUrl: insurer.logoUrl,
 
-        // Mapped via PersonDtoMapper
+        // Mapeado vía PersonDtoMapper
         organizationName: flatPerson.organizationName,
         socialReason: flatPerson.socialReason,
         website: flatPerson.website,

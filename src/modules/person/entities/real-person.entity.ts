@@ -18,16 +18,16 @@ export class RealPerson {
   @Column({ name: 'first_name' })
   firstName: string;
 
-  @Column({ name: 'middle_name', nullable: true })
+  @Column({ name: 'middle_name', nullable: true, type: 'varchar' })
   middleName: string | null;
 
   @Column({ name: 'last_name' })
   lastName: string;
 
-  @Column({ name: 'maternal_last_name', nullable: true })
+  @Column({ name: 'maternal_last_name', nullable: true, type: 'varchar' })
   maternalLastName: string | null;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'varchar' })
   nationality: string | null;
 
   @Column({ name: 'birth_date', type: 'date', nullable: true })

@@ -16,7 +16,7 @@ export class Agent extends AuditableEntity {
     @Column({ name: 'code', unique: true })
     agentCode: string;
 
-    @Column({ name: 'license_number', nullable: true })
+    @Column({ name: 'license_number', nullable: true, type: 'varchar' })
     licenseNumber: string | null;
 
     @Column({ name: 'is_active', default: true })

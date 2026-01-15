@@ -16,10 +16,10 @@ export class LegalPerson {
   @Column({ name: 'organization_name' })
   organizationName: string;
 
-  @Column({ name: 'social_reason', nullable: true })
+  @Column({ name: 'social_reason', nullable: true, type: 'varchar' })
   socialReason?: string | null;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'varchar' })
   website?: string | null;
 
   @OneToOne(() => Person, {

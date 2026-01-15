@@ -18,13 +18,13 @@ export class Insurer {
   @Column({ unique: true })
   code: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'varchar' })
   executive: string | null;
 
-  @Column({ name: 'agency_number', nullable: true })
+  @Column({ name: 'agency_number', nullable: true, type: 'varchar' })
   agencyNumber: string | null;
 
-  @Column({ name: 'logo_url', nullable: true })
+  @Column({ name: 'logo_url', nullable: true, type: 'varchar' })
   logoUrl: string | null;
 
   @OneToOne(() => LegalPerson, { eager: true, cascade: ['insert'] })

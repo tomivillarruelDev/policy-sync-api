@@ -1,17 +1,16 @@
-import { IsString, IsOptional, ValidateNested, IsNotEmpty } from 'class-validator';
-import { Type } from 'class-transformer';
+import { IsString, IsOptional, IsNotEmpty, IsBoolean } from 'class-validator';
 import { CreateRealPersonDto } from '../../person/dto/create-real-person.dto';
 
-export class CreateAgentDto {
+export class CreateAgentDto extends CreateRealPersonDto {
     @IsString()
     @IsNotEmpty()
     agentCode: string;
 
     @IsString()
     @IsOptional()
-    licenseNumber?: string;
+    licenseNumber?: string | null;
 
-    @ValidateNested()
-    @Type(() => CreateRealPersonDto)
-    person: CreateRealPersonDto;
+    @IsBoolean()
+    @IsOptional()
+    isActive?: boolean;
 }

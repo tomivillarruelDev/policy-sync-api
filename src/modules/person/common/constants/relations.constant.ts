@@ -26,3 +26,7 @@ export const INSURER_RELATIONS = [
     ...LEGAL_PERSON_RELATIONS.map((rel) => `legalPerson.${rel}`),
     'products',
 ];
+
+export const AGENT_RELATIONS = [
+    ...REAL_PERSON_RELATIONS.map((rel) => `realPerson.${rel}`),
+];

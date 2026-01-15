@@ -8,13 +8,13 @@ export class CreateInsurerDto extends CreateLegalPersonDto {
 
   @IsString()
   @IsOptional()
-  executive?: string;
+  executive?: string | null;
 
   @IsString()
   @IsOptional()
-  agencyNumber?: string;
+  agencyNumber?: string | null;
 
   @IsUrl()
   @IsOptional()
-  logoUrl?: string;
+  logoUrl?: string | null;
 }

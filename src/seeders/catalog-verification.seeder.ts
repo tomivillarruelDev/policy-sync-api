@@ -160,7 +160,7 @@ export class CatalogVerificationSeeder {
     const agentPayload: CreateAgentDto = {
       agentCode: 'AG-007',
       licenseNumber: 'LIC-007',
-      person: {
+      realPerson: {
         firstName: 'Agente',
         lastName: 'Smith',
         emails: [{ account: 'agent.smith@matrix.com' }],

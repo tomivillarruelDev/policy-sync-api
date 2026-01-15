@@ -17,10 +17,10 @@ export class LegalPerson {
   organizationName: string;
 
   @Column({ name: 'social_reason', nullable: true })
-  socialReason?: string;
+  socialReason?: string | null;
 
   @Column({ nullable: true })
-  website?: string;
+  website?: string | null;
 
   @OneToOne(() => Person, {
     onDelete: 'CASCADE',

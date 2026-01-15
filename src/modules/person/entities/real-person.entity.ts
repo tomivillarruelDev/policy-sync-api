@@ -19,25 +19,25 @@ export class RealPerson {
   firstName: string;
 
   @Column({ name: 'middle_name', nullable: true })
-  middleName: string;
+  middleName: string | null;
 
   @Column({ name: 'last_name' })
   lastName: string;
 
   @Column({ name: 'maternal_last_name', nullable: true })
-  maternalLastName: string;
+  maternalLastName: string | null;
 
   @Column({ nullable: true })
-  nationality: string;
+  nationality: string | null;
 
   @Column({ name: 'birth_date', type: 'date', nullable: true })
-  birthDate: Date;
+  birthDate: Date | null;
 
   @Column({ type: 'enum', enum: Gender, nullable: true })
-  gender: Gender;
+  gender: Gender | null;
 
   @Column({ name: 'civil_status', type: 'enum', enum: CivilStatus, nullable: true })
-  civilStatus: CivilStatus;
+  civilStatus: CivilStatus | null;
 
   @OneToOne(() => Person, {
     onDelete: 'CASCADE',

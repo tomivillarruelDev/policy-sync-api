@@ -23,25 +23,25 @@ export class CreateRealPersonDto extends CreatePersonDto {
 
   @IsOptional()
   @IsString()
-  middleName?: string;
+  middleName?: string | null;
 
   @IsOptional()
   @IsString()
-  maternalLastName?: string;
+  maternalLastName?: string | null;
 
   @IsOptional()
   @IsString()
-  nationality?: string;
+  nationality?: string | null;
 
   @IsOptional()
   @IsString()
-  birthDate?: string;
+  birthDate?: Date | null;
 
   @IsOptional()
   @IsEnum(Gender)
-  gender?: Gender;
+  gender?: Gender | null;
 
   @IsOptional()
   @IsEnum(CivilStatus)
-  civilStatus?: CivilStatus;
+  civilStatus?: CivilStatus | null;
 }

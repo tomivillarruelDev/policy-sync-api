@@ -16,9 +16,9 @@ export class CreateLegalPersonDto extends CreatePersonDto {
   @IsOptional()
   @IsString()
   @MaxLength(100)
-  socialReason?: string;
+  socialReason?: string | null;
 
   @IsOptional()
   @IsUrl()
-  website?: string;
+  website?: string | null;
 }

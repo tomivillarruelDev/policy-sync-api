@@ -48,11 +48,15 @@ export class InsurerService extends BaseService<Insurer, InsurerDto> {
 
       const personData = mapPersonData(createInsurerDto, PersonType.LEGAL);
 
+      if (!personData) {
+        throw new BadRequestException('Person data is required');
+      }
+
       const insurer = new Insurer();
       insurer.code = createInsurerDto.code;
-      insurer.executive = createInsurerDto.executive || '';
-      insurer.agencyNumber = createInsurerDto.agencyNumber || '';
-      insurer.logoUrl = createInsurerDto.logoUrl || '';
+      insurer.executive = createInsurerDto.executive || null;
+      insurer.agencyNumber = createInsurerDto.agencyNumber || null;
+      insurer.logoUrl = createInsurerDto.logoUrl || null;
 
       if (!personData) {
         throw new BadRequestException('Person data is required');

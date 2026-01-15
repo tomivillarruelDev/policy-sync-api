@@ -8,11 +8,17 @@ export interface FlatPersonDto {
   phoneNumbers: any[];
   addresses: any[];
   identifications: any[];
-  organizationName?: string;
-  socialReason?: string;
-  website?: string;
-  firstName?: string;
-  lastName?: string;
+  organizationName?: string | null;
+  socialReason?: string | null;
+  website?: string | null;
+  firstName?: string | null;
+  lastName?: string | null;
+  middleName?: string | null;
+  maternalLastName?: string | null;
+  nationality?: string | null;
+  birthDate?: Date | null;
+  gender?: string | null;
+  civilStatus?: string | null;
 }
 
 export class PersonDtoMapper {
@@ -42,6 +48,20 @@ export class PersonDtoMapper {
           type: i.type ? { id: i.type.id, name: i.type.name } : null,
         })) || [],
     };
+
+    if (entity instanceof RealPerson) {
+      return {
+        ...base,
+        firstName: entity.firstName,
+        lastName: entity.lastName,
+        middleName: entity.middleName,
+        maternalLastName: entity.maternalLastName,
+        nationality: entity.nationality,
+        birthDate: entity.birthDate,
+        gender: entity.gender,
+        civilStatus: entity.civilStatus,
+      };
+    }
 
     if (entity instanceof LegalPerson) {
       return {

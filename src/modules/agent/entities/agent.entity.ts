@@ -17,7 +17,7 @@ export class Agent extends AuditableEntity {
     agentCode: string;
 
     @Column({ name: 'license_number', nullable: true })
-    licenseNumber: string;
+    licenseNumber: string | null;
 
     @Column({ name: 'is_active', default: true })
     isActive: boolean;

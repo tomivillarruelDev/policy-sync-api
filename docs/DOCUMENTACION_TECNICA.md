@@ -1,124 +1,131 @@
-# Documentación Técnica: Sistema de Seguros (Versión Portfolio MVP)
+Guía de Integración Frontend: API de Personas (Versión 2.0 - Arquitectura BaseService)
+Esta guía documenta los contratos de API actualizados tras la refactorización BaseService. Regla de Oro: La API es 100% PLANA (Flat). Tanto en la Entrada (POST/PATCH) como en la Salida (GET), no existen objetos anidados como realPerson o legalPerson.
 
-**Tecnologías:** NestJS + PostgreSQL + TypeORM
+1. Patrones Generales (BaseService)
+Gracias a la nueva arquitectura, todos los módulos principales (Insurers, Agents, Contacts) comparten este comportamiento:
 
-## 1. Resumen del Proyecto
+GET /list: Devuelve un array de objetos planos DTO.
 
-El objetivo es desarrollar el backend de un sistema de gestión de seguros simplificado pero robusto. Esta versión "MVP" (Producto Mínimo Viable) se centra en el ciclo de vida de la venta de una póliza, demostrando buenas prácticas de arquitectura, manejo de bases de datos relacionales y validación de datos.
+GET /:id: Devuelve un objeto plano DTO.
 
-## 2. Alcance y Simplificaciones
+DELETE /:id: Ejecuta un Soft Delete.
 
-Para adaptar el proyecto a un desarrollo unipersonal viable para portfolio, se han realizado los siguientes cambios estructurales:
+Respuesta Éxito: 200 OK (Body vacío).
 
-*   **Base de Datos Relacional:** Se utiliza PostgreSQL con TypeORM para garantizar integridad referencial.
-*   **Centralización en Policy:** Se eliminan módulos satélite innecesarios; datos como fechas y estados se integran directamente en la tabla `policies`.
-*   **Sin Módulo Financiero Complejo:** Se excluyen cálculos complejos de comisiones y liquidaciones.
-*   **Simplificación Comercial:** Existe una única entidad `Agent` que vende directamente, sin jerarquías de agencias.
+Error: 404 Not Found (Si el ID no existe o ya fue borrado).
 
----
+2. Agentes (Agent)
+El módulo de vendedores. Combina datos de licencia profesional con datos personales.
 
-## 3. Arquitectura de Base de Datos (Modelo de Dominio)
+A. Lectura (GET /agents)
+Importante para la Tabla: Los datos vienen aplanados. No busques row.realPerson.firstName.
 
-### A. Módulos de Catálogo (Configuración)
+Respuesta JSON:
 
-#### 1. Entity: Insurer (Aseguradora)
-Representa la compañía que ofrece el seguro.
-*   **Relación:** `OneToOne` con `LegalPerson` (hereda datos fiscales y de contacto).
-*   **Campos propios:** `id`, `code` (Único), `executive`, `agency_number`, `logo_url`.
-*   **Relaciones:** `products` (OneToMany).
+JSON
 
-#### 2. Entity: Product (Producto)
-Un tipo de seguro ofrecido (ej: "Automóvil", "Vida").
-*   **Campos:** `id`, `name`, `code`, `branch` (Ramo), `insured_amount` (Suma Orientativa), `special_benefits`, `admin_expenses`.
-*   **Relaciones:** `insurer` (ManyToOne).
+[
+  {
+    "id": "uuid-del-agente",
+    "agentCode": "AGT-99",
+    "licenseNumber": "LIC-2024-X",
+    "isActive": true,
+    // Datos personales aplanados (vienen directo en la raíz)
+    "firstName": "Roberto",
+    "lastName": "Gómez",
+    "email": "roberto@gmail.com" 
+  }
+]
+B. Creación (POST /agents)
+DTO: CreateAgentDto
 
-#### 3. Entity: Plan (Plan)
-Una variante comercial específica de un producto (ej: "Todo Riesgo con Franquicia").
-*   **Campos:** `id`, `name`, `code`, `deductible_one`, `deductible_two`.
-*   **Relaciones:** `product` (ManyToOne).
+JSON
 
----
+{
+  "agentCode": "AGT-99",
+  "licenseNumber": "LIC-2024-X",
+  "isActive": true,
 
-### B. Módulos de Actores (Personas y Roles)
+  // Datos Personales (Directos en raíz)
+  "firstName": "Roberto",
+  "lastName": "Gómez",
+  "birthDate": "1985-05-15",
+  "gender": "male",
+  "nationality": "Argentino",
 
-#### 4. Módulo: Person (Núcleo de Identidad)
-Centraliza la información de cualquier entidad (física o jurídica) utilizando un patrón de composición.
+  // Listas de contacto (Estas sí son arrays, pero simples)
+  "emails": [ { "account": "roberto@gmail.com", "label": "work" } ],
+  "phoneNumbers": [ { "number": "+54911...", "label": "mobile" } ]
+}
+3. Aseguradoras (Insurer)
+El módulo de compañías de seguros.
 
-*   **Entity Base: Person** (`people`)
-    *   Interactúa con: `emails`, `phone_numbers`, `addresses`, `identifications`.
-    *   Campos universales: checks de privacidad (LOPDP).
-    
-*   **Subtipo: RealPerson (Persona Física)** (`real_people`)
-    *   Datos biográficos: `first_name`, `last_name`, `birth_date`, `gender`, `civil_status`, `nationality`.
-    *   Relación: OneToOne con `Person`.
+A. Lectura (GET /insurers)
+Respuesta JSON:
 
-*   **Subtipo: LegalPerson (Persona Jurídica)** (`legal_people`)
-    *   Datos empresariales: `organization_name`, `social_reason`, `website`.
-    *   Relación: OneToOne con `Person`.
+JSON
 
-##### 4.1 Detalles de Entidades Auxiliares (Person)
-Documentación detallada de estructuras compuestas:
+[
+  {
+    "id": "uuid-aseguradora",
+    "code": "INS-001",
+    "executive": "Juan Pérez",
+    "logoUrl": "...",
+    // Datos legales aplanados
+    "organizationName": "Seguros del Norte S.A.",
+    "socialReason": "Seguros del Norte Sociedad Anónima",
+    "cuit": "30-12345678-9"
+  }
+]
+B. Creación (POST /insurers)
+DTO: CreateInsurerDto
 
-**Address (Direcciones)** (`addresses`)
-*   **Campos:** `id`, `street`, `street_number`, `zip_code`, `apartment`, `person_id`.
-*   **Relaciones:** `city_id` (ManyToOne -> City).
+JSON
 
-**Email (Correos)** (`emails`)
-*   **Campos:** `id`, `account` (Único), `person_id`.
+{
+  "code": "INS-001",
+  "executive": "Juan Pérez",
+  "logoUrl": "https://...",
+  
+  // Datos Legales mezclados
+  "organizationName": "Seguros del Norte S.A.",
+  "socialReason": "Seguros del Norte Sociedad Anónima",
+  
+  // Contacto
+  "emails": [ { "account": "contacto@norte.com", "label": "main" } ],
+  "addresses": [ { "street": "Av. Corrientes", "streetNumber": "100" } ]
+}
+4. Contactos (Contact)
+A. Creación (POST /contacts)
+Se usa para crear personas sueltas o vincularlas a una empresa existente.
 
-**Identification (Documentos)** (`identifications`)
-*   **Campos:** `id`, `value`, `person_id`.
-*   **Relaciones:** `type_id` (ManyToOne -> IdentificationType).
+Opción A: Contacto para Empresa
 
-**PhoneNumber (Teléfonos)** (`phone_number`)
-*   **Campos:** `id`, `number`, `person_id`.
+JSON
 
-#### 5. Actor: Client (El Asegurado)
-Implementado principalmente como una `RealPerson` que actúa como "Tomador" de la póliza.
+{
+  "legalPersonId": "uuid-de-la-compania", 
+  "firstName": "María",
+  "lastName": "López",
+  "emails": [{ "account": "maria@empresa.com", "label": "work" }]
+}
+5. Actualizaciones (PATCH /:resource/:id)
+La lógica de actualización parcial también espera una estructura plana. Nota: Al actualizar arrays (emails, addresses), se reemplaza la lista completa.
 
-#### 6. Actor: Agent (El Vendedor)
-Representa al productor de seguros.
-*   **Entity: Agent** (`agents`)
-    *   Campos: `agent_code`, `license_number`, `is_active`.
-    *   Relación: OneToOne con `RealPerson` (permite acceso directo a nombre y apellido).
-    *   Relación: OneToMany con `Policy` (historial de ventas - *implementado*).
+Ejemplo Patch Agente:
 
----
+JSON
 
-### C. Módulo Core (La Póliza)
+{
+  "isActive": false,
+  "lastName": "Gómez de la Fuente" // Actualiza la persona real subyacente
+}
+6. Referencia de Enums
+Gender
+male, female, other
 
-Es la entidad central que consolida la información comercial, financiera y de cobertura.
+CivilStatus
+single, married, divorced, widowed
 
-#### 7. Entity: Policy (`policies`)
-*   **Identificación:** `policy_number` (Único), `status` (PENDING, ACTIVE, etc.), `business_type` (NEW, RENEWAL).
-*   **Relaciones:**
-    *   `client` (ManyToOne -> Person)
-    *   `agent` (ManyToOne -> Agent)
-    *   `plan` (ManyToOne -> Plan)
-*   **Vigencia:** `issue_date`, `start_date`, `end_date`, `renewal_date`.
-*   **Financiero:** `insured_amount`, `premium_amount`, `currency`, `payment_frequency`, `payment_method`, `installments`.
-*   **Overrides:** `deductible_one`, `deductible_two` (Personalización por póliza).
-
-#### 8. Sub-Entidad: PolicyDependent (`policy_dependents`)
-Representa a los beneficiarios o asegurados adicionales (hijos, cónyuge).
-*   **Campos:** `first_name`, `last_name`, `relation_type` (SPOUSE, CHILD), `birth_date`.
-*   **Relación:** ManyToOne -> Policy (Cascade).
-
----
-
-## 4. Puntos Fuertes del Diseño
-
-1.  **Modelo Visual Completo:** Cubre todos los campos críticos visibles en interfaces de seguros reales (Primas, Vigencias, Deducibles).
-2.  **Abstracción Financiera:** Simplifica la contabilidad manteniendo solo los valores finales (`premium_amount`) necesarios para la venta, evitando la complejidad de un sistema contable completo.
-3.  **Dependientes en Cascada:** Maneja correctamente relaciones complejas editables dentro de un mismo formulario (Padre-Hijo).
-4.  **Patrón Persona:** Separa limpiamente la identidad (quién es) del rol (qué hace), permitiendo que una misma persona pueda ser Cliente, Agente o ambos sin duplicar datos.
-
----
-
-## 5. Hoja de Ruta de Implementación
-
-1.  **Fase 0: Configuración** (NestJS, Docker, TypeORM).
-2.  **Fase 1: Catálogos** (Insurer, Product, Plan) - *Completado*.
-3.  **Fase 2: Personas** (Architecture Split: Person/Real/Legal/Agent) - *Completado*.
-4.  **Fase 3: Core** (Policy & Dependents) - *Completado*.
-5.  **Fase 4: Verificación** (Seeders y Scripts de Prueba) - *Completado*.
+PolicyStatus
+QUOTED, PENDING, ACTIVE, CANCELLED, EXPIRED

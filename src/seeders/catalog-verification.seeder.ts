@@ -145,7 +145,7 @@ export class CatalogVerificationSeeder {
         },
       ],
       phoneNumbers: [{ number: '555-1234' }],
-      birthDate: '1990-01-01',
+      birthDate: new Date('1990-01-01'),
       gender: Gender.MALE,
       civilStatus: CivilStatus.SINGLE,
       nationality: 'AR',
@@ -160,24 +160,22 @@ export class CatalogVerificationSeeder {
     const agentPayload: CreateAgentDto = {
       agentCode: 'AG-007',
       licenseNumber: 'LIC-007',
-      realPerson: {
-        firstName: 'Agente',
-        lastName: 'Smith',
-        emails: [{ account: 'agent.smith@matrix.com' }],
-        addresses: [
-          {
-            street: 'Matrix St',
-            streetNumber: '1',
-            cityId: cityId,
-          },
-        ],
-        phoneNumbers: [{ number: '555-9999' }],
-        birthDate: '1985-05-05',
-        gender: Gender.MALE,
-        identifications: rucTypeId
-          ? [{ typeId: rucTypeId, value: '99887766' }]
-          : [],
-      }
+      firstName: 'Agente',
+      lastName: 'Smith',
+      emails: [{ account: 'agent.smith@matrix.com' }],
+      addresses: [
+        {
+          street: 'Matrix St',
+          streetNumber: '1',
+          cityId: cityId,
+        },
+      ],
+      phoneNumbers: [{ number: '555-9999' }],
+      birthDate: new Date('1985-05-05'),
+      gender: Gender.MALE,
+      identifications: rucTypeId
+        ? [{ typeId: rucTypeId, value: '99887766' }]
+        : [],
     };
     const agent = await this.agentService.create(agentPayload);
     // Note: AgentService now returns AgentDto (flat)

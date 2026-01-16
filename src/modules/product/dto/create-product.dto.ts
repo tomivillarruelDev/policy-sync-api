@@ -24,26 +24,6 @@ export class CreateProductDto {
   @Min(0)
   insuredAmount: number;
 
-  @IsNumber()
-  @Min(0)
-  @IsOptional()
-  specialBenefits?: number;
-
-  @IsNumber()
-  @Min(0)
-  @IsOptional()
-  adminExpenses?: number;
-
-  @IsNumber()
-  @Min(0)
-  @IsOptional()
-  deductibleOne?: number;
-
-  @IsNumber()
-  @Min(0)
-  @IsOptional()
-  deductibleTwo?: number;
-
   @IsUUID()
   insurerId: string;
 }

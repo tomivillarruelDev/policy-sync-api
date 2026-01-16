@@ -30,3 +30,12 @@ export const INSURER_RELATIONS = [
 export const AGENT_RELATIONS = [
     ...REAL_PERSON_RELATIONS.map((rel) => `realPerson.${rel}`),
 ];
+
+export const PRODUCT_RELATIONS = [
+    'insurer',
+    'plans',
+];
+
+export const PLAN_RELATIONS = [
+    'product',
+];

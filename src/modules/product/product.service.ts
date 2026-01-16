@@ -4,83 +4,120 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { ProductDto } from './dto/product.dto';
+import { plainToInstance } from 'class-transformer';
 import { Product } from './entities/product.entity';
+import { Insurer } from '../insurer/entities/insurer.entity';
+import { BaseService } from 'src/common/base/base.service';
+import { PRODUCT_RELATIONS } from '../person/common/constants/relations.constant';
+import { handleDBErrors } from 'src/common/utils/typeorm-errors.util';
 
 @Injectable()
-export class ProductService {
+export class ProductService extends BaseService<Product, ProductDto> {
   constructor(
     @InjectRepository(Product)
     private readonly productRepository: Repository<Product>,
-  ) {}
+    private readonly dataSource: DataSource,
+  ) {
+    super(productRepository);
+  }
 
-  async create(createProductDto: CreateProductDto) {
+  async create(createProductDto: CreateProductDto): Promise<ProductDto> {
+    const qr = this.dataSource.createQueryRunner();
+    await qr.connect();
+    await qr.startTransaction();
+
     try {
-      const { insurerId, ...productData } = createProductDto;
+      const productRepo = qr.manager.getRepository(Product);
 
-      const product = this.productRepository.create({
-        ...productData,
-        insurer: { id: insurerId },
+      const existingProduct = await productRepo.findOne({
+        where: { code: createProductDto.code },
       });
 
-      return await this.productRepository.save(product);
+      if (existingProduct)
+        throw new BadRequestException(`Product with code ${createProductDto.code} already exists`);
+
+      const product = new Product();
+      product.name = createProductDto.name;
+      product.code = createProductDto.code;
+      product.branch = createProductDto.branch;
+      product.insuredAmount = createProductDto.insuredAmount;
+      product.insurer = { id: createProductDto.insurerId } as Insurer;
+
+      const savedProduct = await productRepo.save(product);
+      await qr.commitTransaction();
+      return this.toDto(savedProduct);
     } catch (error) {
-      this.handleDBErrors(error);
+      await qr.rollbackTransaction();
+      handleDBErrors(error);
+    } finally {
+      await qr.release();
     }
   }
 
-  async findAll() {
-    return await this.productRepository.find({
-      relations: ['insurer', 'plans'],
+  async findAll(): Promise<ProductDto[]> {
+    const products = await super.findAll({
+      relations: PRODUCT_RELATIONS,
     });
+    return products.map((i) => this.toDto(i as unknown as Product));
   }
 
-  async findOne(id: string) {
-    const product = await this.productRepository.findOne({
-      where: { id },
-      relations: ['insurer', 'plans'],
+  async findOne(id: string): Promise<ProductDto> {
+    const product = await super.findOne(id, {
+      relations: PRODUCT_RELATIONS,
     });
-
-    if (!product)
-      throw new NotFoundException(`Product with id ${id} not found`);
-    return product;
+    return this.toDto(product as unknown as Product);
   }
 
   async update(id: string, updateProductDto: UpdateProductDto) {
-    const { insurerId, ...toUpdate } = updateProductDto;
-
-    const product = await this.productRepository.preload({
-      id,
-      ...toUpdate,
-      ...(insurerId ? { insurer: { id: insurerId } } : {}),
-    });
-
-    if (!product)
-      throw new NotFoundException(`Product with id ${id} not found`);
+    const qr = this.dataSource.createQueryRunner();
+    await qr.connect();
+    await qr.startTransaction();
 
     try {
-      return await this.productRepository.save(product);
+      const productRepo = qr.manager.getRepository(Product);
+      const product = await productRepo.findOne({
+        where: { id },
+        relations: PRODUCT_RELATIONS,
+      });
+
+      if (!product)
+        throw new NotFoundException(`Product with id ${id} not found`);
+
+      if (updateProductDto.name !== undefined) product.name = updateProductDto.name;
+      if (updateProductDto.code !== undefined) product.code = updateProductDto.code;
+      if (updateProductDto.branch !== undefined) product.branch = updateProductDto.branch;
+      if (updateProductDto.insuredAmount !== undefined)
+        product.insuredAmount = updateProductDto.insuredAmount;
+      if (updateProductDto.insurerId !== undefined)
+        product.insurer = { id: updateProductDto.insurerId } as Insurer;
+
+      await productRepo.save(product);
+      await qr.commitTransaction();
+      return this.findOne(id);
     } catch (error) {
-      this.handleDBErrors(error);
+      await qr.rollbackTransaction();
+      handleDBErrors(error);
+    } finally {
+      await qr.release();
     }
   }
 
-  async remove(id: string) {
-    const product = await this.findOne(id);
-    await this.productRepository.remove(product);
-    return { message: `Product with id ${id} deleted successfully` };
+
+  private toDto(product: Product): ProductDto {
+    return plainToInstance(ProductDto, {
+      id: product.id,
+      name: product.name,
+      code: product.code,
+      branch: product.branch,
+      insuredAmount: product.insuredAmount,
+      insurerId: product.insurer?.id,
+      insurerName: product.insurer?.legalPerson?.organizationName,
+    }, { excludeExtraneousValues: true });
   }
 
-  private handleDBErrors(error: any): never {
-    if (error.code === '23503')
-      throw new BadRequestException(
-        'Insurer ID not found or referenced record is invalid',
-      );
-    if (error.code === '23505') throw new BadRequestException(error.detail);
 
-    console.log(error);
-    throw new BadRequestException('Please check server logs');
-  }
 }

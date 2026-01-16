@@ -40,12 +40,12 @@ export class ProductService extends BaseService<Product, ProductDto> {
       if (existingProduct)
         throw new BadRequestException(`Product with code ${createProductDto.code} already exists`);
 
-      const product = new Product();
-      product.name = createProductDto.name;
-      product.code = createProductDto.code;
-      product.branch = createProductDto.branch;
-      product.insuredAmount = createProductDto.insuredAmount;
-      product.insurer = { id: createProductDto.insurerId } as Insurer;
+      const { insurerId, ...planData } = createProductDto;
+
+      const product = productRepo.create({
+        ...planData,
+        insurer: { id: insurerId } as Insurer,
+      });
 
       const savedProduct = await productRepo.save(product);
       await qr.commitTransaction();
@@ -87,13 +87,13 @@ export class ProductService extends BaseService<Product, ProductDto> {
       if (!product)
         throw new NotFoundException(`Product with id ${id} not found`);
 
-      if (updateProductDto.name !== undefined) product.name = updateProductDto.name;
-      if (updateProductDto.code !== undefined) product.code = updateProductDto.code;
-      if (updateProductDto.branch !== undefined) product.branch = updateProductDto.branch;
-      if (updateProductDto.insuredAmount !== undefined)
-        product.insuredAmount = updateProductDto.insuredAmount;
-      if (updateProductDto.insurerId !== undefined)
-        product.insurer = { id: updateProductDto.insurerId } as Insurer;
+      const { insurerId, ...productData } = updateProductDto;
+
+      Object.assign(product, productData);
+
+      if (insurerId) {
+        product.insurer = { id: insurerId } as Insurer;
+      }
 
       await productRepo.save(product);
       await qr.commitTransaction();

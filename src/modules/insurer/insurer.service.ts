@@ -52,21 +52,24 @@ export class InsurerService extends BaseService<Insurer, InsurerDto> {
         throw new BadRequestException('Person data is required');
       }
 
-      const insurer = new Insurer();
-      insurer.code = createInsurerDto.code;
-      insurer.executive = createInsurerDto.executive || null;
-      insurer.agencyNumber = createInsurerDto.agencyNumber || null;
-      insurer.logoUrl = createInsurerDto.logoUrl || null;
+      const {
+        code,
+        executive,
+        agencyNumber,
+        logoUrl,
+        ...legalPersonData
+      } = createInsurerDto;
 
-      if (!personData) {
-        throw new BadRequestException('Person data is required');
-      }
-
-      insurer.legalPerson = new LegalPerson();
-      insurer.legalPerson.organizationName = createInsurerDto.organizationName;
-      insurer.legalPerson.socialReason = createInsurerDto.socialReason;
-      insurer.legalPerson.website = createInsurerDto.website;
-      insurer.legalPerson.person = personData;
+      const insurer = insurerRepo.create({
+        code,
+        executive,
+        agencyNumber,
+        logoUrl,
+        legalPerson: {
+          ...legalPersonData,
+          person: personData,
+        },
+      });
 
       const saved = await insurerRepo.save(insurer);
       await qr.commitTransaction();
@@ -108,38 +111,41 @@ export class InsurerService extends BaseService<Insurer, InsurerDto> {
       if (!insurer)
         throw new NotFoundException(`Insurer with id ${id} not found`);
 
-      if (updateInsurerDto.code !== undefined)
-        insurer.code = updateInsurerDto.code;
-      if (updateInsurerDto.executive !== undefined)
-        insurer.executive = updateInsurerDto.executive;
-      if (updateInsurerDto.agencyNumber !== undefined)
-        insurer.agencyNumber = updateInsurerDto.agencyNumber;
-      if (updateInsurerDto.logoUrl !== undefined)
-        insurer.logoUrl = updateInsurerDto.logoUrl;
+      const {
+        code,
+        executive,
+        agencyNumber,
+        logoUrl,
+        legalPersonId,
+        emails,
+        identifications,
+        addresses,
+        phoneNumbers,
+        ...legalPersonData
+      } = updateInsurerDto;
 
-      if (updateInsurerDto.legalPersonId) {
-        if (updateInsurerDto.legalPersonId !== insurer.legalPerson?.id) {
+      if (code !== undefined) insurer.code = code;
+      if (executive !== undefined) insurer.executive = executive;
+      if (agencyNumber !== undefined) insurer.agencyNumber = agencyNumber;
+      if (logoUrl !== undefined) insurer.logoUrl = logoUrl;
+
+      if (legalPersonId) {
+        if (legalPersonId !== insurer.legalPerson?.id) {
           const newLegal = await qr.manager
             .getRepository(LegalPerson)
-            .findOne({ where: { id: updateInsurerDto.legalPersonId } });
+            .findOne({ where: { id: legalPersonId } });
           if (!newLegal) throw new NotFoundException('LegalPerson not found');
           insurer.legalPerson = newLegal;
         }
       } else if (insurer.legalPerson) {
-        if (updateInsurerDto.organizationName)
-          insurer.legalPerson.organizationName =
-            updateInsurerDto.organizationName;
-        if (updateInsurerDto.socialReason !== undefined)
-          insurer.legalPerson.socialReason = updateInsurerDto.socialReason;
-        if (updateInsurerDto.website !== undefined)
-          insurer.legalPerson.website = updateInsurerDto.website;
+        Object.assign(insurer.legalPerson, legalPersonData);
 
         await validatePersonUniqueConstraints(
           qr.manager,
           insurer.legalPerson.person.id,
           {
-            emails: updateInsurerDto.emails,
-            identifications: updateInsurerDto.identifications?.map((i) => ({
+            emails,
+            identifications: identifications?.map((i) => ({
               value: i.value,
               typeId: i.typeId,
             })),

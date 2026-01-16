@@ -42,16 +42,18 @@ export class AgentService extends BaseService<Agent, AgentDto> {
                 throw new BadRequestException('Person data is required');
             }
 
-            const agent = new Agent();
-            agent.agentCode = createAgentDto.agentCode;
-            agent.isActive = createAgentDto.isActive!;
-            agent.licenseNumber = createAgentDto.licenseNumber || null;
-
-            agent.realPerson = new RealPerson();
-            agent.realPerson.firstName = createAgentDto.firstName;
-            agent.realPerson.lastName = createAgentDto.lastName;
-            agent.realPerson.person = personData;
-
+            // 1. Separas los datos del Agente (código, licencias) del resto (nombre, apellido, etc.)
+            const { agentCode, licenseNumber, isActive, ...realPersonData } = createAgentDto;
+            // 2. Creas todo de una sola vez, anidando objetos
+            const agent = agentRepo.create({
+                agentCode,
+                licenseNumber,
+                isActive,
+                realPerson: {
+                    ...realPersonData,
+                    person: personData
+                }
+            });
             const saved = await agentRepo.save(agent);
             await qr.commitTransaction();
 
@@ -94,28 +96,30 @@ export class AgentService extends BaseService<Agent, AgentDto> {
             if (!agent)
                 throw new NotFoundException(`Agent with id ${id} not found`);
 
-            if (updateAgentDto.agentCode) agent.agentCode = updateAgentDto.agentCode;
-            if (updateAgentDto.licenseNumber !== undefined)
-                agent.licenseNumber = updateAgentDto.licenseNumber;
-            if (updateAgentDto.isActive !== undefined)
-                agent.isActive = updateAgentDto.isActive;
+            const {
+                agentCode,
+                licenseNumber,
+                isActive,
+                emails,
+                identifications,
+                addresses,
+                phoneNumbers,
+                ...personData
+            } = updateAgentDto;
+
+            if (agentCode) agent.agentCode = agentCode;
+            if (licenseNumber !== undefined) agent.licenseNumber = licenseNumber;
+            if (isActive !== undefined) agent.isActive = isActive;
 
             if (agent.realPerson) {
-                if (updateAgentDto.firstName) agent.realPerson.firstName = updateAgentDto.firstName;
-                if (updateAgentDto.lastName) agent.realPerson.lastName = updateAgentDto.lastName;
-                if (updateAgentDto.middleName !== undefined) agent.realPerson.middleName = updateAgentDto.middleName;
-                if (updateAgentDto.maternalLastName !== undefined) agent.realPerson.maternalLastName = updateAgentDto.maternalLastName;
-                if (updateAgentDto.nationality !== undefined) agent.realPerson.nationality = updateAgentDto.nationality;
-                if (updateAgentDto.birthDate !== undefined) agent.realPerson.birthDate = updateAgentDto.birthDate;
-                if (updateAgentDto.gender !== undefined) agent.realPerson.gender = updateAgentDto.gender;
-                if (updateAgentDto.civilStatus !== undefined) agent.realPerson.civilStatus = updateAgentDto.civilStatus;
+                Object.assign(agent.realPerson, personData);
 
                 await validatePersonUniqueConstraints(
                     qr.manager,
                     agent.realPerson.person.id,
                     {
-                        emails: updateAgentDto.emails,
-                        identifications: updateAgentDto.identifications?.map((i) => ({
+                        emails,
+                        identifications: identifications?.map((i) => ({
                             value: i.value,
                             typeId: i.typeId,
                         })),

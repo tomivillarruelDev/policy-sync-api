@@ -11,7 +11,7 @@ export class Plan {
   @Column()
   name: string;
 
-  @Column()
+  @Column({ unique: true })
   code: string;
 
   @Column({ name: 'deductible_one', type: 'decimal', precision: 12, scale: 2, default: 0 })

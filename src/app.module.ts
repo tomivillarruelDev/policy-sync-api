@@ -14,6 +14,7 @@ import { ProductModule } from './modules/product/product.module';
 import { PlanModule } from './modules/plan/plan.module';
 import { PolicyModule } from './modules/policy/policy.module';
 import { AgentModule } from './modules/agent/agent.module';
+import { BranchModule } from './modules/branch/branch.module';
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { AgentModule } from './modules/agent/agent.module';
     PlanModule,
     PolicyModule,
     AgentModule,
+    BranchModule,
   ],
   controllers: [AppController],
   providers: [AppService],

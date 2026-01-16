@@ -50,6 +50,7 @@ export class PlanService extends BaseService<Plan, PlanDto> {
       });
 
       const savedPlan = await planRepo.save(plan);
+      
       await qr.commitTransaction();
       return this.toDto(savedPlan);
     } catch (error) {
@@ -90,15 +91,15 @@ export class PlanService extends BaseService<Plan, PlanDto> {
 
       const { productId, ...toUpdate } = updatePlanDto;
 
-      // Merge simple fields
       Object.assign(plan, toUpdate);
 
-      // Handle references explicitly
+
       if (productId) {
         plan.product = { id: productId } as Product;
       }
 
       await planRepo.save(plan);
+
       await qr.commitTransaction();
       return this.findOne(id);
     } catch (error) {

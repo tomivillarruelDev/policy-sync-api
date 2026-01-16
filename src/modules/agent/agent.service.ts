@@ -85,8 +85,8 @@ export class AgentService extends BaseService<Agent, AgentDto> {
         await qr.startTransaction();
 
         try {
-            const repo = qr.manager.getRepository(Agent);
-            const agent = await repo.findOne({
+            const agentRepo = qr.manager.getRepository(Agent);
+            const agent = await agentRepo.findOne({
                 where: { id },
                 relations: AGENT_RELATIONS,
             });
@@ -128,7 +128,7 @@ export class AgentService extends BaseService<Agent, AgentDto> {
                 await qr.manager.getRepository(RealPerson).save(agent.realPerson);
             }
 
-            const savedAgent = await repo.save(agent);
+            const savedAgent = await agentRepo.save(agent);
             await qr.commitTransaction();
 
             return this.findOne(savedAgent.id);

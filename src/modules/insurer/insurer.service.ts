@@ -99,8 +99,8 @@ export class InsurerService extends BaseService<Insurer, InsurerDto> {
     await qr.startTransaction();
 
     try {
-      const repo = qr.manager.getRepository(Insurer);
-      const insurer = await repo.findOne({
+      const insurerRepo = qr.manager.getRepository(Insurer);
+      const insurer = await insurerRepo.findOne({
         where: { id },
         relations: INSURER_RELATIONS,
       });
@@ -108,7 +108,8 @@ export class InsurerService extends BaseService<Insurer, InsurerDto> {
       if (!insurer)
         throw new NotFoundException(`Insurer with id ${id} not found`);
 
-      if (updateInsurerDto.code) insurer.code = updateInsurerDto.code;
+      if (updateInsurerDto.code !== undefined)
+        insurer.code = updateInsurerDto.code;
       if (updateInsurerDto.executive !== undefined)
         insurer.executive = updateInsurerDto.executive;
       if (updateInsurerDto.agencyNumber !== undefined)
@@ -145,18 +146,6 @@ export class InsurerService extends BaseService<Insurer, InsurerDto> {
           },
         );
 
-        await validatePersonUniqueConstraints(
-          qr.manager,
-          insurer.legalPerson.person.id,
-          {
-            emails: updateInsurerDto.emails,
-            identifications: updateInsurerDto.identifications?.map((i) => ({
-              value: i.value,
-              typeId: i.typeId,
-            })),
-          },
-        );
-
         updatePersonFields(insurer.legalPerson.person, updateInsurerDto);
 
         await qr.manager.getRepository(Person).save(insurer.legalPerson.person);
@@ -164,7 +153,7 @@ export class InsurerService extends BaseService<Insurer, InsurerDto> {
         await qr.manager.getRepository(LegalPerson).save(insurer.legalPerson);
       }
 
-      await repo.save(insurer);
+      await insurerRepo.save(insurer);
       await qr.commitTransaction();
       return this.findOne(id);
     } catch (error) {

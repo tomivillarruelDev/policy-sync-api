@@ -20,6 +20,8 @@ import { CreateAgentDto } from '../modules/agent/dto/create-agent.dto';
 import { IdentificationSeeder } from './identification.seeder';
 import { IdentificationType } from '../modules/person/common/identification/entity/identification-type.entity';
 import { City } from '../modules/person/common/address/entities/city.entity';
+import { BranchService } from '../modules/branch/branch.service';
+import { CreateBranchDto } from '../modules/branch/dto/create-branch.dto';
 
 @Injectable()
 export class CatalogVerificationSeeder {
@@ -27,6 +29,7 @@ export class CatalogVerificationSeeder {
 
   constructor(
     private readonly insurerService: InsurerService,
+    private readonly branchService: BranchService,
     private readonly productService: ProductService,
     private readonly planService: PlanService,
     private readonly realPersonService: RealPersonService,
@@ -114,11 +117,18 @@ export class CatalogVerificationSeeder {
       throw new Error('CRITICAL: No addresses returned for Insurer.');
     }
 
-    this.logger.log('2. [CATALOG] Creando Producto...');
+    this.logger.log('2. [CATALOG] Creando Ramo (Branch)...');
+    const branch = await this.branchService.create({
+      name: 'Vida',
+      code: 'RAMO-VIDA',
+      insurerId: insurer.id,
+    });
+
+    this.logger.log('3. [CATALOG] Creando Producto...');
     const product = await this.productService.create({
       name: 'Vida Individual Elite',
       code: 'VID-ELITE',
-      branch: 'Vida',
+      branchId: branch.id,
       insuredAmount: 100000,
       insurerId: insurer.id,
     });
@@ -251,6 +261,8 @@ export class CatalogVerificationSeeder {
     const productRepo = this.dataSource.getRepository('Product');
     const insurerRepo = this.dataSource.getRepository('Insurer');
 
+    const branchRepo = this.dataSource.getRepository('Branch');
+
     const policy = await policyRepo.findOne({
       where: { policyNumber: 'POL-2024-001' },
     });
@@ -259,11 +271,27 @@ export class CatalogVerificationSeeder {
     const agent = await agentRepo.findOne({ where: { agentCode: 'AG-007' } });
     if (agent) await agentRepo.remove(agent);
 
+    // 1. Find Product first to clean its dependencies
+    const product = await productRepo.findOne({
+      where: { code: 'VID-ELITE' },
+      relations: ['plans'],
+    });
+
+    if (product) {
+      // Delete all plans associated with this product (FK constraint fix)
+      if (product.plans && product.plans.length > 0) {
+        await planRepo.remove(product.plans);
+      }
+      // Now delete the product
+      await productRepo.remove(product);
+    }
+
+    // Also try to find the specific plan by code if it wasn't linked to the product above for some reason
     const plan = await planRepo.findOne({ where: { code: 'PL-ELITE+' } });
     if (plan) await planRepo.remove(plan);
 
-    const product = await productRepo.findOne({ where: { code: 'VID-ELITE' } });
-    if (product) await productRepo.remove(product);
+    const branch = await branchRepo.findOne({ where: { code: 'RAMO-VIDA' } });
+    if (branch) await branchRepo.remove(branch);
 
     const insurer = await insurerRepo.findOne({ where: { code: 'GLOB-MVP' } });
     if (insurer) await insurerRepo.remove(insurer);

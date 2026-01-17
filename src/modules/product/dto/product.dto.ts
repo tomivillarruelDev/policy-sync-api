@@ -12,7 +12,10 @@ export class ProductDto {
     code: string;
 
     @Expose()
-    branch: string;
+    branchId: string;
+
+    @Expose()
+    branchName: string;
 
     @Expose()
     insuredAmount: number;

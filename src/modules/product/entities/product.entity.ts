@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { Insurer } from '../../insurer/entities/insurer.entity';
 import { Plan } from '../../plan/entities/plan.entity';
+import { Branch } from '../../branch/entities/branch.entity';
 
 import { AuditableEntity } from '../../../common/entities/auditable.entity';
 
@@ -22,8 +23,9 @@ export class Product {
   @Column({ unique: true })
   code: string;
 
-  @Column()
-  branch: string; // Ramo: Automóviles, Vida, etc.
+  @ManyToOne(() => Branch)
+  @JoinColumn({ name: 'branch_id' })
+  branch: Branch;
 
   // Valores Económicos
   @Column({ name: 'insured_amount', type: 'decimal', precision: 12, scale: 2 })

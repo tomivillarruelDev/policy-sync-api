@@ -16,6 +16,7 @@ import { PlanModule } from '../modules/plan/plan.module';
 import { PersonModule } from '../modules/person/person.module';
 import { AgentModule } from '../modules/agent/agent.module';
 import { PolicyModule } from '../modules/policy/policy.module';
+import { BranchModule } from '../modules/branch/branch.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { PolicyModule } from '../modules/policy/policy.module';
     PersonModule,
     AgentModule,
     PolicyModule,
+    BranchModule,
   ],
   providers: [
     LocationSeeder,

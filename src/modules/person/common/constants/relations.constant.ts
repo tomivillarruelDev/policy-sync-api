@@ -34,6 +34,7 @@ export const AGENT_RELATIONS = [
 export const PRODUCT_RELATIONS = [
     'insurer',
     'plans',
+    'branch',
 ];
 
 export const PLAN_RELATIONS = [

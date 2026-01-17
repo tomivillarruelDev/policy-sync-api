@@ -16,9 +16,9 @@ export class CreateProductDto {
   @IsNotEmpty()
   code: string;
 
-  @IsString()
+  @IsUUID()
   @IsNotEmpty()
-  branch: string;
+  branchId: string;
 
   @IsNumber()
   @Min(0)

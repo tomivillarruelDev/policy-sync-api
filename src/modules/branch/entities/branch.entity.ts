@@ -4,14 +4,12 @@ import {
     Column,
     ManyToOne,
     JoinColumn,
-    Unique,
 } from 'typeorm';
 import { AuditableEntity } from '../../../common/entities/auditable.entity';
 import { Insurer } from '../../insurer/entities/insurer.entity';
 
 @Entity('branches')
-@Unique(['code', 'insurer'])
-export class Branch extends AuditableEntity {
+export class Branch {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
@@ -24,4 +22,7 @@ export class Branch extends AuditableEntity {
     @ManyToOne(() => Insurer)
     @JoinColumn({ name: 'insurer_id' })
     insurer: Insurer;
+
+    @Column(() => AuditableEntity, { prefix: false })
+    audit: AuditableEntity;
 }

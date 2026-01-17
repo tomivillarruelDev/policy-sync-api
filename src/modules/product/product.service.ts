@@ -11,6 +11,7 @@ import { ProductDto } from './dto/product.dto';
 import { plainToInstance } from 'class-transformer';
 import { Product } from './entities/product.entity';
 import { Insurer } from '../insurer/entities/insurer.entity';
+import { Branch } from '../branch/entities/branch.entity';
 import { BaseService } from 'src/common/base/base.service';
 import { PRODUCT_RELATIONS } from '../person/common/constants/relations.constant';
 import { handleDBErrors } from 'src/common/utils/typeorm-errors.util';
@@ -40,11 +41,12 @@ export class ProductService extends BaseService<Product, ProductDto> {
       if (existingProduct)
         throw new BadRequestException(`Product with code ${createProductDto.code} already exists`);
 
-      const { insurerId, ...planData } = createProductDto;
+      const { insurerId, branchId, ...planData } = createProductDto;
 
       const product = productRepo.create({
         ...planData,
         insurer: { id: insurerId } as Insurer,
+        branch: { id: branchId } as Branch,
       });
 
       const savedProduct = await productRepo.save(product);
@@ -87,12 +89,15 @@ export class ProductService extends BaseService<Product, ProductDto> {
       if (!product)
         throw new NotFoundException(`Product with id ${id} not found`);
 
-      const { insurerId, ...productData } = updateProductDto;
+      const { insurerId, branchId, ...productData } = updateProductDto;
 
       Object.assign(product, productData);
 
       if (insurerId) {
         product.insurer = { id: insurerId } as Insurer;
+      }
+      if (branchId) {
+        product.branch = { id: branchId } as Branch;
       }
 
       await productRepo.save(product);
@@ -112,7 +117,8 @@ export class ProductService extends BaseService<Product, ProductDto> {
       id: product.id,
       name: product.name,
       code: product.code,
-      branch: product.branch,
+      branchId: product.branch?.id,
+      branchName: product.branch?.name,
       insuredAmount: product.insuredAmount,
       insurerId: product.insurer?.id,
       insurerName: product.insurer?.legalPerson?.organizationName,

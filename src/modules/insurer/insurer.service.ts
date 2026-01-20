@@ -45,6 +45,7 @@ export class InsurerService extends BaseService<Insurer, InsurerDto> {
 
     try {
       const insurerRepo = qr.manager.getRepository(Insurer);
+      
 
       const personData = mapPersonData(createInsurerDto, PersonType.LEGAL);
 

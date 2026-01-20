@@ -44,3 +44,7 @@ export const PLAN_RELATIONS = [
 export const BRANCH_RELATIONS = [
     'insurer',
 ];
+
+export const CLIENT_RELATIONS = [
+    ...REAL_PERSON_RELATIONS.map((rel) => `realPerson.${rel}`),
+];

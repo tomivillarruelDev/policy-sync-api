@@ -7,12 +7,12 @@ import {
   Min,
 } from 'class-validator';
 import { Transform } from 'class-transformer';
-import { ToSentenceCase, ToUpperCase } from '../../../common/transformers/text.transformers';
+import { ToUpperCase, Trim } from '../../../common/transformers/text.transformers';
 
 export class CreatePlanDto {
   @IsString()
   @IsNotEmpty()
-  @Transform(ToSentenceCase)
+  @Transform(Trim)
   name: string;
 
   @IsString()

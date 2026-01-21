@@ -6,20 +6,20 @@ import {
   MaxLength,
 } from 'class-validator';
 import { Transform } from 'class-transformer';
-import { ToSentenceCase } from '../../../common/transformers/text.transformers';
+import { ToSentenceCase, Trim } from '../../../common/transformers/text.transformers';
 import { CreatePersonDto } from './create-person.dto';
 
 export class CreateLegalPersonDto extends CreatePersonDto {
   @IsNotEmpty()
   @MaxLength(50)
   @IsString()
-  @Transform(ToSentenceCase)
+  @Transform(Trim)
   organizationName: string;
 
   @IsOptional()
   @IsString()
   @MaxLength(100)
-  @Transform(ToSentenceCase)
+  @Transform(Trim)
   socialReason?: string | null;
 
   @IsOptional()

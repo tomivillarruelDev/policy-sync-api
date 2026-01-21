@@ -21,7 +21,7 @@ export function updatePersonFields(
       (incoming) => createEmail(incoming, person),
       (existing, incoming) => {
         existing.account = incoming.account;
-        existing.person = person; 
+        existing.person = person;
       },
     );
   }
@@ -35,7 +35,7 @@ export function updatePersonFields(
       (incoming) => createPhoneNumber(incoming, person),
       (existing, incoming) => {
         existing.number = incoming.number;
-        existing.person = person; 
+        existing.person = person;
       },
     );
   }
@@ -44,14 +44,13 @@ export function updatePersonFields(
     person.addresses = updateCollection(
       person.addresses,
       dto.addresses as any[],
-      
+
       (existing, incoming) =>
         existing.street?.trim().toLowerCase() === incoming.street?.trim().toLowerCase() &&
         existing.streetNumber?.trim() === incoming.streetNumber?.trim(),
       (incoming) => createAddress(incoming, person),
       (existing, incoming) => updateAddress(existing, incoming, person),
     );
-    console.log('[DEBUG] Updated addresses:', person.addresses?.map(a => ({ id: a.id, personId: a.person?.id, street: a.street })));
   }
 
   if (dto.identifications) {
@@ -61,8 +60,6 @@ export function updatePersonFields(
       (existing, incoming) => {
         const valMatch = existing.value?.trim() === incoming.value?.trim();
         const typeMatch = existing.type?.id === incoming.typeId;
-        console.log(`[DEBUG] Matching Ident: Ex.Val='${existing.value}' vs Inc.Val='${incoming.value}' -> ${valMatch}`);
-        console.log(`[DEBUG] Matching Ident: Ex.Type.ID='${existing.type?.id}' vs Inc.TypeId='${incoming.typeId}' -> ${typeMatch}`);
         return valMatch && typeMatch;
       },
       (incoming) => createIdentification(incoming, person),
@@ -105,7 +102,7 @@ function updateAddress(existing: Address, dto: any, person: Person) {
   existing.apartment = dto.apartment || '';
   existing.zipCode = dto.zipCode || '';
   existing.city = dto.cityId ? ({ id: dto.cityId } as any) : null;
-  existing.person = person; 
+  existing.person = person;
   existing.personId = person.id;
 }
 
@@ -124,7 +121,7 @@ function updateIdentification(
 ) {
   existing.value = dto.value;
   existing.type = { id: dto.typeId } as IdentificationType;
-  existing.person = person; 
+  existing.person = person;
 }
 
 

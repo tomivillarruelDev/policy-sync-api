@@ -7,7 +7,7 @@ import {
   IsDate,
 } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
-import { ToSentenceCase } from '../../../common/transformers/text.transformers';
+import { ToTitleCase } from '../../../common/transformers/text.transformers';
 import { CreatePersonDto } from './create-person.dto';
 import { Gender } from '../enums/gender.enum';
 import { CivilStatus } from '../enums/civil-status.enum';
@@ -16,22 +16,22 @@ export class CreateRealPersonDto extends CreatePersonDto {
   @IsNotEmpty()
   @MinLength(2)
   @IsString()
-  @Transform(ToSentenceCase)
+  @Transform(ToTitleCase)
   firstName: string;
 
   @IsNotEmpty()
   @IsString()
-  @Transform(ToSentenceCase)
+  @Transform(ToTitleCase)
   lastName: string;
 
   @IsOptional()
   @IsString()
-  @Transform(ToSentenceCase)
+  @Transform(ToTitleCase)
   middleName?: string | null;
 
   @IsOptional()
   @IsString()
-  @Transform(ToSentenceCase)
+  @Transform(ToTitleCase)
   maternalLastName?: string | null;
 
   @IsOptional()

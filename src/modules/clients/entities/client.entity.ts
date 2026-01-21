@@ -13,9 +13,6 @@ export class Client {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column({ name: 'code', unique: true })
-    clientCode: string;
-
     @Column({ name: 'is_active', default: true })
     isActive: boolean;
 

@@ -7,10 +7,7 @@ import { AddressResponseDto } from '../../person/common/mappers/address.mapper';
 export class ClientDto {
     @Expose()
     id: string;
-
-    @Expose()
-    clientCode: string;
-
+    
     @Expose()
     isActive: boolean;
 

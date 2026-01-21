@@ -42,19 +42,14 @@ export class ClientsService extends BaseService<Client, ClientDto> {
         try {
             const repo = qr.manager.getRepository(Client);
 
-            // 1. Business Validations
-            const exists = await repo.findOne({ where: { clientCode: createDto.clientCode } });
-            if (exists) throw new BadRequestException('Client Code already exists');
-
             // 2. Map Person Data
             const personData = mapPersonData(createDto, PersonType.REAL);
             if (!personData) throw new BadRequestException('Person data is required');
 
             // 3. Extract Client specific data
-            const { clientCode, isActive, ...realPersonData } = createDto;
+            const { isActive, ...realPersonData } = createDto;
 
             const client = repo.create({
-                clientCode,
                 isActive,
                 realPerson: {
                     ...realPersonData, // firstName, etc.
@@ -109,7 +104,6 @@ export class ClientsService extends BaseService<Client, ClientDto> {
 
             // 2. Scalable Update
             const {
-                clientCode,
                 isActive,
                 emails,
                 identifications,
@@ -119,7 +113,7 @@ export class ClientsService extends BaseService<Client, ClientDto> {
             } = updateDto;
 
             // 2.1 Direct Client Updates (with undefined filter)
-            const clientUpdates = { clientCode, isActive };
+            const clientUpdates = { isActive };
             Object.keys(clientUpdates).forEach(
                 (key) => clientUpdates[key] === undefined && delete clientUpdates[key],
             );

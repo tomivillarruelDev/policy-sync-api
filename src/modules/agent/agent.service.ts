@@ -104,15 +104,37 @@ export class AgentService extends BaseService<Agent, AgentDto> {
                 identifications,
                 addresses,
                 phoneNumbers,
-                ...personData
+                firstName,
+                lastName,
+                middleName,
+                maternalLastName,
+                nationality,
+                birthDate,
+                gender,
+                civilStatus,
             } = updateAgentDto;
 
-            if (agentCode) agent.agentCode = agentCode;
-            if (licenseNumber !== undefined) agent.licenseNumber = licenseNumber;
-            if (isActive !== undefined) agent.isActive = isActive;
+            const agentUpdates = { agentCode, licenseNumber, isActive };
+            Object.keys(agentUpdates).forEach(key => agentUpdates[key] === undefined && delete agentUpdates[key]);
+
+            Object.assign(agent, agentUpdates);
 
             if (agent.realPerson) {
-                Object.assign(agent.realPerson, personData);
+                const personUpdates = {
+                    firstName,
+                    lastName,
+                    middleName,
+                    maternalLastName,
+                    nationality,
+                    birthDate,
+                    gender,
+                    civilStatus,
+                };
+
+                // Limpiar personUpdates de valores undefined para no sobrescribir
+                Object.keys(personUpdates).forEach(key => personUpdates[key] === undefined && delete personUpdates[key]);
+
+                Object.assign(agent.realPerson, personUpdates);
 
                 await validatePersonUniqueConstraints(
                     qr.manager,

@@ -21,6 +21,8 @@ export const REAL_PERSON_RELATIONS = [
     'person.phoneNumbers',
     'person.identifications',
     'gender',
+    'civilStatus',
+    'nationality',
 ];
 
 export const INSURER_RELATIONS = [

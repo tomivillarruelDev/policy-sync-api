@@ -35,8 +35,8 @@ export class CreateRealPersonDto extends CreatePersonDto {
   maternalLastName?: string | null;
 
   @IsOptional()
-  @IsString()
-  nationality?: string | null;
+  @IsUUID()
+  nationalityId?: string | null;
 
   @IsOptional()
   @IsDate()

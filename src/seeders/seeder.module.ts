@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { LocationSeeder } from './location.seeder';
 import { SeederService } from './seeder.service';
 import { GenderSeeder } from './gender.seeder';
+import { NationalitySeeder } from './nationality.seeder';
 import { CivilStatusSeeder } from './civil-status.seeder';
 
 import { Country } from '../modules/person/common/address/entities/country.entity';
@@ -11,6 +12,7 @@ import { City } from '../modules/person/common/address/entities/city.entity';
 import { IdentificationType } from '../modules/person/common/identification/entity/identification-type.entity';
 import { Identification } from '../modules/person/common/identification/entity/identification.entity';
 import { Gender } from '../modules/person/entities/gender.entity';
+import { Nationality } from '../modules/person/entities/nationality.entity';
 import { CivilStatus } from '../modules/person/entities/civil-status.entity';
 import { IdentificationSeeder } from './identification.seeder';
 import { CatalogVerificationSeeder } from './catalog-verification.seeder';
@@ -32,6 +34,7 @@ import { ClientsModule } from '../modules/clients/clients.module';
       IdentificationType,
       Identification,
       Gender,
+      Nationality,
       CivilStatus,
     ]),
     InsurerModule,
@@ -50,6 +53,7 @@ import { ClientsModule } from '../modules/clients/clients.module';
     SeederService,
     IdentificationSeeder,
     GenderSeeder,
+    NationalitySeeder,
     CivilStatusSeeder,
     CatalogVerificationSeeder,
   ],

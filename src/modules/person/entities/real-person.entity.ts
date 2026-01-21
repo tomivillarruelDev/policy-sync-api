@@ -10,6 +10,7 @@ import { Person } from './person.entity';
 import { AuditableEntity } from 'src/common/entities/auditable.entity';
 import { Gender } from './gender.entity';
 import { CivilStatus } from './civil-status.entity';
+import { Nationality } from './nationality.entity';
 
 @Entity({ name: 'real_people' })
 export class RealPerson {
@@ -28,8 +29,12 @@ export class RealPerson {
   @Column({ name: 'maternal_last_name', nullable: true, type: 'varchar' })
   maternalLastName: string | null;
 
-  @Column({ nullable: true, type: 'varchar' })
-  nationality: string | null;
+  @ManyToOne(() => Nationality)
+  @JoinColumn({ name: 'nationality_id' })
+  nationality: Nationality;
+
+  @Column({ name: 'nationality_id', nullable: true })
+  nationalityId: string | null;
 
   @Column({ name: 'birth_date', type: 'date', nullable: true })
   birthDate: Date | null;

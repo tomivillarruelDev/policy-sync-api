@@ -18,6 +18,7 @@ export interface FlatPersonDto {
   middleName?: string | null;
   maternalLastName?: string | null;
   nationality?: string | null;
+  nationalityId?: string | null;
   birthDate?: Date | null;
   gender?: Gender | null;
   genderId?: string | null;
@@ -59,7 +60,8 @@ export class PersonDtoMapper {
         lastName: entity.lastName,
         middleName: entity.middleName,
         maternalLastName: entity.maternalLastName,
-        nationality: entity.nationality,
+        nationality: entity.nationality?.name,
+        nationalityId: entity.nationalityId,
         birthDate: entity.birthDate,
 
         genderId: entity.genderId || entity.gender?.id,

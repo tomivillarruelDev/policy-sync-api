@@ -9,7 +9,7 @@ import { AuditableEntity } from 'src/common/entities/auditable.entity';
 import { RealPerson } from '../../person/entities/real-person.entity';
 
 @Entity('agents')
-export class Agent extends AuditableEntity {
+export class Agent {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
@@ -25,4 +25,7 @@ export class Agent extends AuditableEntity {
     @OneToOne(() => RealPerson, { cascade: true, eager: true })
     @JoinColumn({ name: 'real_person_id' })
     realPerson: RealPerson;
+
+    @Column(() => AuditableEntity, { prefix: false })
+    audit: AuditableEntity;
 }

@@ -7,6 +7,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { Product } from '../../product/entities/product.entity';
+import { Branch } from '../../branch/entities/branch.entity';
 import { LegalPerson } from '../../person/entities/legal-person.entity';
 import { AuditableEntity } from 'src/common/entities/auditable.entity';
 
@@ -33,6 +34,9 @@ export class Insurer {
 
   @OneToMany(() => Product, (product) => product.insurer)
   products: Product[];
+
+  @OneToMany(() => Branch, (branch) => branch.insurer)
+  branches: Branch[];
 
   @Column(() => AuditableEntity, { prefix: false })
   audit: AuditableEntity;

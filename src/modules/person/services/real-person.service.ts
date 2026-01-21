@@ -60,17 +60,32 @@ export class RealPersonService {
   }
 
   async update(id: string, dto: UpdateRealPersonDto): Promise<RealPerson> {
-    const entity = await this.findOne(id);
-
-    if (dto.firstName) entity.firstName = dto.firstName;
-    if (dto.lastName) entity.lastName = dto.lastName;
-
-    updatePersonFields(entity.person, dto);
+    const qr = this.dataSource.createQueryRunner();
+    await qr.connect();
+    await qr.startTransaction();
 
     try {
-      return await this.realRepo.save(entity);
+      const realRepo = qr.manager.getRepository(RealPerson);
+      const entity = await realRepo.findOne({
+        where: { id },
+        relations: REAL_PERSON_RELATIONS,
+      });
+
+      if (!entity) throw new NotFoundException(`RealPerson ${id} no encontrada`);
+
+      Object.assign(entity, dto);
+
+      updatePersonFields(entity.person, dto);
+
+      await realRepo.save(entity);
+
+      await qr.commitTransaction();
+      return this.findOne(id);
     } catch (error) {
+      await qr.rollbackTransaction();
       handleDBErrors(error);
+    } finally {
+      await qr.release();
     }
   }
 

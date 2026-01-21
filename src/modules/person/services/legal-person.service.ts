@@ -61,18 +61,32 @@ export class LegalPersonService {
   }
 
   async update(id: string, dto: UpdateLegalPersonDto): Promise<LegalPerson> {
-    const entity = await this.findOne(id);
-
-    if (dto.organizationName) entity.organizationName = dto.organizationName;
-    if (dto.socialReason !== undefined) entity.socialReason = dto.socialReason;
-    if (dto.website !== undefined) entity.website = dto.website;
-
-    updatePersonFields(entity.person, dto);
+    const qr = this.dataSource.createQueryRunner();
+    await qr.connect();
+    await qr.startTransaction();
 
     try {
-      return await this.legalRepo.save(entity);
+      const legalRepo = qr.manager.getRepository(LegalPerson);
+      const entity = await legalRepo.findOne({
+        where: { id },
+        relations: LEGAL_PERSON_RELATIONS,
+      });
+
+      if (!entity) throw new NotFoundException(`LegalPerson ${id} no encontrada`);
+
+      Object.assign(entity, dto);
+
+      updatePersonFields(entity.person, dto);
+
+      await legalRepo.save(entity);
+
+      await qr.commitTransaction();
+      return this.findOne(id);
     } catch (error) {
+      await qr.rollbackTransaction();
       handleDBErrors(error);
+    } finally {
+      await qr.release();
     }
   }
 

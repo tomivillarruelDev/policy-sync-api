@@ -25,7 +25,8 @@ import { GenderSeeder } from './gender.seeder';
 import { CivilStatusSeeder } from './civil-status.seeder';
 import { City } from '../modules/person/common/address/entities/city.entity';
 import { BranchService } from '../modules/branch/branch.service';
-import { CreateBranchDto } from '../modules/branch/dto/create-branch.dto';
+import { Nationality } from '../modules/person/entities/nationality.entity';
+import { NationalitySeeder } from './nationality.seeder';
 
 @Injectable()
 export class CatalogVerificationSeeder {
@@ -52,6 +53,9 @@ export class CatalogVerificationSeeder {
     private readonly identificationSeeder: IdentificationSeeder,
     private readonly genderSeeder: GenderSeeder,
     private readonly civilStatusSeeder: CivilStatusSeeder,
+    @InjectRepository(Nationality)
+    private readonly nationalityRepo: Repository<Nationality>,
+    private readonly nationalitySeeder: NationalitySeeder,
   ) { }
 
   async seed() {
@@ -65,6 +69,7 @@ export class CatalogVerificationSeeder {
     await this.identificationSeeder.seed();
     await this.genderSeeder.seed();
     await this.civilStatusSeeder.seed();
+    await this.nationalitySeeder.seed();
     // Assuming GenderSeeder runs before or we run it here if needed, but it's better to fetch.
     // In SeederModule, GenderSeeder is a provider but not auto-called here. 
     // We should probably rely on the fact that we can fetch them.
@@ -74,6 +79,9 @@ export class CatalogVerificationSeeder {
 
     const singleStatus = await this.civilStatusRepo.findOne({ where: { slug: 'single' } });
     if (!singleStatus) this.logger.warn('CivilStatus SINGLE not found.');
+
+    const argentinaNationality = await this.nationalityRepo.findOne({ where: { name: 'Argentine' } });
+    if (!argentinaNationality) this.logger.warn('Nationality Argentine not found.');
 
     // PRELOAD: Obtener Tipos de Identificación
     const dniType = await this.identificationTypeRepo.findOne({
@@ -180,7 +188,7 @@ export class CatalogVerificationSeeder {
       birthDate: new Date('1990-01-01'),
       genderId: maleGender?.id,
       civilStatusId: singleStatus?.id,
-      nationality: 'AR',
+      nationalityId: argentinaNationality?.id,
       identifications: dniTypeId
         ? [{ typeId: dniTypeId, value: '11223344' }]
         : [],

@@ -1,0 +1,3669 @@
+{
+  "sha": "45317db322374f1dd50a521d3a1b73b19b99e6f1",
+  "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/trees/45317db322374f1dd50a521d3a1b73b19b99e6f1",
+  "tree": [
+    {
+      "path": ".claude",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "7c01404a76d0091e380b50bbde6017dcf605aed3",
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/trees/7c01404a76d0091e380b50bbde6017dcf605aed3"
+    },
+    {
+      "path": ".claude/CLAUDE.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e8e8d40a5213d4c574f5d3c297e774633ba42412",
+      "size": 9823,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/e8e8d40a5213d4c574f5d3c297e774633ba42412"
+    },
+    {
+      "path": ".github",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "f479da0d5b907d3d0b75d122bc50df8e4854a68d",
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/trees/f479da0d5b907d3d0b75d122bc50df8e4854a68d"
+    },
+    {
+      "path": ".github/CHANGELOG.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d94e3d6c6b10cb0c21e4b70e755c78997f9bb824",
+      "size": 268,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/d94e3d6c6b10cb0c21e4b70e755c78997f9bb824"
+    },
+    {
+      "path": ".github/CODE_OF_CONDUCT.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4a3c9fca446ea6b85367aea568410dcdfdd2829c",
+      "size": 1593,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/4a3c9fca446ea6b85367aea568410dcdfdd2829c"
+    },
+    {
+      "path": ".github/CONTENT_LICENSE",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0213c1df781ffad276afe26c8aa967b87bf23062",
+      "size": 2458,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/0213c1df781ffad276afe26c8aa967b87bf23062"
+    },
+    {
+      "path": ".github/CONTRIBUTING.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bba6c6123b3c22bdda8a96903f86aea802d6a38f",
+      "size": 15141,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/bba6c6123b3c22bdda8a96903f86aea802d6a38f"
+    },
+    {
+      "path": ".github/FUNDING.yml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9fbd2cdc6a4a8911f3d1794e5311402fc79e379d",
+      "size": 27,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/9fbd2cdc6a4a8911f3d1794e5311402fc79e379d"
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "4c734568a700d4ffb069d3a5bf044b9dec57ffaf",
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/trees/4c734568a700d4ffb069d3a5bf044b9dec57ffaf"
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/bug_report.yml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "43ec3f9544ec01a5a9013ca7d2fb583ce259177c",
+      "size": 1328,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/43ec3f9544ec01a5a9013ca7d2fb583ce259177c"
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/config.yml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7de2544255d958191da926ccc6c4bdf6f8fb1d6c",
+      "size": 909,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/7de2544255d958191da926ccc6c4bdf6f8fb1d6c"
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/feature_request.yml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e6ca84e760baca4211ee27ec8a4f5305ba2b543a",
+      "size": 1016,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/e6ca84e760baca4211ee27ec8a4f5305ba2b543a"
+    },
+    {
+      "path": ".github/PULL_REQUEST_TEMPLATE",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "958f4e147d01050058223f9c58015e298a57fc44",
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/trees/958f4e147d01050058223f9c58015e298a57fc44"
+    },
+    {
+      "path": ".github/PULL_REQUEST_TEMPLATE/pull_request_template.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c06d42fa50f30f7f195a61979193f79f90eab37e",
+      "size": 658,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/c06d42fa50f30f7f195a61979193f79f90eab37e"
+    },
+    {
+      "path": ".github/agent-docs",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "fe306e38504151ec73e980f4d237e6b71a92cd04",
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/trees/fe306e38504151ec73e980f4d237e6b71a92cd04"
+    },
+    {
+      "path": ".github/agent-docs/AI_AGENT_BEST_PRACTICES.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "daccec53f8653ac16b822655e250b79d5174896d",
+      "size": 14411,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/daccec53f8653ac16b822655e250b79d5174896d"
+    },
+    {
+      "path": ".github/agent-docs/CHANGELOG_SYSTEM.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c21d61ccbafc25b8f5cc0ac48413467637d1060e",
+      "size": 11152,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/c21d61ccbafc25b8f5cc0ac48413467637d1060e"
+    },
+    {
+      "path": ".github/agent-docs/INDEX.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "25864495a83b85561125bce4ae6c6ba5a24f8265",
+      "size": 10628,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/25864495a83b85561125bce4ae6c6ba5a24f8265"
+    },
+    {
+      "path": ".github/agent-docs/TIMEZONE_GUIDE.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4c2bc4fc5656dba385d7168c7ba1e83e87185852",
+      "size": 7971,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/4c2bc4fc5656dba385d7168c7ba1e83e87185852"
+    },
+    {
+      "path": ".github/agent-docs/WIKIPEDIA_API_DOCS.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6e8b3fc33573487e88b4e58f65131e46acce2366",
+      "size": 5465,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/6e8b3fc33573487e88b4e58f65131e46acce2366"
+    },
+    {
+      "path": ".github/copilot-instructions.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "18661a33c6e468dc2df91c68dbe1b41560e30021",
+      "size": 17757,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/18661a33c6e468dc2df91c68dbe1b41560e30021"
+    },
+    {
+      "path": ".github/fixes-docs",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "954166270845e09a09f16593c4830b10c4cad73a",
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/trees/954166270845e09a09f16593c4830b10c4cad73a"
+    },
+    {
+      "path": ".github/fixes-docs/AFGHANISTAN_MISSING_WARDAK_PROVINCE.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "735c1dff1619fa11e9ad58b902838dcdcf37b94b",
+      "size": 6745,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/735c1dff1619fa11e9ad58b902838dcdcf37b94b"
+    },
+    {
+      "path": ".github/fixes-docs/AZERBAIJAN_MISSING_MUNICIPALITIES.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "628c2636777b2d2f7e8b9bbeaf73f688f19da138",
+      "size": 13198,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/628c2636777b2d2f7e8b9bbeaf73f688f19da138"
+    },
+    {
+      "path": ".github/fixes-docs/BAHRAIN_REMOVE_CENTRAL_GOVERNORATE.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9a4a9bf3003384047dd01135cd437b8781ba75f9",
+      "size": 4582,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/9a4a9bf3003384047dd01135cd437b8781ba75f9"
+    },
+    {
+      "path": ".github/fixes-docs/BANGLADESH_MISSING_DISTRICTS.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7658bc4c4790ed2eebf6a06db4c6cb153ac12395",
+      "size": 12346,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/7658bc4c4790ed2eebf6a06db4c6cb153ac12395"
+    },
+    {
+      "path": ".github/fixes-docs/BOSNIA_HERZEGOVINA_REMOVE_CANTONS.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a98c8294af5d0efe82cfc9c1c58a8d4415eb6b6e",
+      "size": 6168,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/a98c8294af5d0efe82cfc9c1c58a8d4415eb6b6e"
+    },
+    {
+      "path": ".github/fixes-docs/CABO_VERDE_MISSING_SAO_SALVADOR_DO_MUNDO.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bd6b074e6176dbbe16620127639ca376188cb536",
+      "size": 8737,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/bd6b074e6176dbbe16620127639ca376188cb536"
+    },
+    {
+      "path": ".github/fixes-docs/CAMBODIA_MISSING_TBOUNG_KHMUM_PROVINCE.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1b4c39dc7e0723812a83b7694e359ce4da13262f",
+      "size": 6904,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/1b4c39dc7e0723812a83b7694e359ce4da13262f"
+    },
+    {
+      "path": ".github/fixes-docs/DOMINICAN_REPUBLIC_MISSING_REGIONS.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f8aef0f82b22d470e2e88664454d5e532ab82978",
+      "size": 5978,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/f8aef0f82b22d470e2e88664454d5e532ab82978"
+    },
+    {
+      "path": ".github/fixes-docs/EQUATORIAL_GUINEA_MISSING_DJIBLOHO_PROVINCE.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "37db403651c80846e93baac8a76d48783235a44d",
+      "size": 8368,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/37db403651c80846e93baac8a76d48783235a44d"
+    },
+    {
+      "path": ".github/fixes-docs/ESTONIA_ISO_3166_2_UPDATE.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c584ccb73dd23cf8305740aeb13beca45db5e8d8",
+      "size": 7802,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/c584ccb73dd23cf8305740aeb13beca45db5e8d8"
+    },
+    {
+      "path": ".github/fixes-docs/ETHIOPIA_CITIES_REASSIGNMENT.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "317b3b3801457302533ffc0d3d303e98f57d3ef1",
+      "size": 7130,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/317b3b3801457302533ffc0d3d303e98f57d3ef1"
+    },
+    {
+      "path": ".github/fixes-docs/ETHIOPIA_SUMMARY.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "76e69e8b03a75ccf47e938190d391af836f80d53",
+      "size": 1561,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/76e69e8b03a75ccf47e938190d391af836f80d53"
+    },
+    {
+      "path": ".github/fixes-docs/FIX_1019_SUMMARY.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "366549d8ee35e32585c9ba01c05c30c90561a3a0",
+      "size": 6425,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/366549d8ee35e32585c9ba01c05c30c90561a3a0"
+    },
+    {
+      "path": ".github/fixes-docs/FIX_1025_NORTH_MACEDONIA_MUNICIPALITIES.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1a51d09100e624b7bcfa7c1cab55bb181d69cd98",
+      "size": 6411,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/1a51d09100e624b7bcfa7c1cab55bb181d69cd98"
+    },
+    {
+      "path": ".github/fixes-docs/FIX_1155_SUMMARY.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "55f47b4b6e735b954a60d721d1607d5e343437e1",
+      "size": 6078,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/55f47b4b6e735b954a60d721d1607d5e343437e1"
+    },
+    {
+      "path": ".github/fixes-docs/FIX_ANGOLA_MISSING_NAMIBE.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2f3f7de68ec8e89c0295caecb1e3550fbfdb291b",
+      "size": 8912,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/2f3f7de68ec8e89c0295caecb1e3550fbfdb291b"
+    },
+    {
+      "path": ".github/fixes-docs/FIX_BAHAMAS_EXTRA_DISTRICTS.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "df2d355fef56d1c67138c781ee4a36126d15f5f6",
+      "size": 7231,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/df2d355fef56d1c67138c781ee4a36126d15f5f6"
+    },
+    {
+      "path": ".github/fixes-docs/FIX_BOTSWANA_ADMINISTRATIVE_DIVISIONS.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a2d56fc2ea39ea83151dd3fd8a0257a944f27008",
+      "size": 6513,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/a2d56fc2ea39ea83151dd3fd8a0257a944f27008"
+    },
+    {
+      "path": ".github/fixes-docs/FIX_COTE_DIVOIRE_ADMINISTRATIVE_RESTRUCTURING.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "76a2968b83bfa4a8f51f131404f49fe7e10e8e35",
+      "size": 8324,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/76a2968b83bfa4a8f51f131404f49fe7e10e8e35"
+    },
+    {
+      "path": ".github/fixes-docs/FIX_ETHIOPIA_MISSING_STATES.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "afe72804f16d485ae6e9317e42a0eb29c955480d",
+      "size": 5095,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/afe72804f16d485ae6e9317e42a0eb29c955480d"
+    },
+    {
+      "path": ".github/fixes-docs/FIX_ICELAND_MISSING_MUNICIPALITIES.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8f0d16620110bb27742f392035e16d31c87cca76",
+      "size": 18270,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/8f0d16620110bb27742f392035e16d31c87cca76"
+    },
+    {
+      "path": ".github/fixes-docs/FIX_MALDIVES_PROVINCES_REMOVAL.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f9307216d8ce6ac4eaeeac5b05bcf49d88f530d3",
+      "size": 8424,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/f9307216d8ce6ac4eaeeac5b05bcf49d88f530d3"
+    },
+    {
+      "path": ".github/fixes-docs/FIX_OMAN_REMOVE_EXTRA_GOVERNORATES.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "57d117234816398543548327452e952d884bc4df",
+      "size": 2664,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/57d117234816398543548327452e952d884bc4df"
+    },
+    {
+      "path": ".github/fixes-docs/FIX_SCHEMA_FILES_FORMAT.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3dc282984fcfc6337a20c00f84decba95cd624c2",
+      "size": 6170,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/3dc282984fcfc6337a20c00f84decba95cd624c2"
+    },
+    {
+      "path": ".github/fixes-docs/FIX_SEYCHELLES_MISSING_3_DISTRICTS.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "27d8d02d4b15b8b16ee57651cb5bc919383e7375",
+      "size": 10843,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/27d8d02d4b15b8b16ee57651cb5bc919383e7375"
+    },
+    {
+      "path": ".github/fixes-docs/FIX_SOMALIA_MISSING_REGIONS.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cf5833be9b239f02f087ce8b8bd69a326bbeb47b",
+      "size": 10204,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/cf5833be9b239f02f087ce8b8bd69a326bbeb47b"
+    },
+    {
+      "path": ".github/fixes-docs/FRANCE_MISSING_NEW_CALEDONIA.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7ae085dad63b26550a816f00b6a9868dfba797cc",
+      "size": 9157,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/7ae085dad63b26550a816f00b6a9868dfba797cc"
+    },
+    {
+      "path": ".github/fixes-docs/GUINEA_BISSAU_AUTONOMOUS_SECTOR.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3aa47d3ad16d412d966235b011fdf4992ba2efcd",
+      "size": 2522,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/3aa47d3ad16d412d966235b011fdf4992ba2efcd"
+    },
+    {
+      "path": ".github/fixes-docs/INDONESIA_MISSING_GEOGRAPHICAL_UNITS.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3718f0b3a6c960272f6a102b7ddf4a788d0b9f00",
+      "size": 10710,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/3718f0b3a6c960272f6a102b7ddf4a788d0b9f00"
+    },
+    {
+      "path": ".github/fixes-docs/IRAQ_MISSING_KURDISTAN_REGION.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "40253bb04c088bb3efbbc7309858aaac29aa7cd5",
+      "size": 6919,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/40253bb04c088bb3efbbc7309858aaac29aa7cd5"
+    },
+    {
+      "path": ".github/fixes-docs/ITALY_MISSING_METROPOLITAN_CITIES_AND_AUTONOMOUS_PROVINCES.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a60951b15c06d606ae9e3d259b93e98ec7b13f79",
+      "size": 11756,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/a60951b15c06d606ae9e3d259b93e98ec7b13f79"
+    },
+    {
+      "path": ".github/fixes-docs/LIBYA_MISSING_AL_BUTNAN_POPULARE.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7d0dcd6a88ff59bf2165b56b81732b2f981df82e",
+      "size": 8789,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/7d0dcd6a88ff59bf2165b56b81732b2f981df82e"
+    },
+    {
+      "path": ".github/fixes-docs/LITHUANIA_CITY_MUNICIPALITIES_FIX.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8a3b8d561aa7b7de0d72648cea0b14780291fc0b",
+      "size": 7397,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/8a3b8d561aa7b7de0d72648cea0b14780291fc0b"
+    },
+    {
+      "path": ".github/fixes-docs/MALTA_MISSING_SAFI_LOCAL_COUNCIL.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fadab8cfc9c07301deea3da540b6404c5dca3a8f",
+      "size": 5425,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/fadab8cfc9c07301deea3da540b6404c5dca3a8f"
+    },
+    {
+      "path": ".github/fixes-docs/MARSHALL_ISLANDS_MUNICIPALITIES_ADDED.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "edd5a1a055caa6910887a15e86bbae2821f74c8b",
+      "size": 8607,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/edd5a1a055caa6910887a15e86bbae2821f74c8b"
+    },
+    {
+      "path": ".github/fixes-docs/MOLDOVA_MISSING_LEOVA_DISTRICT.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "161c0c2ff7a11d79bb4b4a04593eb75ead133035",
+      "size": 9745,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/161c0c2ff7a11d79bb4b4a04593eb75ead133035"
+    },
+    {
+      "path": ".github/fixes-docs/MONACO_MISSING_QUARTERS.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "eac0875e7a9c1a25b2d31ad3553b85deb5417433",
+      "size": 8568,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/eac0875e7a9c1a25b2d31ad3553b85deb5417433"
+    },
+    {
+      "path": ".github/fixes-docs/MONTENEGRO_MISSING_MUNICIPALITIES.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cd736fd65eb82e77c1a7584db107e741aa7e4ce2",
+      "size": 8122,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/cd736fd65eb82e77c1a7584db107e741aa7e4ce2"
+    },
+    {
+      "path": ".github/fixes-docs/NIGER_MISSING_NIAMEY_URBAN_COMMUNITY.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "10775ab1841650a41690e0b511651d1c82653c76",
+      "size": 5556,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/10775ab1841650a41690e0b511651d1c82653c76"
+    },
+    {
+      "path": ".github/fixes-docs/NORTH_KOREA_MISSING_METROPOLITAN_CITIES.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b82be24064466dc355776516ceaac0e4874f206b",
+      "size": 12076,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/b82be24064466dc355776516ceaac0e4874f206b"
+    },
+    {
+      "path": ".github/fixes-docs/PAKISTAN_REMOVE_FATA.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "31f682cbf9651a7cfd46308044b86a808b5d6b5e",
+      "size": 7080,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/31f682cbf9651a7cfd46308044b86a808b5d6b5e"
+    },
+    {
+      "path": ".github/fixes-docs/PANAMA_MISSING_NASO_TJER_DI.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bde13eda57f8a3b58412b27508b306673cf00c6d",
+      "size": 9715,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/bde13eda57f8a3b58412b27508b306673cf00c6d"
+    },
+    {
+      "path": ".github/fixes-docs/PERU_MISSING_METROPOLITAN_LIMA_MUNICIPALITY.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "712fb1f0d28131ccdd13b9dd4da5bb74324a5471",
+      "size": 9963,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/712fb1f0d28131ccdd13b9dd4da5bb74324a5471"
+    },
+    {
+      "path": ".github/fixes-docs/POLAND_BHUTAN_UK.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3937ac56272cc6de3692d7fe2433f2a2e9a6a3d9",
+      "size": 6723,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/3937ac56272cc6de3692d7fe2433f2a2e9a6a3d9"
+    },
+    {
+      "path": ".github/fixes-docs/POLAND_CITIES_FIX.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "108bd9a690567ed8feaa64d6509a0d2bf46cb214",
+      "size": 3837,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/108bd9a690567ed8feaa64d6509a0d2bf46cb214"
+    },
+    {
+      "path": ".github/fixes-docs/SAINT_LUCIA_REMOVE_EXTRA_DISTRICTS.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1e1015960bc4acedfecc0e12184a08ab07facb46",
+      "size": 4131,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/1e1015960bc4acedfecc0e12184a08ab07facb46"
+    },
+    {
+      "path": ".github/fixes-docs/SAO_TOME_PRINCIPE_ADMINISTRATIVE_DIVISIONS.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "648de6f80435d9d077a82f813e593da8f41e7a29",
+      "size": 10140,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/648de6f80435d9d077a82f813e593da8f41e7a29"
+    },
+    {
+      "path": ".github/fixes-docs/SERBIA_MISSING_KOSOVO_DIVISIONS.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bfdaa29d63be72465005e3bbe49b7fb402c0ab4a",
+      "size": 8987,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/bfdaa29d63be72465005e3bbe49b7fb402c0ab4a"
+    },
+    {
+      "path": ".github/fixes-docs/SIERRA_LEONE_MISSING_NORTH_WESTERN_PROVINCE.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bf893468cf365fff234cd63cf0f010155151d871",
+      "size": 10425,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/bf893468cf365fff234cd63cf0f010155151d871"
+    },
+    {
+      "path": ".github/fixes-docs/SLOVENIA_MISSING_VELENJE_URBAN_MUNICIPALITY.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3036a8611540cccaf0a57f7c7f3637b7f50efdc9",
+      "size": 10231,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/3036a8611540cccaf0a57f7c7f3637b7f50efdc9"
+    },
+    {
+      "path": ".github/fixes-docs/SPAIN_MISSING_AUTONOMOUS_COMMUNITIES.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a7462421d27623af77173e45222ef237cfa35cb8",
+      "size": 8238,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/a7462421d27623af77173e45222ef237cfa35cb8"
+    },
+    {
+      "path": ".github/fixes-docs/TAIWAN_MISSING_COUNTIES.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "814888c45a4b5d35412ab1838fa659187a3a0b77",
+      "size": 8814,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/814888c45a4b5d35412ab1838fa659187a3a0b77"
+    },
+    {
+      "path": ".github/fixes-docs/TAJIKISTAN_MISSING_CAPITAL_TERRITORY.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "606f747ad0b8876ddf6cbcb1343a7adca8d0e9c5",
+      "size": 11383,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/606f747ad0b8876ddf6cbcb1343a7adca8d0e9c5"
+    },
+    {
+      "path": ".github/fixes-docs/TIMEZONE_COVERAGE_VALIDATION.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c36735fca1abdb341d0cfb706c39d6a9c6cf27f6",
+      "size": 13356,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/c36735fca1abdb341d0cfb706c39d6a9c6cf27f6"
+    },
+    {
+      "path": ".github/fixes-docs/TIMOR_LESTE_OECUSSE_AMBENO_SAR.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "78bd0208063e0093fad3676e234b9cd550e998e6",
+      "size": 7967,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/78bd0208063e0093fad3676e234b9cd550e998e6"
+    },
+    {
+      "path": ".github/fixes-docs/TRINIDAD_TOBAGO_ISO_3166_2_FIX.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "696d12d8c08355632c2fc9228408e4275880cfb9",
+      "size": 10087,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/696d12d8c08355632c2fc9228408e4275880cfb9"
+    },
+    {
+      "path": ".github/fixes-docs/UK_CITIES_RESTRUCTURE.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7dc2b35c13bdf18ae2f13f248accac947b0c8be2",
+      "size": 5256,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/7dc2b35c13bdf18ae2f13f248accac947b0c8be2"
+    },
+    {
+      "path": ".github/fixes-docs/UK_SUMMARY.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e7b552ed92a283bacb08c65c50b068357929aa72",
+      "size": 5444,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/e7b552ed92a283bacb08c65c50b068357929aa72"
+    },
+    {
+      "path": ".github/fixes-docs/WALLIS_FUTUNA_MISSING_ADMINISTRATIVE_PRECINCTS.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "755a8b7a6a5374579b6d45f20f960c29b41a271e",
+      "size": 10492,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/755a8b7a6a5374579b6d45f20f960c29b41a271e"
+    },
+    {
+      "path": ".github/fixes-docs/YEMEN_CITIES_CLEANUP.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "98f00dfe0f0da5b4b43f6d84161b22fdd403841d",
+      "size": 8824,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/98f00dfe0f0da5b4b43f6d84161b22fdd403841d"
+    },
+    {
+      "path": ".github/images",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "432e17b69a5059ea2d1a470c718347cc031d9b57",
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/trees/432e17b69a5059ea2d1a470c718347cc031d9b57"
+    },
+    {
+      "path": ".github/images/api.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7c6bdf08c46f5075636d66e2085e5f3d7ed70432",
+      "size": 148581,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/7c6bdf08c46f5075636d66e2085e5f3d7ed70432"
+    },
+    {
+      "path": ".github/images/banner.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "566972e3993839be9977cb01698195af31fe6dda",
+      "size": 212050,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/566972e3993839be9977cb01698195af31fe6dda"
+    },
+    {
+      "path": ".github/images/export-tool.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cd72f3ab9620729bfa163b73d031d3649d1e7656",
+      "size": 147414,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/cd72f3ab9620729bfa163b73d031d3649d1e7656"
+    },
+    {
+      "path": ".github/images/update-tool.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d8dc4a02a82b1934ea8c4ba36fbfb6e99cab946c",
+      "size": 511613,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/d8dc4a02a82b1934ea8c4ba36fbfb6e99cab946c"
+    },
+    {
+      "path": ".github/my.load",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4dc4a56c9b0276248e70085d1dca450626dcce94",
+      "size": 337,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/4dc4a56c9b0276248e70085d1dca450626dcce94"
+    },
+    {
+      "path": ".github/workflows",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "6d98de00ab2c2089daa13f6d9a20b87d71d10889",
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/trees/6d98de00ab2c2089daa13f6d9a20b87d71d10889"
+    },
+    {
+      "path": ".github/workflows/claude.yml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "412cef9e6785990d352aec5b9df3141e878fe3b5",
+      "size": 1898,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/412cef9e6785990d352aec5b9df3141e878fe3b5"
+    },
+    {
+      "path": ".github/workflows/copilot-setup-steps.yml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5b326109fe0fad7b39d67b02ec9578d1535b0504",
+      "size": 3625,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/5b326109fe0fad7b39d67b02ec9578d1535b0504"
+    },
+    {
+      "path": ".github/workflows/export.yml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "95abb439fbf4f558c41290dd4da1afe127c3e7a2",
+      "size": 18033,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/95abb439fbf4f558c41290dd4da1afe127c3e7a2"
+    },
+    {
+      "path": ".github/workflows/generate-changelog.yml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7fc8b2fbab9e6b3fab24fac6b85a20049f9c7d78",
+      "size": 6768,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/7fc8b2fbab9e6b3fab24fac6b85a20049f9c7d78"
+    },
+    {
+      "path": ".gitignore",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d28c603531505a949e7c02e24d02d2ebb25e047d",
+      "size": 1534,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/d28c603531505a949e7c02e24d02d2ebb25e047d"
+    },
+    {
+      "path": ".gitmodules",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2ed1f7f384292dbf41f347634c07aa9096d6cd0d",
+      "size": 74,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/2ed1f7f384292dbf41f347634c07aa9096d6cd0d"
+    },
+    {
+      "path": "LICENSE",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8cb0802a350bf108fe0c633a14ef76c68fbc54e3",
+      "size": 25364,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/8cb0802a350bf108fe0c633a14ef76c68fbc54e3"
+    },
+    {
+      "path": "README.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7cb98aa3baecf2505c09ce4fb6815b6475de73de",
+      "size": 17255,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/7cb98aa3baecf2505c09ce4fb6815b6475de73de"
+    },
+    {
+      "path": "bin",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "cdb76800ad68988e6768d3c347c887f2a4331d58",
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/trees/cdb76800ad68988e6768d3c347c887f2a4331d58"
+    },
+    {
+      "path": "bin/.env",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "34a0098847e88647e9841901cf1233125236b0a4",
+      "size": 26,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/34a0098847e88647e9841901cf1233125236b0a4"
+    },
+    {
+      "path": "bin/Commands",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "8562344c9bbe988e3bc33352badd2050bbb78a1a",
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/trees/8562344c9bbe988e3bc33352badd2050bbb78a1a"
+    },
+    {
+      "path": "bin/Commands/ExportCsv.php",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "420be775f80b2821b843810382a63952326e1d14",
+      "size": 4922,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/420be775f80b2821b843810382a63952326e1d14"
+    },
+    {
+      "path": "bin/Commands/ExportJson.php",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2bf3443d384def6901fb3729a14aed142f252828",
+      "size": 16464,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/2bf3443d384def6901fb3729a14aed142f252828"
+    },
+    {
+      "path": "bin/Commands/ExportMongoDB.php",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d13975e96e840e16244fa7f00b9fab6ecd90951b",
+      "size": 10978,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/d13975e96e840e16244fa7f00b9fab6ecd90951b"
+    },
+    {
+      "path": "bin/Commands/ExportPlist.php",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cfe691d8355aaae1bd639195798abbd12e24fc17",
+      "size": 1770,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/cfe691d8355aaae1bd639195798abbd12e24fc17"
+    },
+    {
+      "path": "bin/Commands/ExportSqlServer.php",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1408bc2c9210fc5fc45ef86193911ef1f1b6427c",
+      "size": 10206,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/1408bc2c9210fc5fc45ef86193911ef1f1b6427c"
+    },
+    {
+      "path": "bin/Commands/ExportXml.php",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6c0b11177d6a4f6ae422955f53885fbcf0ccd2ee",
+      "size": 2718,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/6c0b11177d6a4f6ae422955f53885fbcf0ccd2ee"
+    },
+    {
+      "path": "bin/Commands/ExportYaml.php",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "63727bde3dd7e43d491a59e4e896f5dc8f79c408",
+      "size": 2651,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/63727bde3dd7e43d491a59e4e896f5dc8f79c408"
+    },
+    {
+      "path": "bin/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "546a3e35a6723140720b81d2c37c4fdde2eb28e8",
+      "size": 7236,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/546a3e35a6723140720b81d2c37c4fdde2eb28e8"
+    },
+    {
+      "path": "bin/Support",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "1c3e288ece356f95aab663a79c80b3a90e645558",
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/trees/1c3e288ece356f95aab663a79c80b3a90e645558"
+    },
+    {
+      "path": "bin/Support/Config.php",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e6131260958f3ddf9e8867d583661d8b338c13e1",
+      "size": 3024,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/e6131260958f3ddf9e8867d583661d8b338c13e1"
+    },
+    {
+      "path": "bin/Support/Env.php",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7614d4a97c8f9202f160b8c96f8182bc7fd56e2a",
+      "size": 1537,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/7614d4a97c8f9202f160b8c96f8182bc7fd56e2a"
+    },
+    {
+      "path": "bin/composer.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e3efde40efbc48dacc5af6b25c95b464b79592b5",
+      "size": 815,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/e3efde40efbc48dacc5af6b25c95b464b79592b5"
+    },
+    {
+      "path": "bin/config",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "a4dc7e76ff5d68ebce0d5b817a8fe54ca84bb7c2",
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/trees/a4dc7e76ff5d68ebce0d5b817a8fe54ca84bb7c2"
+    },
+    {
+      "path": "bin/config/app.yaml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "42a9e388cd0c036dd425cb983d5fbb71d3d22d02",
+      "size": 201,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/42a9e388cd0c036dd425cb983d5fbb71d3d22d02"
+    },
+    {
+      "path": "bin/config/changelog.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3022a33d5066c2c6bd65d122712a0fec591f2683",
+      "size": 484,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/3022a33d5066c2c6bd65d122712a0fec591f2683"
+    },
+    {
+      "path": "bin/config/phinx.yaml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3965c17107195d3b8ea3b169902a72185ee6eab0",
+      "size": 1028,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/3965c17107195d3b8ea3b169902a72185ee6eab0"
+    },
+    {
+      "path": "bin/console",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "22d71e1e6fa65f1400a7725c32f2497e6def418f",
+      "size": 3063,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/22d71e1e6fa65f1400a7725c32f2497e6def418f"
+    },
+    {
+      "path": "bin/db",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "03578e57a6b8cdb9ae8197f8fbc442acd344d6fb",
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/trees/03578e57a6b8cdb9ae8197f8fbc442acd344d6fb"
+    },
+    {
+      "path": "bin/db/migrations",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "76fae90322fad30cd82894f1621a04ffab97889f",
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/trees/76fae90322fad30cd82894f1621a04ffab97889f"
+    },
+    {
+      "path": "bin/db/migrations/20240708093950_add_languages_in_country.php",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "566a8096c65858f9b6f0bf8f72f82616cab62244",
+      "size": 1399,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/566a8096c65858f9b6f0bf8f72f82616cab62244"
+    },
+    {
+      "path": "bin/db/schema.sql",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2ca7b0fefbb9c963ecc77703f7e48c823f3153d3",
+      "size": 10881,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/2ca7b0fefbb9c963ecc77703f7e48c823f3153d3"
+    },
+    {
+      "path": "bin/scripts",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "98158b4e13a398595dbdcec1ad4d1c26f33d74f4",
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/trees/98158b4e13a398595dbdcec1ad4d1c26f33d74f4"
+    },
+    {
+      "path": "bin/scripts/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "15ff4d6263f98322ec6e26d0ed67280d5d0cb776",
+      "size": 6465,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/15ff4d6263f98322ec6e26d0ed67280d5d0cb776"
+    },
+    {
+      "path": "bin/scripts/analysis",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "a6b70cbb4de287a5920193d9122bcf110091ae17",
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/trees/a6b70cbb4de287a5920193d9122bcf110091ae17"
+    },
+    {
+      "path": "bin/scripts/analysis/timezone_summary.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3138fd8c5096850d782817ba5977068470482bf0",
+      "size": 7321,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/3138fd8c5096850d782817ba5977068470482bf0"
+    },
+    {
+      "path": "bin/scripts/changelog",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "04811edf713546e584aba6f212b2459f2d7ba4b2",
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/trees/04811edf713546e584aba6f212b2459f2d7ba4b2"
+    },
+    {
+      "path": "bin/scripts/changelog/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "264291948f8b271012281417e2dae48d0cc96601",
+      "size": 2374,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/264291948f8b271012281417e2dae48d0cc96601"
+    },
+    {
+      "path": "bin/scripts/changelog/__init__.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "06028626f167e0e4ccdd5f4f5b8405f95718d33d",
+      "size": 548,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/06028626f167e0e4ccdd5f4f5b8405f95718d33d"
+    },
+    {
+      "path": "bin/scripts/changelog/archiver.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fa321f437c6ec95b044c2037a9498f9f8eb8fdb0",
+      "size": 5400,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/fa321f437c6ec95b044c2037a9498f9f8eb8fdb0"
+    },
+    {
+      "path": "bin/scripts/changelog/changelog_generator.py",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "31713e2f13983f296bfa5d2501d0b29c9edf99b7",
+      "size": 8968,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/31713e2f13983f296bfa5d2501d0b29c9edf99b7"
+    },
+    {
+      "path": "bin/scripts/changelog/changelog_writer.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5c2732768b3d85c1f7a776b30e6b6f429f41cd09",
+      "size": 6964,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/5c2732768b3d85c1f7a776b30e6b6f429f41cd09"
+    },
+    {
+      "path": "bin/scripts/changelog/deduplicator.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4b00c04330a5cd1faad2b7f071c2451d24fe14d7",
+      "size": 3419,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/4b00c04330a5cd1faad2b7f071c2451d24fe14d7"
+    },
+    {
+      "path": "bin/scripts/changelog/git_parser.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "524c8bf562e3c406ed2346874fedf89c903c5585",
+      "size": 5096,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/524c8bf562e3c406ed2346874fedf89c903c5585"
+    },
+    {
+      "path": "bin/scripts/changelog/json_analyzer.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7dcdbf12b330e6dd90f866cf036a9996810134c0",
+      "size": 8172,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/7dcdbf12b330e6dd90f866cf036a9996810134c0"
+    },
+    {
+      "path": "bin/scripts/changelog/requirements-changelog.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "20524d69a5f7a6257fa4f91f4d19e6000051bb54",
+      "size": 119,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/20524d69a5f7a6257fa4f91f4d19e6000051bb54"
+    },
+    {
+      "path": "bin/scripts/changelog/sql_analyzer.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fdfeb8ce924c3057d6ddcbe3e975ff1947295b13",
+      "size": 1320,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/fdfeb8ce924c3057d6ddcbe3e975ff1947295b13"
+    },
+    {
+      "path": "bin/scripts/changelog/utils.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "74f4c07ce1fd5b20529dbfe2b05ac1f13da11dd8",
+      "size": 5370,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/74f4c07ce1fd5b20529dbfe2b05ac1f13da11dd8"
+    },
+    {
+      "path": "bin/scripts/export",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "24d5d9225ccace7468436b5a32fdbf4e9aedee82",
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/trees/24d5d9225ccace7468436b5a32fdbf4e9aedee82"
+    },
+    {
+      "path": "bin/scripts/export/export_plist.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "315a0c2b24e2ea9622d29ffb104fe168a8a3d312",
+      "size": 591,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/315a0c2b24e2ea9622d29ffb104fe168a8a3d312"
+    },
+    {
+      "path": "bin/scripts/export/import_duckdb.py",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "19f2cfee69805ffe50c2999bf949e2f803fc9e63",
+      "size": 11730,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/19f2cfee69805ffe50c2999bf949e2f803fc9e63"
+    },
+    {
+      "path": "bin/scripts/export/json_to_geojson.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5cd4e1454cadf670469fb03bd8479f781cfd3b52",
+      "size": 2766,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/5cd4e1454cadf670469fb03bd8479f781cfd3b52"
+    },
+    {
+      "path": "bin/scripts/export/json_to_toon.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7ff93f1e241636743d0dc0637965e490e33fd6df",
+      "size": 2198,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/7ff93f1e241636743d0dc0637965e490e33fd6df"
+    },
+    {
+      "path": "bin/scripts/fixes",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "fbf6cfb204993ab672b730dbee9873f18fdf8bf5",
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/trees/fbf6cfb204993ab672b730dbee9873f18fdf8bf5"
+    },
+    {
+      "path": "bin/scripts/fixes/timezone_mappings.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d8fb931ca509bddec20902d26e8c3e66fad8d030",
+      "size": 8546,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/d8fb931ca509bddec20902d26e8c3e66fad8d030"
+    },
+    {
+      "path": "bin/scripts/sync",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "c1ab22021aebe37c210527e8a3d388bc70f6de20",
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/trees/c1ab22021aebe37c210527e8a3d388bc70f6de20"
+    },
+    {
+      "path": "bin/scripts/sync/import_json_to_mysql.py",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "16bbec7e0dd8c1b20cae292c989adb789e4ed4f3",
+      "size": 18431,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/16bbec7e0dd8c1b20cae292c989adb789e4ed4f3"
+    },
+    {
+      "path": "bin/scripts/sync/normalize_json.py",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "6fc7a7fc1ca9d5a916f4d33ffd01f308e0cfc19d",
+      "size": 8990,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/6fc7a7fc1ca9d5a916f4d33ffd01f308e0cfc19d"
+    },
+    {
+      "path": "bin/scripts/sync/sync_mysql_to_json.py",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "33146c0eab488570596930e4dd5a5b87a137504b",
+      "size": 14348,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/33146c0eab488570596930e4dd5a5b87a137504b"
+    },
+    {
+      "path": "bin/scripts/validation",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "0ba84410b37b8153f938724519a7adada1b373bf",
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/trees/0ba84410b37b8153f938724519a7adada1b373bf"
+    },
+    {
+      "path": "bin/scripts/validation/add_timezones.py",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "43f45cc402a2b33d21f714da90e44e1d466a951b",
+      "size": 19270,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/43f45cc402a2b33d21f714da90e44e1d466a951b"
+    },
+    {
+      "path": "bin/scripts/validation/analyze_missing_timezones.py",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "66c4b39eb9834a0c32b7a8ec14b5e39e8471ee27",
+      "size": 14080,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/66c4b39eb9834a0c32b7a8ec14b5e39e8471ee27"
+    },
+    {
+      "path": "bin/scripts/validation/requirements.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "dd6a11bf75bda93a6deda4932b5a3a1f5073e1fe",
+      "size": 94,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/dd6a11bf75bda93a6deda4932b5a3a1f5073e1fe"
+    },
+    {
+      "path": "bin/scripts/validation/translation_enricher.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7444b08e632bf97e02bbaf30cbc982c05aea8a57",
+      "size": 10704,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/7444b08e632bf97e02bbaf30cbc982c05aea8a57"
+    },
+    {
+      "path": "bin/scripts/validation/validate_timezones.py",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "9c72c96ebdf126a928492a50dd7d5b49ee0c6431",
+      "size": 7677,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/9c72c96ebdf126a928492a50dd7d5b49ee0c6431"
+    },
+    {
+      "path": "bin/scripts/validation/wikipedia_validator.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3660af567c0eb58cfc7d73ccf9e612c8034e9d5c",
+      "size": 9588,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/3660af567c0eb58cfc7d73ccf9e612c8034e9d5c"
+    },
+    {
+      "path": "contributions",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "85e9b8dfe0d9808c5f672a9d80239d4981d9989f",
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/trees/85e9b8dfe0d9808c5f672a9d80239d4981d9989f"
+    },
+    {
+      "path": "contributions/.gitignore",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "49870f6cc2939dae6f0f1d349130e5936f89f0d6",
+      "size": 130,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/49870f6cc2939dae6f0f1d349130e5936f89f0d6"
+    },
+    {
+      "path": "contributions/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d2918ad7d9dcd5d25586c7df23ab28ffd74c778e",
+      "size": 6706,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/d2918ad7d9dcd5d25586c7df23ab28ffd74c778e"
+    },
+    {
+      "path": "contributions/cities",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "29ad6abc5d6ee94c04c127a167e384c2dc781720",
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/trees/29ad6abc5d6ee94c04c127a167e384c2dc781720"
+    },
+    {
+      "path": "contributions/cities/AD.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "68bd6455e1110d132f70f8764bc966796373c4cb",
+      "size": 10932,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/68bd6455e1110d132f70f8764bc966796373c4cb"
+    },
+    {
+      "path": "contributions/cities/AE.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "05b94aa9e050725acb8b759110c50e96ec532490",
+      "size": 32025,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/05b94aa9e050725acb8b759110c50e96ec532490"
+    },
+    {
+      "path": "contributions/cities/AF.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7e145bdd0ae4ec77f51894771343df4760c38fd0",
+      "size": 104715,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/7e145bdd0ae4ec77f51894771343df4760c38fd0"
+    },
+    {
+      "path": "contributions/cities/AG.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "94e86dcb0b7375f574fb60f9f1343493ed931fd9",
+      "size": 9486,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/94e86dcb0b7375f574fb60f9f1343493ed931fd9"
+    },
+    {
+      "path": "contributions/cities/AL.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "945e4b1b982a64bf2c86581ec8e972b1d1b51594",
+      "size": 155161,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/945e4b1b982a64bf2c86581ec8e972b1d1b51594"
+    },
+    {
+      "path": "contributions/cities/AM.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e74e9dec7cab779d5c37bc768ded99a1eba578c2",
+      "size": 316566,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/e74e9dec7cab779d5c37bc768ded99a1eba578c2"
+    },
+    {
+      "path": "contributions/cities/AO.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a0effac43a719b6f30dc8d074fd9ccc3ddc4cd98",
+      "size": 72030,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/a0effac43a719b6f30dc8d074fd9ccc3ddc4cd98"
+    },
+    {
+      "path": "contributions/cities/AR.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fa565099f42793e7eda37abcc1b9940c046e62dd",
+      "size": 1341210,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/fa565099f42793e7eda37abcc1b9940c046e62dd"
+    },
+    {
+      "path": "contributions/cities/AS.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "93e96ce8263ad7b8d68c35108e0182df790465ac",
+      "size": 13993,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/93e96ce8263ad7b8d68c35108e0182df790465ac"
+    },
+    {
+      "path": "contributions/cities/AT.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e3b251daddf535b341e269aa6787f6a1dcc5a98d",
+      "size": 2666984,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/e3b251daddf535b341e269aa6787f6a1dcc5a98d"
+    },
+    {
+      "path": "contributions/cities/AU.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "db9b9c778c35ecd25ddc509636c53fb2bb4bf2e8",
+      "size": 4501293,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/db9b9c778c35ecd25ddc509636c53fb2bb4bf2e8"
+    },
+    {
+      "path": "contributions/cities/AW.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8665b3fa7138f7a73e715f84f061ab31cfc94103",
+      "size": 5956,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/8665b3fa7138f7a73e715f84f061ab31cfc94103"
+    },
+    {
+      "path": "contributions/cities/AX.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "21b742ef3679bd482b5e1fd5161acd1eed8cda78",
+      "size": 5935,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/21b742ef3679bd482b5e1fd5161acd1eed8cda78"
+    },
+    {
+      "path": "contributions/cities/AZ.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5fa2d33a7d603b859f061f642c129a26d513464f",
+      "size": 190597,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/5fa2d33a7d603b859f061f642c129a26d513464f"
+    },
+    {
+      "path": "contributions/cities/BA.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ca09288fc65e80a17cdd533275010b505bcca5c3",
+      "size": 242841,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/ca09288fc65e80a17cdd533275010b505bcca5c3"
+    },
+    {
+      "path": "contributions/cities/BB.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "75ef375862090ca49862cd29d64c2dd34c9c6fbd",
+      "size": 7313,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/75ef375862090ca49862cd29d64c2dd34c9c6fbd"
+    },
+    {
+      "path": "contributions/cities/BD.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1ba27aed1f33aa78873b01daff07bed2c5037559",
+      "size": 67285,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/1ba27aed1f33aa78873b01daff07bed2c5037559"
+    },
+    {
+      "path": "contributions/cities/BE.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b8078a8bf9e30d748b7e16e63127e4abb0633e83",
+      "size": 570728,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/b8078a8bf9e30d748b7e16e63127e4abb0633e83"
+    },
+    {
+      "path": "contributions/cities/BF.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "aa1d2ab2193b3416c3380aea8cb35124208ae20b",
+      "size": 102721,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/aa1d2ab2193b3416c3380aea8cb35124208ae20b"
+    },
+    {
+      "path": "contributions/cities/BG.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "04bf954c5aeec808ff94b1361ab4761498b9e66c",
+      "size": 582933,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/04bf954c5aeec808ff94b1361ab4761498b9e66c"
+    },
+    {
+      "path": "contributions/cities/BH.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "acb4e1339d732073b2dbfa414fcac213a30c1540",
+      "size": 9669,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/acb4e1339d732073b2dbfa414fcac213a30c1540"
+    },
+    {
+      "path": "contributions/cities/BI.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d5d60fe13f7aa751edfb1fb06c7b898f9b1c6484",
+      "size": 16906,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/d5d60fe13f7aa751edfb1fb06c7b898f9b1c6484"
+    },
+    {
+      "path": "contributions/cities/BJ.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "950d9858ca26879c18f140d55a29e51912344574",
+      "size": 36857,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/950d9858ca26879c18f140d55a29e51912344574"
+    },
+    {
+      "path": "contributions/cities/BM.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d3bdfb980a29129ac6c4be01106faab2930def73",
+      "size": 9445,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/d3bdfb980a29129ac6c4be01106faab2930def73"
+    },
+    {
+      "path": "contributions/cities/BN.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "38d0dd604a36b9c29be1a0cf8f5976a8b03e6ec5",
+      "size": 9291,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/38d0dd604a36b9c29be1a0cf8f5976a8b03e6ec5"
+    },
+    {
+      "path": "contributions/cities/BO.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "474c4eba6a38988f7f287827fbbf02a97fe4574f",
+      "size": 266790,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/474c4eba6a38988f7f287827fbbf02a97fe4574f"
+    },
+    {
+      "path": "contributions/cities/BQ.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0f520c2e414b55bc73ed041fb102aa4717843b1b",
+      "size": 8857,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/0f520c2e414b55bc73ed041fb102aa4717843b1b"
+    },
+    {
+      "path": "contributions/cities/BR.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f55fadb34559e63bc07d776022c01262500c6677",
+      "size": 6403633,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/f55fadb34559e63bc07d776022c01262500c6677"
+    },
+    {
+      "path": "contributions/cities/BS.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5b5c278a2cfe773f40bbcaf0d62a13b260c1991c",
+      "size": 23304,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/5b5c278a2cfe773f40bbcaf0d62a13b260c1991c"
+    },
+    {
+      "path": "contributions/cities/BT.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "78363fc3f7a997aaf1d575c15040dcd9e2aec4a9",
+      "size": 58242,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/78363fc3f7a997aaf1d575c15040dcd9e2aec4a9"
+    },
+    {
+      "path": "contributions/cities/BW.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "092b52f00bd96f648f4dedb0e59fcb2b34aeb800",
+      "size": 76083,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/092b52f00bd96f648f4dedb0e59fcb2b34aeb800"
+    },
+    {
+      "path": "contributions/cities/BY.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9c4df0496e9fc514c28376ad53890a3412dcdb2b",
+      "size": 365174,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/9c4df0496e9fc514c28376ad53890a3412dcdb2b"
+    },
+    {
+      "path": "contributions/cities/BZ.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2a8bea84cdb6152da9b7e96555d2d38fea832c27",
+      "size": 14452,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/2a8bea84cdb6152da9b7e96555d2d38fea832c27"
+    },
+    {
+      "path": "contributions/cities/CA.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cb64fd55f656c37cb9a11cf5274225a989a39c68",
+      "size": 1177508,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/cb64fd55f656c37cb9a11cf5274225a989a39c68"
+    },
+    {
+      "path": "contributions/cities/CD.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1ed8b967adbafe778dd0179c90e3698bed0a0839",
+      "size": 66537,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/1ed8b967adbafe778dd0179c90e3698bed0a0839"
+    },
+    {
+      "path": "contributions/cities/CF.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bb4d59c87993a407cbec307c6b0f09d7f1bf2af5",
+      "size": 41200,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/bb4d59c87993a407cbec307c6b0f09d7f1bf2af5"
+    },
+    {
+      "path": "contributions/cities/CG.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0e1c459fa558401c5081ef384eaab313ef7d7d57",
+      "size": 17105,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/0e1c459fa558401c5081ef384eaab313ef7d7d57"
+    },
+    {
+      "path": "contributions/cities/CH.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3b2c332e47a31b99ff5d49ac94ab164f9a009aea",
+      "size": 1686540,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/3b2c332e47a31b99ff5d49ac94ab164f9a009aea"
+    },
+    {
+      "path": "contributions/cities/CI.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "75fcd8208512a8a5141c14054347574b0a3ef1bd",
+      "size": 96330,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/75fcd8208512a8a5141c14054347574b0a3ef1bd"
+    },
+    {
+      "path": "contributions/cities/CL.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8c7ca15acc8cc4a6d707a127d6ac790bcc02124f",
+      "size": 314170,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/8c7ca15acc8cc4a6d707a127d6ac790bcc02124f"
+    },
+    {
+      "path": "contributions/cities/CM.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fa850565d0b57c3d82d51d1b057380d5db0ff362",
+      "size": 138218,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/fa850565d0b57c3d82d51d1b057380d5db0ff362"
+    },
+    {
+      "path": "contributions/cities/CN.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b85e2acc2f24c96a8c80832cc4bdb24f2bab96de",
+      "size": 4099512,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/b85e2acc2f24c96a8c80832cc4bdb24f2bab96de"
+    },
+    {
+      "path": "contributions/cities/CO.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6547ff20964fae15da87777a86258de2196ce747",
+      "size": 1185588,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/6547ff20964fae15da87777a86258de2196ce747"
+    },
+    {
+      "path": "contributions/cities/CR.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3f2f0a8db24db5f6aa68d9b186f1af5478c6b39d",
+      "size": 166779,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/3f2f0a8db24db5f6aa68d9b186f1af5478c6b39d"
+    },
+    {
+      "path": "contributions/cities/CU.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e416f27a42b6b8f2670e4e8c55cd3db6bf269456",
+      "size": 212869,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/e416f27a42b6b8f2670e4e8c55cd3db6bf269456"
+    },
+    {
+      "path": "contributions/cities/CV.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8312957fb6666cbc385274b752bc88ed4ab93aff",
+      "size": 30822,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/8312957fb6666cbc385274b752bc88ed4ab93aff"
+    },
+    {
+      "path": "contributions/cities/CY.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "015ef05e783647601f4b6878a7b746a8ce05733a",
+      "size": 100329,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/015ef05e783647601f4b6878a7b746a8ce05733a"
+    },
+    {
+      "path": "contributions/cities/CZ.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bd29521598299282a0a56d38f130139e320f92eb",
+      "size": 1472077,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/bd29521598299282a0a56d38f130139e320f92eb"
+    },
+    {
+      "path": "contributions/cities/DE.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9c4db8b9c862544273662cd6001d68548e8d8bfd",
+      "size": 7643888,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/9c4db8b9c862544273662cd6001d68548e8d8bfd"
+    },
+    {
+      "path": "contributions/cities/DJ.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "213d6e2e22114fdc2227690497c014aa35191bf2",
+      "size": 12077,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/213d6e2e22114fdc2227690497c014aa35191bf2"
+    },
+    {
+      "path": "contributions/cities/DK.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8a4467df3049b7907e3df29ec6c07d39d36cdd0f",
+      "size": 462977,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/8a4467df3049b7907e3df29ec6c07d39d36cdd0f"
+    },
+    {
+      "path": "contributions/cities/DM.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5b6080e877caaf1e9dc009d15773f4f59ae4cf99",
+      "size": 17822,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/5b6080e877caaf1e9dc009d15773f4f59ae4cf99"
+    },
+    {
+      "path": "contributions/cities/DO.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "83d2c4851f8cbc349ab3e006ca6803270083798a",
+      "size": 232609,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/83d2c4851f8cbc349ab3e006ca6803270083798a"
+    },
+    {
+      "path": "contributions/cities/DZ.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6284bfc58dffdca610a3b882855faf37f68ec913",
+      "size": 311119,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/6284bfc58dffdca610a3b882855faf37f68ec913"
+    },
+    {
+      "path": "contributions/cities/EC.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "601a822c4892e06f3c21cc33c04431a70423d2d2",
+      "size": 123188,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/601a822c4892e06f3c21cc33c04431a70423d2d2"
+    },
+    {
+      "path": "contributions/cities/EE.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "852345e65f2363da6a854e3c647d11df93b6b5ef",
+      "size": 166704,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/852345e65f2363da6a854e3c647d11df93b6b5ef"
+    },
+    {
+      "path": "contributions/cities/EG.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "63cd3d9c02277ea3e000f2bc69a99cbee6efc24e",
+      "size": 168070,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/63cd3d9c02277ea3e000f2bc69a99cbee6efc24e"
+    },
+    {
+      "path": "contributions/cities/ER.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2b1d491c337446b0767d7f4561a7f05dd997e9da",
+      "size": 10972,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/2b1d491c337446b0767d7f4561a7f05dd997e9da"
+    },
+    {
+      "path": "contributions/cities/ES.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "876b647262c3ada2bba23c42161fcf9b099c04d7",
+      "size": 9632240,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/876b647262c3ada2bba23c42161fcf9b099c04d7"
+    },
+    {
+      "path": "contributions/cities/ET.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ca12bfd7f811d8a6f6a02821d48acdd76124ad5d",
+      "size": 153128,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/ca12bfd7f811d8a6f6a02821d48acdd76124ad5d"
+    },
+    {
+      "path": "contributions/cities/FI.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f7e49121824f574e45e33d4c3821c8fd307461b3",
+      "size": 448422,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/f7e49121824f574e45e33d4c3821c8fd307461b3"
+    },
+    {
+      "path": "contributions/cities/FJ.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8ae07bcd689b6c0d9b8133a0b347374cf5506e68",
+      "size": 22533,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/8ae07bcd689b6c0d9b8133a0b347374cf5506e68"
+    },
+    {
+      "path": "contributions/cities/FM.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d505af9974a8f602774dae1783dcc572478c584c",
+      "size": 98355,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/d505af9974a8f602774dae1783dcc572478c584c"
+    },
+    {
+      "path": "contributions/cities/FO.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0623978cbd7a2bd31a4bceaf0a226ff1a2375afc",
+      "size": 27120,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/0623978cbd7a2bd31a4bceaf0a226ff1a2375afc"
+    },
+    {
+      "path": "contributions/cities/FR.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1bb447ee289e1ac3a0f6cebf035377eb9d90a692",
+      "size": 11214398,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/1bb447ee289e1ac3a0f6cebf035377eb9d90a692"
+    },
+    {
+      "path": "contributions/cities/GA.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1566ce55aec15b4a86208301d1ef5a47e415aae4",
+      "size": 28163,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/1566ce55aec15b4a86208301d1ef5a47e415aae4"
+    },
+    {
+      "path": "contributions/cities/GB.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ea5c4244c8ddadbb9ee0ac6e731dd1bc039b7be3",
+      "size": 4135146,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/ea5c4244c8ddadbb9ee0ac6e731dd1bc039b7be3"
+    },
+    {
+      "path": "contributions/cities/GD.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2d3277ad02c1805fd73fc3dbbea02859bda5183e",
+      "size": 7389,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/2d3277ad02c1805fd73fc3dbbea02859bda5183e"
+    },
+    {
+      "path": "contributions/cities/GE.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "91adecf337674bc314abe07d73d700983eee05d6",
+      "size": 121285,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/91adecf337674bc314abe07d73d700983eee05d6"
+    },
+    {
+      "path": "contributions/cities/GG.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ab3985db821a1042fc145b9fda83948bf46307b3",
+      "size": 2518,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/ab3985db821a1042fc145b9fda83948bf46307b3"
+    },
+    {
+      "path": "contributions/cities/GH.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8503f62ee1b84377f6c8e7a23eacb9a3457becce",
+      "size": 127595,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/8503f62ee1b84377f6c8e7a23eacb9a3457becce"
+    },
+    {
+      "path": "contributions/cities/GL.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "19947852174cbf02f95aa4a4ae5560f1a06787c6",
+      "size": 19084,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/19947852174cbf02f95aa4a4ae5560f1a06787c6"
+    },
+    {
+      "path": "contributions/cities/GM.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c03a33e3a8c2d17bce67971bcea163a7af8da02c",
+      "size": 110995,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/c03a33e3a8c2d17bce67971bcea163a7af8da02c"
+    },
+    {
+      "path": "contributions/cities/GN.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "37a78eb708750b34e5e281b417c9de283dc5378d",
+      "size": 57887,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/37a78eb708750b34e5e281b417c9de283dc5378d"
+    },
+    {
+      "path": "contributions/cities/GP.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9f0be8cc53c4729e5145fc9c9d1f9e2aca5eb0f1",
+      "size": 35346,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/9f0be8cc53c4729e5145fc9c9d1f9e2aca5eb0f1"
+    },
+    {
+      "path": "contributions/cities/GQ.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b30d1cbbb39cdb2dab23ae0905e6fbe16285da21",
+      "size": 26581,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/b30d1cbbb39cdb2dab23ae0905e6fbe16285da21"
+    },
+    {
+      "path": "contributions/cities/GR.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "11d2e4553e38129bfbf04b25813ac37680c06500",
+      "size": 1171957,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/11d2e4553e38129bfbf04b25813ac37680c06500"
+    },
+    {
+      "path": "contributions/cities/GT.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bd6221d64ad4eb2ce3f20ecb97daa1bb0a5af786",
+      "size": 464875,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/bd6221d64ad4eb2ce3f20ecb97daa1bb0a5af786"
+    },
+    {
+      "path": "contributions/cities/GU.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "78d24bf8567278264da523bbaa453b93b3b5542c",
+      "size": 12506,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/78d24bf8567278264da523bbaa453b93b3b5542c"
+    },
+    {
+      "path": "contributions/cities/GW.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "122883d0aedca240327c1be11076305c325eac91",
+      "size": 14901,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/122883d0aedca240327c1be11076305c325eac91"
+    },
+    {
+      "path": "contributions/cities/GY.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ca4e91a8752689b98eef18f687df6b58d73c5848",
+      "size": 14899,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/ca4e91a8752689b98eef18f687df6b58d73c5848"
+    },
+    {
+      "path": "contributions/cities/HK.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "46e62ba2822eb0f65b5adf138c3e9daaddd542d7",
+      "size": 28530,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/46e62ba2822eb0f65b5adf138c3e9daaddd542d7"
+    },
+    {
+      "path": "contributions/cities/HN.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3cbff9be7aaa2bdcec4a47bb4eebaf83528e6636",
+      "size": 603272,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/3cbff9be7aaa2bdcec4a47bb4eebaf83528e6636"
+    },
+    {
+      "path": "contributions/cities/HR.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d92f331a60271e16cb97ca335f320f5312205638",
+      "size": 705506,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/d92f331a60271e16cb97ca335f320f5312205638"
+    },
+    {
+      "path": "contributions/cities/HT.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a949f7409e4b377ad244b7ba1b01fabcaccdeb51",
+      "size": 139209,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/a949f7409e4b377ad244b7ba1b01fabcaccdeb51"
+    },
+    {
+      "path": "contributions/cities/HU.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "84d45cd6eda8f871a47b9d6ae45470bc4c704ca1",
+      "size": 1168683,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/84d45cd6eda8f871a47b9d6ae45470bc4c704ca1"
+    },
+    {
+      "path": "contributions/cities/ID.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2c32f4b145b8c1674176f8153cbee2d79c6dc490",
+      "size": 922263,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/2c32f4b145b8c1674176f8153cbee2d79c6dc490"
+    },
+    {
+      "path": "contributions/cities/IE.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "98d7f0cde16b3bc57c9a79a7a72f1f409ed79a2f",
+      "size": 387749,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/98d7f0cde16b3bc57c9a79a7a72f1f409ed79a2f"
+    },
+    {
+      "path": "contributions/cities/IL.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "95b580303760cd8c1168ead0f57034ddef787de7",
+      "size": 159395,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/95b580303760cd8c1168ead0f57034ddef787de7"
+    },
+    {
+      "path": "contributions/cities/IM.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "13efa61913a924ed3abe33397dc82d49534b7a63",
+      "size": 15768,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/13efa61913a924ed3abe33397dc82d49534b7a63"
+    },
+    {
+      "path": "contributions/cities/IN.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "faa1f60127813c2a5a0796c3af5f93204b4721da",
+      "size": 4401615,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/faa1f60127813c2a5a0796c3af5f93204b4721da"
+    },
+    {
+      "path": "contributions/cities/IQ.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a6d646daca709017df3c03f7dfd3dd02c710bdfb",
+      "size": 143254,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/a6d646daca709017df3c03f7dfd3dd02c710bdfb"
+    },
+    {
+      "path": "contributions/cities/IR.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2202db732ff3f25a1f0ee94f015b5696b34dc5f0",
+      "size": 1922934,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/2202db732ff3f25a1f0ee94f015b5696b34dc5f0"
+    },
+    {
+      "path": "contributions/cities/IS.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "15e45e47ccebc366a84fee723b31b1e93b744bed",
+      "size": 86126,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/15e45e47ccebc366a84fee723b31b1e93b744bed"
+    },
+    {
+      "path": "contributions/cities/IT.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8eb32c0661ef713d9144ab6d9bf99678e71b5327",
+      "size": 11067666,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/8eb32c0661ef713d9144ab6d9bf99678e71b5327"
+    },
+    {
+      "path": "contributions/cities/JE.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "26264197adce82f3d1448013f5fa30dfe4edeef3",
+      "size": 69105,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/26264197adce82f3d1448013f5fa30dfe4edeef3"
+    },
+    {
+      "path": "contributions/cities/JM.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8309bc6870cd23173af14cb49cf02ed1d705b035",
+      "size": 921006,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/8309bc6870cd23173af14cb49cf02ed1d705b035"
+    },
+    {
+      "path": "contributions/cities/JO.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9e47df8c8ad2c4fc85e344d8bfb96caa91e98903",
+      "size": 84631,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/9e47df8c8ad2c4fc85e344d8bfb96caa91e98903"
+    },
+    {
+      "path": "contributions/cities/JP.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b8dad0e3862cfc61db3e83cbc7d1e674c5d3ccdd",
+      "size": 1707399,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/b8dad0e3862cfc61db3e83cbc7d1e674c5d3ccdd"
+    },
+    {
+      "path": "contributions/cities/KE.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e9a5b72f2fbd79b283ce763801b30f1bd8ac0d50",
+      "size": 144297,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/e9a5b72f2fbd79b283ce763801b30f1bd8ac0d50"
+    },
+    {
+      "path": "contributions/cities/KG.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f7b6e9b786daa209138c47212e5461c6414e0556",
+      "size": 56436,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/f7b6e9b786daa209138c47212e5461c6414e0556"
+    },
+    {
+      "path": "contributions/cities/KH.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5513d74e6d8fe592c3f61f0588c4c8de0430297d",
+      "size": 123635,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/5513d74e6d8fe592c3f61f0588c4c8de0430297d"
+    },
+    {
+      "path": "contributions/cities/KI.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6414bafe2d78d1423a56395562e490e7a6ef4699",
+      "size": 39843,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/6414bafe2d78d1423a56395562e490e7a6ef4699"
+    },
+    {
+      "path": "contributions/cities/KM.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8fc2bcdafb5566e15cfa299e9cea08c8c897ba8e",
+      "size": 89680,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/8fc2bcdafb5566e15cfa299e9cea08c8c897ba8e"
+    },
+    {
+      "path": "contributions/cities/KN.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "93e2253c4ea1e0b18f046a3f446e62580d7cbc42",
+      "size": 14626,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/93e2253c4ea1e0b18f046a3f446e62580d7cbc42"
+    },
+    {
+      "path": "contributions/cities/KP.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8f57ef034001b81a302bf70c750f264920549f44",
+      "size": 82955,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/8f57ef034001b81a302bf70c750f264920549f44"
+    },
+    {
+      "path": "contributions/cities/KR.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "841d4a14dd6014c989b12fbe01ea95a6a8b26949",
+      "size": 316211,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/841d4a14dd6014c989b12fbe01ea95a6a8b26949"
+    },
+    {
+      "path": "contributions/cities/KW.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fa1d2336a8042692af3d2e0bcfedf06e21eeda7c",
+      "size": 27416,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/fa1d2336a8042692af3d2e0bcfedf06e21eeda7c"
+    },
+    {
+      "path": "contributions/cities/KY.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c5b4d1a0319d2eea13635ae933cf05745e1b031c",
+      "size": 7793,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/c5b4d1a0319d2eea13635ae933cf05745e1b031c"
+    },
+    {
+      "path": "contributions/cities/KZ.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "57226d2dfb3508a68c712bd45600b2095f6ee681",
+      "size": 269651,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/57226d2dfb3508a68c712bd45600b2095f6ee681"
+    },
+    {
+      "path": "contributions/cities/LA.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8042c4aee67d55b103a0f1d350cd7356533a566f",
+      "size": 88333,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/8042c4aee67d55b103a0f1d350cd7356533a566f"
+    },
+    {
+      "path": "contributions/cities/LB.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6a8b61b498d7e6788fdebf6674f14fda897b8c48",
+      "size": 27533,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/6a8b61b498d7e6788fdebf6674f14fda897b8c48"
+    },
+    {
+      "path": "contributions/cities/LC.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "10ed164f2214ae1c1b14f9d5d44fef35bfae91a6",
+      "size": 542328,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/10ed164f2214ae1c1b14f9d5d44fef35bfae91a6"
+    },
+    {
+      "path": "contributions/cities/LI.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "10e7dc452560382b1b222bdac62c5dba6732b99d",
+      "size": 10964,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/10e7dc452560382b1b222bdac62c5dba6732b99d"
+    },
+    {
+      "path": "contributions/cities/LK.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "acafdddb15c468d53577e4b09d5a71c3b984065f",
+      "size": 163244,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/acafdddb15c468d53577e4b09d5a71c3b984065f"
+    },
+    {
+      "path": "contributions/cities/LR.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "41a5ffb084cd245719b1e99ed9940d021757eafa",
+      "size": 18934,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/41a5ffb084cd245719b1e99ed9940d021757eafa"
+    },
+    {
+      "path": "contributions/cities/LS.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3be6b812aeeaa245774e3905074f1f064e15be09",
+      "size": 12484,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/3be6b812aeeaa245774e3905074f1f064e15be09"
+    },
+    {
+      "path": "contributions/cities/LT.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0a27fc74b1a0089cd668a63f6d2bb973614da324",
+      "size": 137748,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/0a27fc74b1a0089cd668a63f6d2bb973614da324"
+    },
+    {
+      "path": "contributions/cities/LU.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "100aea10b905d59dfca431e357b00c7c6fa26822",
+      "size": 151617,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/100aea10b905d59dfca431e357b00c7c6fa26822"
+    },
+    {
+      "path": "contributions/cities/LV.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b49b08dec155e67c5aa9e318052973cbf731e18a",
+      "size": 126357,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/b49b08dec155e67c5aa9e318052973cbf731e18a"
+    },
+    {
+      "path": "contributions/cities/LY.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fc103cc8c5703d7bb079a123aee84d9688cd6ca9",
+      "size": 55049,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/fc103cc8c5703d7bb079a123aee84d9688cd6ca9"
+    },
+    {
+      "path": "contributions/cities/MA.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "77a4fde0e448bf902e5c7701c76d664a9663d222",
+      "size": 235824,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/77a4fde0e448bf902e5c7701c76d664a9663d222"
+    },
+    {
+      "path": "contributions/cities/MC.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "68faefae95ceae769a2047c941f397615e3e4f2e",
+      "size": 18500,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/68faefae95ceae769a2047c941f397615e3e4f2e"
+    },
+    {
+      "path": "contributions/cities/MD.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1444c7393c2a397b1cf69c8e6c945185deba943a",
+      "size": 74977,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/1444c7393c2a397b1cf69c8e6c945185deba943a"
+    },
+    {
+      "path": "contributions/cities/ME.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d225262f989e918a5a1e3c98d40e864f4c66f1c3",
+      "size": 41096,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/d225262f989e918a5a1e3c98d40e864f4c66f1c3"
+    },
+    {
+      "path": "contributions/cities/MG.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "71dd1bb8f735864fa64297d295b75c9c7fa6e3cf",
+      "size": 9994,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/71dd1bb8f735864fa64297d295b75c9c7fa6e3cf"
+    },
+    {
+      "path": "contributions/cities/MH.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "38f8da473c78d59aeb82275090dee4982b9145fb",
+      "size": 27271,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/38f8da473c78d59aeb82275090dee4982b9145fb"
+    },
+    {
+      "path": "contributions/cities/MK.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bcb8e8e02d8c60b133c50cb6d81ab522ff004602",
+      "size": 203574,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/bcb8e8e02d8c60b133c50cb6d81ab522ff004602"
+    },
+    {
+      "path": "contributions/cities/ML.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "719d628c90ac5ed07a1126256783442e6ea7e0da",
+      "size": 48573,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/719d628c90ac5ed07a1126256783442e6ea7e0da"
+    },
+    {
+      "path": "contributions/cities/MM.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2c8bc56c15e00a51dc025c5842ede64a9d3189ba",
+      "size": 75688,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/2c8bc56c15e00a51dc025c5842ede64a9d3189ba"
+    },
+    {
+      "path": "contributions/cities/MN.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1d99d815deaa6248f64a91698361a8e07a5f1737",
+      "size": 41717,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/1d99d815deaa6248f64a91698361a8e07a5f1737"
+    },
+    {
+      "path": "contributions/cities/MQ.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "58cee0682aaae2fc023a20dac1c8d7eeaac6af64",
+      "size": 37707,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/58cee0682aaae2fc023a20dac1c8d7eeaac6af64"
+    },
+    {
+      "path": "contributions/cities/MR.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7bade5e6652f2b27e3de50a3ab9f1c9d6fb127f3",
+      "size": 42780,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/7bade5e6652f2b27e3de50a3ab9f1c9d6fb127f3"
+    },
+    {
+      "path": "contributions/cities/MT.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0a12b4b4189a66d27819b0bffb028d7251ab312e",
+      "size": 89458,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/0a12b4b4189a66d27819b0bffb028d7251ab312e"
+    },
+    {
+      "path": "contributions/cities/MU.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "49c5853e558d3087807defda75593f5627f11384",
+      "size": 187227,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/49c5853e558d3087807defda75593f5627f11384"
+    },
+    {
+      "path": "contributions/cities/MV.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fd68774d245c9127d3a4b13fa870673c580b6f64",
+      "size": 21751,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/fd68774d245c9127d3a4b13fa870673c580b6f64"
+    },
+    {
+      "path": "contributions/cities/MW.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b3563515f36e29ebe3913ce9804da183aa9598c4",
+      "size": 67013,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/b3563515f36e29ebe3913ce9804da183aa9598c4"
+    },
+    {
+      "path": "contributions/cities/MX.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c5dca0ddb3b923dbd63227569e7b15c56417efd3",
+      "size": 11389794,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/c5dca0ddb3b923dbd63227569e7b15c56417efd3"
+    },
+    {
+      "path": "contributions/cities/MY.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8f983bce28b29179cb2c7537f5e21dc1e51f7e85",
+      "size": 197133,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/8f983bce28b29179cb2c7537f5e21dc1e51f7e85"
+    },
+    {
+      "path": "contributions/cities/MZ.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c733c87b0b8bd94f5a661ba409e09c38f3dcd96d",
+      "size": 40377,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/c733c87b0b8bd94f5a661ba409e09c38f3dcd96d"
+    },
+    {
+      "path": "contributions/cities/NA.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "dd146c419aab2049ad8a176a182a0f3072077f0f",
+      "size": 51670,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/dd146c419aab2049ad8a176a182a0f3072077f0f"
+    },
+    {
+      "path": "contributions/cities/NC.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "17a6870f0aef538fc2ea58d2d0370f3e8a1ff3b0",
+      "size": 9898,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/17a6870f0aef538fc2ea58d2d0370f3e8a1ff3b0"
+    },
+    {
+      "path": "contributions/cities/NE.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a8dca90fabe025f92e6b79ac80d11a9898236f3b",
+      "size": 79212,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/a8dca90fabe025f92e6b79ac80d11a9898236f3b"
+    },
+    {
+      "path": "contributions/cities/NG.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d1005ddb30e7e2a14c829232e5f0379179d984d0",
+      "size": 457220,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/d1005ddb30e7e2a14c829232e5f0379179d984d0"
+    },
+    {
+      "path": "contributions/cities/NI.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "eacb1abf28fe1188d1cf815898a67c2ccfc4376d",
+      "size": 174640,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/eacb1abf28fe1188d1cf815898a67c2ccfc4376d"
+    },
+    {
+      "path": "contributions/cities/NL.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d02f9ff05832499ea0d91836bcaa409a5b2a2f36",
+      "size": 1736491,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/d02f9ff05832499ea0d91836bcaa409a5b2a2f36"
+    },
+    {
+      "path": "contributions/cities/NO.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "15049873edbd066f518c967a1f106e3cdbcc9b16",
+      "size": 672220,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/15049873edbd066f518c967a1f106e3cdbcc9b16"
+    },
+    {
+      "path": "contributions/cities/NP.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "58f6bcc5822dbb7f193a504b64525c420bb38bba",
+      "size": 79672,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/58f6bcc5822dbb7f193a504b64525c420bb38bba"
+    },
+    {
+      "path": "contributions/cities/NR.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b9bd7aec839cd5c172a0f3d864f793c37d7588cf",
+      "size": 6732,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/b9bd7aec839cd5c172a0f3d864f793c37d7588cf"
+    },
+    {
+      "path": "contributions/cities/NZ.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cec5036f0271aa7366d734723023185a08c942fa",
+      "size": 166509,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/cec5036f0271aa7366d734723023185a08c942fa"
+    },
+    {
+      "path": "contributions/cities/OM.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "20fffabcdc1f76f7f2e905a8978db471f435640b",
+      "size": 29125,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/20fffabcdc1f76f7f2e905a8978db471f435640b"
+    },
+    {
+      "path": "contributions/cities/PA.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c402505af0b96164b491e5ef42583ffa4ca198be",
+      "size": 613923,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/c402505af0b96164b491e5ef42583ffa4ca198be"
+    },
+    {
+      "path": "contributions/cities/PE.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e4dbe94b504654d92b33fb9dda82bb32d29025ea",
+      "size": 542921,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/e4dbe94b504654d92b33fb9dda82bb32d29025ea"
+    },
+    {
+      "path": "contributions/cities/PF.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e32fbbda9d056bfdd7dd10ef8345711c7993fcc5",
+      "size": 48614,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/e32fbbda9d056bfdd7dd10ef8345711c7993fcc5"
+    },
+    {
+      "path": "contributions/cities/PG.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bbaa233dbe539cdf149f8cf3f2989c405d190632",
+      "size": 105996,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/bbaa233dbe539cdf149f8cf3f2989c405d190632"
+    },
+    {
+      "path": "contributions/cities/PH.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "12fcf29dda2a4f63f0d9a46496389899e35b6b5c",
+      "size": 5491215,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/12fcf29dda2a4f63f0d9a46496389899e35b6b5c"
+    },
+    {
+      "path": "contributions/cities/PK.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2bb42085da52578b7d5d674bc3914bf72a96146c",
+      "size": 488113,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/2bb42085da52578b7d5d674bc3914bf72a96146c"
+    },
+    {
+      "path": "contributions/cities/PL.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "22ed693f6a07bbe86b6c8c682a6e133757a21a40",
+      "size": 2991007,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/22ed693f6a07bbe86b6c8c682a6e133757a21a40"
+    },
+    {
+      "path": "contributions/cities/PR.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "81de887ea61881e5e19bf22d1b90abe6754df9c1",
+      "size": 80573,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/81de887ea61881e5e19bf22d1b90abe6754df9c1"
+    },
+    {
+      "path": "contributions/cities/PS.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "862db588610c668d75bfad93db474db72ee4f0b2",
+      "size": 137800,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/862db588610c668d75bfad93db474db72ee4f0b2"
+    },
+    {
+      "path": "contributions/cities/PT.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d46fe59de14f3edd8e1fb2298c2c9f5022c254a0",
+      "size": 1426711,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/d46fe59de14f3edd8e1fb2298c2c9f5022c254a0"
+    },
+    {
+      "path": "contributions/cities/PW.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d19831525e1be90ab5958a216f268520c84204d7",
+      "size": 16301,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/d19831525e1be90ab5958a216f268520c84204d7"
+    },
+    {
+      "path": "contributions/cities/PY.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "77b1486b7a6d286ccca622b3a96339340107ba3b",
+      "size": 165199,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/77b1486b7a6d286ccca622b3a96339340107ba3b"
+    },
+    {
+      "path": "contributions/cities/QA.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2f3c37a416e716d4b465829bd16626f2f6f9612e",
+      "size": 16353,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/2f3c37a416e716d4b465829bd16626f2f6f9612e"
+    },
+    {
+      "path": "contributions/cities/RE.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1a08e49095c2bd2d10043989756d75574293b2e0",
+      "size": 26204,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/1a08e49095c2bd2d10043989756d75574293b2e0"
+    },
+    {
+      "path": "contributions/cities/RO.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "41f93d78d9cedc59b87add489e1e6d84b840f4af",
+      "size": 8852339,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/41f93d78d9cedc59b87add489e1e6d84b840f4af"
+    },
+    {
+      "path": "contributions/cities/RS.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d3c465509589218d3cbe550103107d4b33baf575",
+      "size": 399825,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/d3c465509589218d3cbe550103107d4b33baf575"
+    },
+    {
+      "path": "contributions/cities/RU.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "dded2131aa8c415d1ed1082d30aef33f31935c13",
+      "size": 6209418,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/dded2131aa8c415d1ed1082d30aef33f31935c13"
+    },
+    {
+      "path": "contributions/cities/RW.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e6036b593b45440dfa53320455eaba3534c6d8e6",
+      "size": 12518,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/e6036b593b45440dfa53320455eaba3534c6d8e6"
+    },
+    {
+      "path": "contributions/cities/SA.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f9244ca53e343938f593ac9e266af8bad68d4b33",
+      "size": 412092,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/f9244ca53e343938f593ac9e266af8bad68d4b33"
+    },
+    {
+      "path": "contributions/cities/SB.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bfae8f155976641d5c474a4209c7a7574840f207",
+      "size": 6767,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/bfae8f155976641d5c474a4209c7a7574840f207"
+    },
+    {
+      "path": "contributions/cities/SC.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6e9cd8d3cc1ba7c3afd1c00a4ab5d3823240f6d3",
+      "size": 9641,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/6e9cd8d3cc1ba7c3afd1c00a4ab5d3823240f6d3"
+    },
+    {
+      "path": "contributions/cities/SD.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a46e369229bf4916356993a0aa991c087924f2a9",
+      "size": 73986,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/a46e369229bf4916356993a0aa991c087924f2a9"
+    },
+    {
+      "path": "contributions/cities/SE.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9877fea6222a958e1444bf9812a69a1d52b2f993",
+      "size": 827115,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/9877fea6222a958e1444bf9812a69a1d52b2f993"
+    },
+    {
+      "path": "contributions/cities/SG.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9fd8c0607781d7fea8286900063d0eccb7af6012",
+      "size": 27280,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/9fd8c0607781d7fea8286900063d0eccb7af6012"
+    },
+    {
+      "path": "contributions/cities/SI.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cf4d702e60361ba015ac895b75b5760be22e9f0b",
+      "size": 339470,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/cf4d702e60361ba015ac895b75b5760be22e9f0b"
+    },
+    {
+      "path": "contributions/cities/SK.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "21bfcf40b08d1daffb0266e8c7f7a12af42ae86c",
+      "size": 263646,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/21bfcf40b08d1daffb0266e8c7f7a12af42ae86c"
+    },
+    {
+      "path": "contributions/cities/SL.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d19908a280146d8bde60724465259d4c6905f5df",
+      "size": 92041,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/d19908a280146d8bde60724465259d4c6905f5df"
+    },
+    {
+      "path": "contributions/cities/SM.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "298ecd070589747d38481b4191272dee59f0fdc2",
+      "size": 10160,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/298ecd070589747d38481b4191272dee59f0fdc2"
+    },
+    {
+      "path": "contributions/cities/SN.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f97edd6a000d890c0ae2d58e5b3c8ca03b960714",
+      "size": 77426,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/f97edd6a000d890c0ae2d58e5b3c8ca03b960714"
+    },
+    {
+      "path": "contributions/cities/SO.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9a2b55b52b8941d2d0f1842dfbe65728415775f4",
+      "size": 51795,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/9a2b55b52b8941d2d0f1842dfbe65728415775f4"
+    },
+    {
+      "path": "contributions/cities/SR.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "24563fe556c1d94aea9b91487544879ef6caf226",
+      "size": 13978,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/24563fe556c1d94aea9b91487544879ef6caf226"
+    },
+    {
+      "path": "contributions/cities/SS.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cca52df9c373da856ee8c1c7732af614b5fae479",
+      "size": 943,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/cca52df9c373da856ee8c1c7732af614b5fae479"
+    },
+    {
+      "path": "contributions/cities/ST.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8c5785fb51e0b6c9e892e9175611b652d88c7d83",
+      "size": 8044,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/8c5785fb51e0b6c9e892e9175611b652d88c7d83"
+    },
+    {
+      "path": "contributions/cities/SV.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "94c6dbf12aedec12607d539f7fc8b83fa332b898",
+      "size": 111911,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/94c6dbf12aedec12607d539f7fc8b83fa332b898"
+    },
+    {
+      "path": "contributions/cities/SY.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0bf00c30b0e6e6e3cc393156c481eafa9f6d93a6",
+      "size": 153972,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/0bf00c30b0e6e6e3cc393156c481eafa9f6d93a6"
+    },
+    {
+      "path": "contributions/cities/SZ.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2dcd2ebc5b602766e97e9a108f135a44eb111b77",
+      "size": 35925,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/2dcd2ebc5b602766e97e9a108f135a44eb111b77"
+    },
+    {
+      "path": "contributions/cities/TD.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9abdffee6d9dacaaeeae59c3664b09e16a8218fb",
+      "size": 48670,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/9abdffee6d9dacaaeeae59c3664b09e16a8218fb"
+    },
+    {
+      "path": "contributions/cities/TG.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d3ff3dfe79ac27159401c069f5791291d390465f",
+      "size": 21987,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/d3ff3dfe79ac27159401c069f5791291d390465f"
+    },
+    {
+      "path": "contributions/cities/TH.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6a10e99c4aed484de8b3237d669088cfceff926d",
+      "size": 1489318,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/6a10e99c4aed484de8b3237d669088cfceff926d"
+    },
+    {
+      "path": "contributions/cities/TJ.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "09b5a626457e782d83325a8a0fb6e557f5ac29e6",
+      "size": 74196,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/09b5a626457e782d83325a8a0fb6e557f5ac29e6"
+    },
+    {
+      "path": "contributions/cities/TL.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "63ab42a2bff9bc99cfc598360a3eb481279e27bc",
+      "size": 55335,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/63ab42a2bff9bc99cfc598360a3eb481279e27bc"
+    },
+    {
+      "path": "contributions/cities/TM.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1ffafbbaadf270f80293f566132dcb4332df1a69",
+      "size": 30449,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/1ffafbbaadf270f80293f566132dcb4332df1a69"
+    },
+    {
+      "path": "contributions/cities/TN.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "24631684bc2b5ddb926022bd5b66b213a859b32c",
+      "size": 173153,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/24631684bc2b5ddb926022bd5b66b213a859b32c"
+    },
+    {
+      "path": "contributions/cities/TO.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1e523251294b23e2543bff3913f78a58f14701ec",
+      "size": 8139,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/1e523251294b23e2543bff3913f78a58f14701ec"
+    },
+    {
+      "path": "contributions/cities/TR.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "422b7aae9c9564ed7e8452d37c02a1699a6866db",
+      "size": 999735,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/422b7aae9c9564ed7e8452d37c02a1699a6866db"
+    },
+    {
+      "path": "contributions/cities/TT.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fd2a31eeffb5b3409c602afe29143ea1c212d689",
+      "size": 27196,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/fd2a31eeffb5b3409c602afe29143ea1c212d689"
+    },
+    {
+      "path": "contributions/cities/TV.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c49404f7166986102d01dc40c0ba494a10a80100",
+      "size": 10050,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/c49404f7166986102d01dc40c0ba494a10a80100"
+    },
+    {
+      "path": "contributions/cities/TW.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c26f830fb350071c17d3593c5161aaa1cb4a8033",
+      "size": 40191,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/c26f830fb350071c17d3593c5161aaa1cb4a8033"
+    },
+    {
+      "path": "contributions/cities/TZ.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "01b886e63a7521ad9d5290a794ef2495955cdb35",
+      "size": 305360,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/01b886e63a7521ad9d5290a794ef2495955cdb35"
+    },
+    {
+      "path": "contributions/cities/UA.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c6506f00887ff729579ef02a1dde8e45295d9b5b",
+      "size": 2000228,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/c6506f00887ff729579ef02a1dde8e45295d9b5b"
+    },
+    {
+      "path": "contributions/cities/UG.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fc54f96a9b0949a9d845af69151113a22649f0b5",
+      "size": 93342,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/fc54f96a9b0949a9d845af69151113a22649f0b5"
+    },
+    {
+      "path": "contributions/cities/US.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5ad90c1b1bb88605da510101dbb935ecf746ff6c",
+      "size": 21646661,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/5ad90c1b1bb88605da510101dbb935ecf746ff6c"
+    },
+    {
+      "path": "contributions/cities/UY.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3f436089a3b0b9f101c9d8753014c867e8ce46e6",
+      "size": 207637,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/3f436089a3b0b9f101c9d8753014c867e8ce46e6"
+    },
+    {
+      "path": "contributions/cities/UZ.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "712356d837f2623b46269249a67bb43a272f12d1",
+      "size": 141883,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/712356d837f2623b46269249a67bb43a272f12d1"
+    },
+    {
+      "path": "contributions/cities/VC.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "adbcf66a54dbb8697260c6d2bdfeff2c3ee2f746",
+      "size": 9855,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/adbcf66a54dbb8697260c6d2bdfeff2c3ee2f746"
+    },
+    {
+      "path": "contributions/cities/VE.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b73c62ee0a0f571b0ad47587dfc04f81c913c6ef",
+      "size": 153507,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/b73c62ee0a0f571b0ad47587dfc04f81c913c6ef"
+    },
+    {
+      "path": "contributions/cities/VI.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "69252cb3c10edbb9969d35559a3c16607b8ff445",
+      "size": 21872,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/69252cb3c10edbb9969d35559a3c16607b8ff445"
+    },
+    {
+      "path": "contributions/cities/VN.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "821d424065ac032a6226c746d254ba9820f3fa89",
+      "size": 568868,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/821d424065ac032a6226c746d254ba9820f3fa89"
+    },
+    {
+      "path": "contributions/cities/VU.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "840f7a37bb88617411cb43394ab7a1c0b41b764f",
+      "size": 7149,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/840f7a37bb88617411cb43394ab7a1c0b41b764f"
+    },
+    {
+      "path": "contributions/cities/WF.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e6fecf3779b22a63f3397df1ced1beb35b229b39",
+      "size": 2998,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/e6fecf3779b22a63f3397df1ced1beb35b229b39"
+    },
+    {
+      "path": "contributions/cities/WS.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "64fb982debf15783ade20f4f234d3b14840e18f7",
+      "size": 20253,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/64fb982debf15783ade20f4f234d3b14840e18f7"
+    },
+    {
+      "path": "contributions/cities/XK.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "deb83f6bab15b1a047fc7c25211de5deeb3fc754",
+      "size": 29371,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/deb83f6bab15b1a047fc7c25211de5deeb3fc754"
+    },
+    {
+      "path": "contributions/cities/YE.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "813da316ebbfd494bd8a6d06098bee65701f371f",
+      "size": 355822,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/813da316ebbfd494bd8a6d06098bee65701f371f"
+    },
+    {
+      "path": "contributions/cities/YT.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8bb2035b17c6876f3c512a7b12675145dbfc0fc4",
+      "size": 28332,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/8bb2035b17c6876f3c512a7b12675145dbfc0fc4"
+    },
+    {
+      "path": "contributions/cities/ZA.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fde8023ff3776f2da6438d1edc7a49f91918745e",
+      "size": 361874,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/fde8023ff3776f2da6438d1edc7a49f91918745e"
+    },
+    {
+      "path": "contributions/cities/ZM.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "09a614985390864821ca16dc7713c51c379a1fc2",
+      "size": 72296,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/09a614985390864821ca16dc7713c51c379a1fc2"
+    },
+    {
+      "path": "contributions/cities/ZW.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6ffd92ac1ec38b42cbfb178988a02d27bdff71c7",
+      "size": 118929,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/6ffd92ac1ec38b42cbfb178988a02d27bdff71c7"
+    },
+    {
+      "path": "contributions/countries",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "c6ff2b5d687a5363a55c3305ef272998e6893b28",
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/trees/c6ff2b5d687a5363a55c3305ef272998e6893b28"
+    },
+    {
+      "path": "contributions/countries/countries.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2e74889668b6f26e46ae4a2c37c60735ad0379a2",
+      "size": 448134,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/2e74889668b6f26e46ae4a2c37c60735ad0379a2"
+    },
+    {
+      "path": "contributions/regions",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "c1af5c890402204d847429169d8a2e5664d717c9",
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/trees/c1af5c890402204d847429169d8a2e5664d717c9"
+    },
+    {
+      "path": "contributions/regions/regions.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "aedd7de0f07a679b49cd96907d48e783e4bc8512",
+      "size": 3763,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/aedd7de0f07a679b49cd96907d48e783e4bc8512"
+    },
+    {
+      "path": "contributions/states",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "c9e4e064186465656d0d18e863d53ef1a7e83040",
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/trees/c9e4e064186465656d0d18e863d53ef1a7e83040"
+    },
+    {
+      "path": "contributions/states/states.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "72d5b2232efc20e9fc641474c81a1e6d29aae075",
+      "size": 5767736,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/72d5b2232efc20e9fc641474c81a1e6d29aae075"
+    },
+    {
+      "path": "contributions/subregions",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "029c6dd60d39da40d536e60452bf07c7a0bc7cc5",
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/trees/029c6dd60d39da40d536e60452bf07c7a0bc7cc5"
+    },
+    {
+      "path": "contributions/subregions/subregions.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b30c18034f5b4a4713afdf7c9f74db9e2b6f6480",
+      "size": 15448,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/b30c18034f5b4a4713afdf7c9f74db9e2b6f6480"
+    },
+    {
+      "path": "csv",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "88e776efce4f5a3e8e82cbc2216049ac0bed853a",
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/trees/88e776efce4f5a3e8e82cbc2216049ac0bed853a"
+    },
+    {
+      "path": "csv/cities.csv",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c0d86ad3611611369562cd49385a6eb21651b937",
+      "size": 19678072,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/c0d86ad3611611369562cd49385a6eb21651b937"
+    },
+    {
+      "path": "csv/countries.csv",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "55affd446ebeda73bc5d20cfdce7ed84aef944e2",
+      "size": 108365,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/55affd446ebeda73bc5d20cfdce7ed84aef944e2"
+    },
+    {
+      "path": "csv/regions.csv",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "102f53e70f6ae1a5ece35078123c0fa270d422e6",
+      "size": 101,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/102f53e70f6ae1a5ece35078123c0fa270d422e6"
+    },
+    {
+      "path": "csv/states.csv",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "84622c34027815fac1c6e133db56d011d9a7133b",
+      "size": 649969,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/84622c34027815fac1c6e133db56d011d9a7133b"
+    },
+    {
+      "path": "csv/subregions.csv",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "50691f0bc5c280b5fe83186f4fb38cd0b00fd3f2",
+      "size": 646,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/50691f0bc5c280b5fe83186f4fb38cd0b00fd3f2"
+    },
+    {
+      "path": "csv/translations.csv.gz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fbc398aea6b904b3491a24e378f4c8d7e3c557a6",
+      "size": 22076814,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/fbc398aea6b904b3491a24e378f4c8d7e3c557a6"
+    },
+    {
+      "path": "duckdb",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "dbb0a3cd7030befdad6574effad0732ce73926ac",
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/trees/dbb0a3cd7030befdad6574effad0732ce73926ac"
+    },
+    {
+      "path": "duckdb/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c8cd966cfd1a75a2c145fa1f41278cb636bda97a",
+      "size": 4426,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/c8cd966cfd1a75a2c145fa1f41278cb636bda97a"
+    },
+    {
+      "path": "geojson",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "8efbb11872fbc259abc2ea6eaf363f8ebe614d3b",
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/trees/8efbb11872fbc259abc2ea6eaf363f8ebe614d3b"
+    },
+    {
+      "path": "geojson/cities.geojson.gz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7f9fa9395373104b1ae72f23a68234bde7fff22c",
+      "size": 25442257,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/7f9fa9395373104b1ae72f23a68234bde7fff22c"
+    },
+    {
+      "path": "geojson/countries.geojson",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ae2a5684a5242d6a335823d83506ca0eb3e64865",
+      "size": 512601,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/ae2a5684a5242d6a335823d83506ca0eb3e64865"
+    },
+    {
+      "path": "geojson/states.geojson",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5bbdf804fc350f9e2f09cb057c103b3f2ae76cff",
+      "size": 6871953,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/5bbdf804fc350f9e2f09cb057c103b3f2ae76cff"
+    },
+    {
+      "path": "json",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "a4489ed0acb5c9bab51127639923a3cd0ad8c60e",
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/trees/a4489ed0acb5c9bab51127639923a3cd0ad8c60e"
+    },
+    {
+      "path": "json/cities.json.gz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "67c7666dd9cd81a39e2fbaf0b94ac8770260e851",
+      "size": 25235029,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/67c7666dd9cd81a39e2fbaf0b94ac8770260e851"
+    },
+    {
+      "path": "json/countries+cities.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b7099e42b30176d949bb1f584f8ccf3c72b0ec66",
+      "size": 4112091,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/b7099e42b30176d949bb1f584f8ccf3c72b0ec66"
+    },
+    {
+      "path": "json/countries+states+cities.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1af0b578015114550ecdf766ea69032b2e7c0345",
+      "size": 46724025,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/1af0b578015114550ecdf766ea69032b2e7c0345"
+    },
+    {
+      "path": "json/countries+states+cities.json.gz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "028f4c4aebf05a6610202c54a75b9d4da917473c",
+      "size": 3568739,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/028f4c4aebf05a6610202c54a75b9d4da917473c"
+    },
+    {
+      "path": "json/countries+states.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "90f55ec6582095b3e467a6f48c51a2bc219b7f13",
+      "size": 151173,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/90f55ec6582095b3e467a6f48c51a2bc219b7f13"
+    },
+    {
+      "path": "json/countries.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "946299567a8337149196bf86a6f577397c73adc3",
+      "size": 506106,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/946299567a8337149196bf86a6f577397c73adc3"
+    },
+    {
+      "path": "json/regions.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3e3546d661a6ca87fbdc8fdffd107f28bcf00bd2",
+      "size": 3938,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/3e3546d661a6ca87fbdc8fdffd107f28bcf00bd2"
+    },
+    {
+      "path": "json/states+cities.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d5355727fbd8a1afc9fba3e6fc5286a468e113ce",
+      "size": 28793853,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/d5355727fbd8a1afc9fba3e6fc5286a468e113ce"
+    },
+    {
+      "path": "json/states.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0af51969cff2bc7d066d629aecbe324e79d08012",
+      "size": 6470885,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/0af51969cff2bc7d066d629aecbe324e79d08012"
+    },
+    {
+      "path": "json/subregions.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "33c4cbfe75df8402482bac8c3e7721909e0a8262",
+      "size": 15905,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/33c4cbfe75df8402482bac8c3e7721909e0a8262"
+    },
+    {
+      "path": "mongodb",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "aa1917c1c77aa4f045dc989c0dc9c1a96dbea82a",
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/trees/aa1917c1c77aa4f045dc989c0dc9c1a96dbea82a"
+    },
+    {
+      "path": "mongodb/world-mongodb-dump.tar.gz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5b8e8ae468fb9cd83f2219fb525b81a25638826b",
+      "size": 31999187,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/5b8e8ae468fb9cd83f2219fb525b81a25638826b"
+    },
+    {
+      "path": "nmig",
+      "mode": "160000",
+      "type": "commit",
+      "sha": "6dee39f395093cf8aaf2e8722bb0983e0a031f5f"
+    },
+    {
+      "path": "nmig.config.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "82b3346411f43f7f6910dd8a0080869dc02ad14b",
+      "size": 5197,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/82b3346411f43f7f6910dd8a0080869dc02ad14b"
+    },
+    {
+      "path": "prisma",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "c1fa71a1ba1c6d544d645f7241ec56d2c0b973a5",
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/trees/c1fa71a1ba1c6d544d645f7241ec56d2c0b973a5"
+    },
+    {
+      "path": "prisma/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "dae15928a349f9f31dcd2040605fe0ca01586102",
+      "size": 1381,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/dae15928a349f9f31dcd2040605fe0ca01586102"
+    },
+    {
+      "path": "prisma/package.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a84c8b7db529986a75ace19f01f07031c65f36cd",
+      "size": 774,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/a84c8b7db529986a75ace19f01f07031c65f36cd"
+    },
+    {
+      "path": "prisma/schema.prisma",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8e34f24a12a78459b1a0ee38dc91473e9d2961b4",
+      "size": 5459,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/8e34f24a12a78459b1a0ee38dc91473e9d2961b4"
+    },
+    {
+      "path": "prisma/seed.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2678681ab247702d3af7b79985c584140c249b1e",
+      "size": 3868,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/2678681ab247702d3af7b79985c584140c249b1e"
+    },
+    {
+      "path": "psql",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "eca95a5d1a6072c28aad8e4e4f2167f3275f6742",
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/trees/eca95a5d1a6072c28aad8e4e4f2167f3275f6742"
+    },
+    {
+      "path": "psql/cities.sql.gz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e470641329a82e4276dbafe72dd40a0f44aa7117",
+      "size": 21340174,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/e470641329a82e4276dbafe72dd40a0f44aa7117"
+    },
+    {
+      "path": "psql/countries.sql",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "138b3a3b676836c402f79c0459abe83a2f0b3964",
+      "size": 271412,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/138b3a3b676836c402f79c0459abe83a2f0b3964"
+    },
+    {
+      "path": "psql/regions.sql",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "efba65c55aee28f065a537a26ac81a0fbe48a5ce",
+      "size": 4838,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/efba65c55aee28f065a537a26ac81a0fbe48a5ce"
+    },
+    {
+      "path": "psql/states.sql",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "34390d1abe81509cea278fee52b84d4f921fe2dd",
+      "size": 3601780,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/34390d1abe81509cea278fee52b84d4f921fe2dd"
+    },
+    {
+      "path": "psql/subregions.sql",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a2e425f6eb67dbddaeb71df8a163d11ce86e28ad",
+      "size": 14174,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/a2e425f6eb67dbddaeb71df8a163d11ce86e28ad"
+    },
+    {
+      "path": "psql/world.sql.gz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f3f395287c714be9326e5f344ce5884ced38c90c",
+      "size": 22344471,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/f3f395287c714be9326e5f344ce5884ced38c90c"
+    },
+    {
+      "path": "sql",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "42e9e2b710e3c2ef5498a8106f6b5c31d799a40e",
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/trees/42e9e2b710e3c2ef5498a8106f6b5c31d799a40e"
+    },
+    {
+      "path": "sql/cities.sql.gz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d5ad89248feb323544dc52eb069a7321363f1bc6",
+      "size": 21386005,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/d5ad89248feb323544dc52eb069a7321363f1bc6"
+    },
+    {
+      "path": "sql/countries.sql",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "07cda90d79833939b88a55f464abd1ae305923b8",
+      "size": 281552,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/07cda90d79833939b88a55f464abd1ae305923b8"
+    },
+    {
+      "path": "sql/regions.sql",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "418201c7aaebb6f033e959d6a7ca22415deaa92f",
+      "size": 5123,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/418201c7aaebb6f033e959d6a7ca22415deaa92f"
+    },
+    {
+      "path": "sql/schema.sql",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7d97b85c4e07652bddf6d78bc2faaaebc560a951",
+      "size": 10203,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/7d97b85c4e07652bddf6d78bc2faaaebc560a951"
+    },
+    {
+      "path": "sql/states.sql",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "733708333f181b498efb39cb89bcc81647ef71fa",
+      "size": 3726510,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/733708333f181b498efb39cb89bcc81647ef71fa"
+    },
+    {
+      "path": "sql/subregions.sql",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "34498150324a883e877b3472fb9d4f4a7f43d23a",
+      "size": 14172,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/34498150324a883e877b3472fb9d4f4a7f43d23a"
+    },
+    {
+      "path": "sql/world.sql.gz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "eb4103fb1cca2b167df45ac02f41de4d39b03744",
+      "size": 22398916,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/eb4103fb1cca2b167df45ac02f41de4d39b03744"
+    },
+    {
+      "path": "sqlite",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "e928ecffb123f1b2cf4805e7e1b4de48a8d69ed4",
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/trees/e928ecffb123f1b2cf4805e7e1b4de48a8d69ed4"
+    },
+    {
+      "path": "sqlite/cities.sqlite3.gz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "38d5bb92b8531b5249e4064471b64114e0c33a13",
+      "size": 25454746,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/38d5bb92b8531b5249e4064471b64114e0c33a13"
+    },
+    {
+      "path": "sqlite/countries.sqlite3",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c40b0037f198f11529d9aff26509182dfc2924c4",
+      "size": 290816,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/c40b0037f198f11529d9aff26509182dfc2924c4"
+    },
+    {
+      "path": "sqlite/regions.sqlite3",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5f4b4e375d7e892ab09609aff04d43fa66e9a74f",
+      "size": 12288,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/5f4b4e375d7e892ab09609aff04d43fa66e9a74f"
+    },
+    {
+      "path": "sqlite/states.sqlite3",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9651754e344bf02ac2d8b0d646c214d3a771e42b",
+      "size": 3444736,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/9651754e344bf02ac2d8b0d646c214d3a771e42b"
+    },
+    {
+      "path": "sqlite/subregions.sqlite3",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fd6962c73220fd0819eccc12a784f921c559c326",
+      "size": 28672,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/fd6962c73220fd0819eccc12a784f921c559c326"
+    },
+    {
+      "path": "sqlite/world.sqlite3.gz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e9d2f7a78c1293240dc2dfeb9f08ff9e4d063326",
+      "size": 26575861,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/e9d2f7a78c1293240dc2dfeb9f08ff9e4d063326"
+    },
+    {
+      "path": "sqlserver",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "901d8c2ce9e9097a83238410468d356b06f10a1c",
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/trees/901d8c2ce9e9097a83238410468d356b06f10a1c"
+    },
+    {
+      "path": "sqlserver/cities.sql.gz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6872a82efcfd37eb77992cfd74ff86541073880a",
+      "size": 23752757,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/6872a82efcfd37eb77992cfd74ff86541073880a"
+    },
+    {
+      "path": "sqlserver/countries.sql",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6d9c46f198d12e007acfbde4f42b9d506ee33c75",
+      "size": 299719,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/6d9c46f198d12e007acfbde4f42b9d506ee33c75"
+    },
+    {
+      "path": "sqlserver/regions.sql",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bd1c3696760a714227ad3f4a256a52a614e40fcf",
+      "size": 3373,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/bd1c3696760a714227ad3f4a256a52a614e40fcf"
+    },
+    {
+      "path": "sqlserver/states.sql",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "189fd6d93ee1c787c4157c10929bf6e272972ec8",
+      "size": 4234013,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/189fd6d93ee1c787c4157c10929bf6e272972ec8"
+    },
+    {
+      "path": "sqlserver/subregions.sql",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2bcbb804ea44f65ac76bdfd6ea7567b4cfb83e57",
+      "size": 13946,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/2bcbb804ea44f65ac76bdfd6ea7567b4cfb83e57"
+    },
+    {
+      "path": "sqlserver/world.sql.gz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8b17aefdb5c6cdb5549766d4ddc04700c2d27b8e",
+      "size": 24736780,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/8b17aefdb5c6cdb5549766d4ddc04700c2d27b8e"
+    },
+    {
+      "path": "toon",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "b93a4ea011bb1a6f216c50a07fd3f430521f8307",
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/trees/b93a4ea011bb1a6f216c50a07fd3f430521f8307"
+    },
+    {
+      "path": "toon/cities.toon.gz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "09ababea5d1f572abb62dc6821d5f8d4edfce5a4",
+      "size": 21588722,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/09ababea5d1f572abb62dc6821d5f8d4edfce5a4"
+    },
+    {
+      "path": "toon/countries.toon",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8b5b2733c2137bf899e5cf78e6e19e1c46272658",
+      "size": 199377,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/8b5b2733c2137bf899e5cf78e6e19e1c46272658"
+    },
+    {
+      "path": "toon/states.toon",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c1c48122248db93d0a81ba4e8b89091f75480af8",
+      "size": 2349706,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/c1c48122248db93d0a81ba4e8b89091f75480af8"
+    },
+    {
+      "path": "xml",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "9359a99d4668aac017aa4dcd3db2b963f07dcbaf",
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/trees/9359a99d4668aac017aa4dcd3db2b963f07dcbaf"
+    },
+    {
+      "path": "xml/cities.xml.gz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "505b12fe95618a5608c4a6d3698c982f1446bc9a",
+      "size": 25399787,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/505b12fe95618a5608c4a6d3698c982f1446bc9a"
+    },
+    {
+      "path": "xml/countries.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "61130740670398f6212fc6451c0decc0672368df",
+      "size": 491679,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/61130740670398f6212fc6451c0decc0672368df"
+    },
+    {
+      "path": "xml/regions.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a74ce4be242d840bd079362c7a7354f6475495e4",
+      "size": 3503,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/a74ce4be242d840bd079362c7a7354f6475495e4"
+    },
+    {
+      "path": "xml/states.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3b018984de1d500cf1b0c0d46d73b12cfe14a5bc",
+      "size": 6112439,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/3b018984de1d500cf1b0c0d46d73b12cfe14a5bc"
+    },
+    {
+      "path": "xml/subregions.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "64978b5ef70b39b6afefda283a1de0aaded84aed",
+      "size": 14610,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/64978b5ef70b39b6afefda283a1de0aaded84aed"
+    },
+    {
+      "path": "yml",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "49111a50ffb6c369a6c16ea35f2bc1b94ebe33fa",
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/trees/49111a50ffb6c369a6c16ea35f2bc1b94ebe33fa"
+    },
+    {
+      "path": "yml/cities.yml.gz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "491c1d0f228a6510ccaf55f7542052eaf7480788",
+      "size": 24495182,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/491c1d0f228a6510ccaf55f7542052eaf7480788"
+    },
+    {
+      "path": "yml/countries.yml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2e786768bc5e5513b6f158328c4992f7bb6820e4",
+      "size": 357699,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/2e786768bc5e5513b6f158328c4992f7bb6820e4"
+    },
+    {
+      "path": "yml/regions.yml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e2e8946cb6ac34e75e70ee7b017c913a4230d27b",
+      "size": 2523,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/e2e8946cb6ac34e75e70ee7b017c913a4230d27b"
+    },
+    {
+      "path": "yml/states.yml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b43bf1e2f1da58a6dbe47c953d9abd410a82cb23",
+      "size": 4545035,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/b43bf1e2f1da58a6dbe47c953d9abd410a82cb23"
+    },
+    {
+      "path": "yml/subregions.yml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "eea3a28c580d194474aac3dc5cc66cba1c700a37",
+      "size": 11392,
+      "url": "https://api.github.com/repos/dr5hn/countries-states-cities-database/git/blobs/eea3a28c580d194474aac3dc5cc66cba1c700a37"
+    }
+  ],
+  "truncated": false
+}

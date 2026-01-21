@@ -4,8 +4,6 @@ import { Repository } from 'typeorm';
 import * as fs from 'fs';
 import * as path from 'path';
 
-import csc from 'countries-states-cities';
-
 import { Country } from '../modules/person/common/address/entities/country.entity';
 import { State } from '../modules/person/common/address/entities/state.entity';
 import { City } from '../modules/person/common/address/entities/city.entity';
@@ -13,6 +11,7 @@ import { City } from '../modules/person/common/address/entities/city.entity';
 @Injectable()
 export class LocationSeeder {
   private readonly logger = new Logger(LocationSeeder.name);
+  private readonly dataPath = path.join(__dirname, 'data', 'dr5hn', 'full.json');
 
   constructor(
     @InjectRepository(Country)
@@ -26,13 +25,24 @@ export class LocationSeeder {
   ) { }
 
   async seed() {
-    this.logger.log('Iniciando la carga de datos de localización...');
+    this.logger.log('Iniciando la carga de datos de localización (Source: dr5hn)...');
+
+    if (!fs.existsSync(this.dataPath)) {
+      this.logger.error(`Archivo de datos no encontrado en: ${this.dataPath}`);
+      return;
+    }
 
     await this.clearData();
 
-    const countriesMap = await this.seedCountries();
-    const states = await this.seedStates(countriesMap);
-    await this.seedCities(states);
+    // Load full JSON
+    this.logger.log('Leyendo archivo full.json...');
+    const rawData = fs.readFileSync(this.dataPath, 'utf8');
+    const allCountries = JSON.parse(rawData);
+    this.logger.log(`Archivo leído. Procesando ${allCountries.length} países...`);
+
+    const countriesMap = await this.seedCountries(allCountries);
+    await this.seedStatesAndCities(allCountries, countriesMap);
+
     await this.cleanupCountries();
 
     this.logger.log('Carga de datos de localización completada con éxito.');
@@ -46,100 +56,89 @@ export class LocationSeeder {
     this.logger.log('Datos existentes eliminados.');
   }
 
-  async seedCountries(): Promise<Map<string, Country>> {
+  async seedCountries(allCountries: any[]): Promise<Map<string, Country>> {
     this.logger.log('Cargando países...');
     const countryMap = new Map<string, Country>();
-    const all = csc.getAllCountries();
 
-    const display = new Intl.DisplayNames(['es'], { type: 'region' });
-
-    for (const c of all) {
+    for (const c of allCountries) {
       const code = (c.iso2 || '').toUpperCase();
-      const nameEs = (code && display.of(code)) || c.name;
+
+      // Name Logic: Spanish translation > Native > English Name
+      const nameEs = c.translations?.es || c.native || c.name;
+
       const newCountry = this.countryRepo.create({
         name: c.name,
-        nameEs,
+        nameEs: nameEs,
         code: c.iso2,
-        flag: '',
+        flag: c.emoji || '',
       });
+
       const saved = await this.countryRepo.save(newCountry);
-      countryMap.set(c.iso2, saved);
+      countryMap.set(c.id, saved); // Map by ID from JSON to link states
     }
 
     this.logger.log(`${countryMap.size} países cargados.`);
     return countryMap;
   }
 
-  async seedStates(
+  async seedStatesAndCities(
+    allCountries: any[],
     countryMap: Map<string, Country>,
-  ): Promise<Map<string, State>> {
-    this.logger.log('Cargando estados/provincias...');
-    const stateMap = new Map<string, State>();
-    const all = csc.getAllCountries();
+  ) {
+    this.logger.log('Cargando estados y ciudades...');
+    let stateCount = 0;
+    let cityCount = 0;
 
-    for (const c of all) {
-      const countryEntity = countryMap.get(c.iso2);
+    for (const c of allCountries) {
+      const countryEntity = countryMap.get(c.id);
       if (!countryEntity) continue;
 
-      const states = csc.getStatesOfCountry(c.id);
+      if (!c.states || c.states.length === 0) continue;
 
-      for (const s of states) {
-        const nameEs = this.toTitleEs(s.name);
+      for (const s of c.states) {
+        // State Name Logic: Native (often localized) > Es > Name
+        // Fixes "Community of Madrid" vs "Comunidad de Madrid"
+        const stateNameEs = s.native || s.translations?.es || s.name;
+
+        // Ensure we don't save "undefined" if fields are missing
+        const finalStateNameEs = stateNameEs || s.name;
+
         const newState = this.stateRepo.create({
           name: s.name,
-          nameEs,
+          nameEs: finalStateNameEs,
           country: countryEntity,
         });
-        const saved = await this.stateRepo.save(newState);
-        const stateCode = s.state_code || this.generateStateCode(s.name);
-        stateMap.set(`${c.iso2}-${stateCode}`, saved);
-      }
-    }
 
-    this.logger.log(`${stateMap.size} estados/provincias cargados.`);
-    return stateMap;
-  }
+        const savedState = await this.stateRepo.save(newState);
+        stateCount++;
 
-  async seedCities(stateMap: Map<string, State>) {
-    this.logger.log('Cargando ciudades...');
-    let count = 0;
-    const all = csc.getAllCountries();
-
-    for (const c of all) {
-      const states = csc.getStatesOfCountry(c.id);
-
-      for (const s of states) {
-        const stateCode = s.state_code || this.generateStateCode(s.name);
-        const stateKey = `${c.iso2}-${stateCode}`;
-        const stateEntity = stateMap.get(stateKey);
-        if (!stateEntity) continue;
-
-        const cities = csc.getCitiesOfState(s.id);
-        const batchSize = 1000;
-        for (let i = 0; i < cities.length; i += batchSize) {
-          const batch = cities.slice(i, i + batchSize);
-          const cityEntities = batch.map((city) =>
+        if (s.cities && s.cities.length > 0) {
+          const cityEntities = s.cities.map((city) =>
             this.cityRepo.create({
               name: city.name,
-              nameEs: this.toTitleEs(city.name),
-              state: stateEntity,
+              nameEs: city.name, // Cities usually don't have translations in this dataset
+              state: savedState,
             }),
           );
-          await this.cityRepo.save(cityEntities);
-          count += cityEntities.length;
-          this.logger.log(`Procesadas ${count} ciudades...`);
+
+          // Batch save cities for performance
+          // TypeORM save can handle arrays, but let's chunk if huge (rarely per state)
+          // 1000 limit is safe
+          const batchSize = 1000;
+          for (let i = 0; i < cityEntities.length; i += batchSize) {
+            await this.cityRepo.save(cityEntities.slice(i, i + batchSize));
+          }
+          cityCount += cityEntities.length;
         }
+      }
+
+      // Periodic log to show progress
+      if (stateCount % 500 === 0) {
+        this.logger.log(`Procesados estados: ${stateCount}, ciudades: ${cityCount}...`);
       }
     }
 
-    this.logger.log(`${count} ciudades cargadas.`);
-  }
-
-  private generateStateCode(stateName: string): string {
-    if (!stateName) return 'UN';
-    const clean = stateName.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
-    if (clean.length === 0) return 'UN';
-    return clean.substring(0, 2).padEnd(2, 'X');
+    this.logger.log(`Total: ${stateCount} estados/provincias y ${cityCount} ciudades cargados.`);
   }
 
   async cleanupCountries() {
@@ -152,41 +151,5 @@ export class LocationSeeder {
     } catch (error) {
       this.logger.error('Error al limpiar países:', error);
     }
-  }
-
-  // Heurística mejorada para “españolizar” nombres
-  private toTitleEs(text: string): string {
-    if (!text) return text;
-
-    // 1. Eliminar sufijos administrativos comunes en inglés
-    let clean = text
-      .replace(/\b(Province|State|Region|Department|District|County)\b/gi, '')
-      .replace(/,\s*D\.C\./gi, '')
-      .trim();
-
-    // 2. Traducir conectores
-    clean = clean.replace(/\b(of|the|and)\b/gi, (m) => {
-      const map: Record<string, string> = { of: 'de', the: '', and: 'y' };
-      return map[m.toLowerCase()] || m;
-    });
-
-    // 3. Capitalizar correctamente, respetando acentos.
-    return clean
-      .split(/\s+/)
-      .map((word, index) => {
-        if (!word) return '';
-        const lower = word.toLowerCase();
-        // Mantener minúsculas para conectores si no es la primera palabra
-        if (
-          index > 0 &&
-          ['de', 'y', 'del', 'la', 'lo', 'los', 'las', 'en'].includes(lower)
-        ) {
-          return lower;
-        }
-        return lower.charAt(0).toUpperCase() + lower.slice(1);
-      })
-      .join(' ')
-      .replace(/\s+/g, ' ')
-      .trim();
   }
 }

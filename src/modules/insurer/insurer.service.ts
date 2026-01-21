@@ -45,7 +45,7 @@ export class InsurerService extends BaseService<Insurer, InsurerDto> {
 
     try {
       const insurerRepo = qr.manager.getRepository(Insurer);
-      
+
 
       const personData = mapPersonData(createInsurerDto, PersonType.LEGAL);
 
@@ -113,22 +113,27 @@ export class InsurerService extends BaseService<Insurer, InsurerDto> {
         throw new NotFoundException(`Insurer with id ${id} not found`);
 
       const {
-        code,
-        executive,
-        agencyNumber,
-        logoUrl,
         legalPersonId,
         emails,
         identifications,
         addresses,
         phoneNumbers,
-        ...legalPersonData
+        ...directUpdates
       } = updateInsurerDto;
 
-      if (code !== undefined) insurer.code = code;
-      if (executive !== undefined) insurer.executive = executive;
-      if (agencyNumber !== undefined) insurer.agencyNumber = agencyNumber;
-      if (logoUrl !== undefined) insurer.logoUrl = logoUrl;
+  
+
+      const insurerUpdates = {
+        code: directUpdates.code,
+        executive: directUpdates.executive,
+        agencyNumber: directUpdates.agencyNumber,
+        logoUrl: directUpdates.logoUrl
+      };
+
+      // Removemos undefined para que Object.assign no sobrescriba con undefined si falta en DTO
+      Object.keys(insurerUpdates).forEach(key => insurerUpdates[key] === undefined && delete insurerUpdates[key]);
+
+      Object.assign(insurer, insurerUpdates);
 
       if (legalPersonId) {
         if (legalPersonId !== insurer.legalPerson?.id) {
@@ -139,7 +144,13 @@ export class InsurerService extends BaseService<Insurer, InsurerDto> {
           insurer.legalPerson = newLegal;
         }
       } else if (insurer.legalPerson) {
-        Object.assign(insurer.legalPerson, legalPersonData);
+        // Actualización anidada de LegalPerson
+        // Extraemos solo props de LegalPerson del DTO
+        const { organizationName, socialReason, website } = updateInsurerDto;
+        const legalUpdates = { organizationName, socialReason, website };
+        Object.keys(legalUpdates).forEach(key => legalUpdates[key] === undefined && delete legalUpdates[key]);
+
+        Object.assign(insurer.legalPerson, legalUpdates);
 
         await validatePersonUniqueConstraints(
           qr.manager,

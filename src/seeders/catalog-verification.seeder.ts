@@ -12,14 +12,17 @@ import { BusinessType } from '../modules/policy/enums/business-type.enum';
 import { PaymentFrequency } from '../modules/policy/enums/payment-frequency.enum';
 import { PaymentMethod } from '../modules/policy/enums/payment-method.enum';
 import { RelationType } from '../modules/policy/enums/relation-type.enum';
-import { CivilStatus } from '../modules/person/enums/civil-status.enum';
+import { CivilStatus } from '../modules/person/entities/civil-status.entity';
 import { CreateRealPersonDto } from '../modules/person/dto/create-real-person.dto';
+import { CreateClientDto } from '../modules/clients/dto/create-client.dto';
+import { ClientsService } from '../modules/clients/clients.service';
 import { CreateInsurerDto } from '../modules/insurer/dto/create-insurer.dto';
 import { CreateAgentDto } from '../modules/agent/dto/create-agent.dto';
 import { IdentificationSeeder } from './identification.seeder';
 import { IdentificationType } from '../modules/person/common/identification/entity/identification-type.entity';
 import { Gender } from '../modules/person/entities/gender.entity';
 import { GenderSeeder } from './gender.seeder';
+import { CivilStatusSeeder } from './civil-status.seeder';
 import { City } from '../modules/person/common/address/entities/city.entity';
 import { BranchService } from '../modules/branch/branch.service';
 import { CreateBranchDto } from '../modules/branch/dto/create-branch.dto';
@@ -34,6 +37,7 @@ export class CatalogVerificationSeeder {
     private readonly productService: ProductService,
     private readonly planService: PlanService,
     private readonly realPersonService: RealPersonService,
+    private readonly clientsService: ClientsService,
     private readonly agentService: AgentService,
     private readonly policyService: PolicyService,
     private readonly dataSource: DataSource,
@@ -43,8 +47,11 @@ export class CatalogVerificationSeeder {
     private readonly cityRepo: Repository<City>,
     @InjectRepository(Gender)
     private readonly genderRepo: Repository<Gender>,
+    @InjectRepository(CivilStatus)
+    private readonly civilStatusRepo: Repository<CivilStatus>,
     private readonly identificationSeeder: IdentificationSeeder,
     private readonly genderSeeder: GenderSeeder,
+    private readonly civilStatusSeeder: CivilStatusSeeder,
   ) { }
 
   async seed() {
@@ -57,12 +64,16 @@ export class CatalogVerificationSeeder {
     // 0. PRELOAD: Seed Identification Types and Genders
     await this.identificationSeeder.seed();
     await this.genderSeeder.seed();
+    await this.civilStatusSeeder.seed();
     // Assuming GenderSeeder runs before or we run it here if needed, but it's better to fetch.
     // In SeederModule, GenderSeeder is a provider but not auto-called here. 
     // We should probably rely on the fact that we can fetch them.
 
     const maleGender = await this.genderRepo.findOne({ where: { slug: 'male' } });
     if (!maleGender) this.logger.warn('Gender MALE not found. Make sure GenderSeeder runs.');
+
+    const singleStatus = await this.civilStatusRepo.findOne({ where: { slug: 'single' } });
+    if (!singleStatus) this.logger.warn('CivilStatus SINGLE not found.');
 
     // PRELOAD: Obtener Tipos de Identificación
     const dniType = await this.identificationTypeRepo.findOne({
@@ -153,8 +164,8 @@ export class CatalogVerificationSeeder {
     });
 
     // 2. PERSONA (Cliente)
-    this.logger.log('4. [PERSON] Creando Cliente (RealPerson)...');
-    const clientPayload: CreateRealPersonDto = {
+    this.logger.log('4. [CLIENT] Creando Cliente (Client Entity wrapping RealPerson)...');
+    const clientPayload: CreateClientDto = {
       firstName: 'Juan',
       lastName: 'Perez',
       emails: [{ account: 'juan.perez@test.com' }],
@@ -168,13 +179,17 @@ export class CatalogVerificationSeeder {
       phoneNumbers: [{ number: '555-1234' }],
       birthDate: new Date('1990-01-01'),
       genderId: maleGender?.id,
-      civilStatus: CivilStatus.SINGLE,
+      civilStatusId: singleStatus?.id,
       nationality: 'AR',
       identifications: dniTypeId
         ? [{ typeId: dniTypeId, value: '11223344' }]
         : [],
+      isActive: true,
     };
-    const client = await this.realPersonService.create(clientPayload);
+    const client = await this.clientsService.create(clientPayload);
+    this.logger.log(
+      `>> Cliente creado: ${client.firstName} ${client.lastName} (ID: ${client.id})`,
+    );
 
     // 3. AGENTE (Con RealPerson Anidada -> FLATTENED)
     this.logger.log('5. [AGENT] Creando Agente con RealPerson anidada...');
@@ -219,7 +234,7 @@ export class CatalogVerificationSeeder {
       paymentFrequency: PaymentFrequency.ANNUAL,
       paymentMethod: PaymentMethod.CREDIT_CARD,
       installments: 1,
-      clientId: client.person.id, // Client is Person (via RealPerson)
+      clientId: client.personId, // Client is Person (via RealPerson)
       agentId: agent.id,
       planId: plan.id,
       dependents: [

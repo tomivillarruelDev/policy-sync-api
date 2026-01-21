@@ -50,7 +50,7 @@ export class PlanService extends BaseService<Plan, PlanDto> {
       });
 
       const savedPlan = await planRepo.save(plan);
-      
+
       await qr.commitTransaction();
       return this.toDto(savedPlan);
     } catch (error) {
@@ -90,6 +90,10 @@ export class PlanService extends BaseService<Plan, PlanDto> {
       if (!plan) throw new NotFoundException(`Plan with id ${id} not found`);
 
       const { productId, ...toUpdate } = updatePlanDto;
+
+      Object.keys(toUpdate).forEach(
+        (key) => toUpdate[key] === undefined && delete toUpdate[key],
+      );
 
       Object.assign(plan, toUpdate);
 

@@ -88,6 +88,10 @@ export class BranchService extends BaseService<Branch, BranchDto> {
 
             const { insurerId, ...updateData } = updateDto;
 
+            Object.keys(updateData).forEach(
+                (key) => updateData[key] === undefined && delete updateData[key],
+            );
+
             Object.assign(entity, updateData);
 
             if (insurerId) {

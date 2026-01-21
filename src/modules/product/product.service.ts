@@ -91,6 +91,10 @@ export class ProductService extends BaseService<Product, ProductDto> {
 
       const { insurerId, branchId, ...productData } = updateProductDto;
 
+      Object.keys(productData).forEach(
+        (key) => productData[key] === undefined && delete productData[key],
+      );
+
       Object.assign(product, productData);
 
       if (insurerId) {

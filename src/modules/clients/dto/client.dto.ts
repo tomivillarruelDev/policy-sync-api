@@ -12,6 +12,9 @@ export class ClientDto {
     @Expose()
     isActive: boolean;
 
+    @Expose()
+    personId: string;
+
     // Propiedades Directas de Persona
     @Expose()
     firstName: string;

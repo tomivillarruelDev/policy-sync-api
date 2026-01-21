@@ -23,6 +23,9 @@ export class ClientDto {
     @Type(() => Gender)
     gender: Gender;
 
+    @Expose()
+    civilStatusId: string;
+
     // Colecciones Completas (NO Strings sueltos)
     @Expose()
     @Type(() => Email)

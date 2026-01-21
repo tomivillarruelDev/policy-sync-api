@@ -21,7 +21,7 @@ export interface FlatPersonDto {
   birthDate?: Date | null;
   gender?: Gender | null;
   genderId?: string | null;
-  civilStatus?: string | null;
+  civilStatusId?: string | null;
 }
 
 export class PersonDtoMapper {
@@ -63,7 +63,7 @@ export class PersonDtoMapper {
         birthDate: entity.birthDate,
 
         genderId: entity.genderId || entity.gender?.id,
-        civilStatus: entity.civilStatus,
+        civilStatusId: entity.civilStatusId || entity.civilStatus?.id,
       };
     }
 

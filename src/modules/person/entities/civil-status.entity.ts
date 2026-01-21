@@ -1,23 +1,20 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { Expose } from 'class-transformer';
 import { AuditableEntity } from 'src/common/entities/auditable.entity';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity({ name: 'gender' })
-export class Gender {
+@Entity('civil_status')
+export class CivilStatus {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column()
+    @Column({ unique: true })
     name: string;
 
     @Column({ name: 'name_es', nullable: true })
     nameEs: string;
 
-    @Expose()
     @Column({ unique: true })
     slug: string;
 
     @Column(() => AuditableEntity, { prefix: false })
     audit: AuditableEntity;
-
 }

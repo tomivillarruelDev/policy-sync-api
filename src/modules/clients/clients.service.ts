@@ -130,7 +130,7 @@ export class ClientsService extends BaseService<Client, ClientDto> {
                     nationality,
                     birthDate,
                     gender,
-                    civilStatus,
+                    civilStatusId,
                 } = personData as any; // Cast to access potential properties
 
                 const realPersonUpdates = {
@@ -141,7 +141,7 @@ export class ClientsService extends BaseService<Client, ClientDto> {
                     nationality,
                     birthDate,
                     gender,
-                    civilStatus,
+                    civilStatusId,
                 };
 
                 // Filter undefined values
@@ -196,6 +196,7 @@ export class ClientsService extends BaseService<Client, ClientDto> {
             firstName: entity.realPerson?.firstName,
             lastName: entity.realPerson?.lastName,
             gender: entity.realPerson?.gender,
+            civilStatusId: entity.realPerson?.civilStatusId || entity.realPerson?.civilStatus?.id,
             // Map Person collections fully (no flattening to string)
             emails: entity.realPerson?.person?.emails,
             phoneNumbers: entity.realPerson?.person?.phoneNumbers,

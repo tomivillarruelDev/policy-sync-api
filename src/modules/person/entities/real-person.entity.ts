@@ -9,7 +9,7 @@ import {
 import { Person } from './person.entity';
 import { AuditableEntity } from 'src/common/entities/auditable.entity';
 import { Gender } from './gender.entity';
-import { CivilStatus } from '../enums/civil-status.enum';
+import { CivilStatus } from './civil-status.entity';
 
 @Entity({ name: 'real_people' })
 export class RealPerson {
@@ -41,8 +41,12 @@ export class RealPerson {
   @Column({ name: 'gender_id' })
   genderId: string;
 
-  @Column({ name: 'civil_status', type: 'enum', enum: CivilStatus, nullable: true })
-  civilStatus: CivilStatus | null;
+  @ManyToOne(() => CivilStatus)
+  @JoinColumn({ name: 'civil_status_id' })
+  civilStatus: CivilStatus;
+
+  @Column({ name: 'civil_status_id', nullable: true })
+  civilStatusId: string;
 
   @OneToOne(() => Person, {
     onDelete: 'CASCADE',

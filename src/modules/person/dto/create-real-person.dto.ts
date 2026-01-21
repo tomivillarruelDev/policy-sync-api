@@ -47,6 +47,7 @@ export class CreateRealPersonDto extends CreatePersonDto {
   genderId?: string;
 
   @IsOptional()
-  @IsEnum(CivilStatus)
-  civilStatus?: CivilStatus | null;
+  @IsOptional()
+  @IsUUID()
+  civilStatusId?: string;
 }

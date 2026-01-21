@@ -111,7 +111,7 @@ export class AgentService extends BaseService<Agent, AgentDto> {
                 nationality,
                 birthDate,
                 genderId,
-                civilStatus,
+                civilStatusId,
             } = updateAgentDto;
 
             const agentUpdates = { agentCode, licenseNumber, isActive };
@@ -128,7 +128,7 @@ export class AgentService extends BaseService<Agent, AgentDto> {
                     nationality,
                     birthDate,
                     genderId,
-                    civilStatus,
+                    civilStatusId,
                 };
 
                 // Limpiar personUpdates de valores undefined para no sobrescribir

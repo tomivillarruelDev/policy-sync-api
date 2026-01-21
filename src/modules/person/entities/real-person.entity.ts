@@ -34,9 +34,9 @@ export class RealPerson {
   @Column({ name: 'birth_date', type: 'date', nullable: true })
   birthDate: Date | null;
 
-  @ManyToOne(() => Gender, { eager: true })
+  @ManyToOne(() => Gender)
   @JoinColumn({ name: 'gender_id' })
-  gender: Gender | null;
+  gender: Gender;
 
   @Column({ name: 'gender_id' })
   genderId: string;

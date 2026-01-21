@@ -13,12 +13,13 @@ import { PaymentFrequency } from '../modules/policy/enums/payment-frequency.enum
 import { PaymentMethod } from '../modules/policy/enums/payment-method.enum';
 import { RelationType } from '../modules/policy/enums/relation-type.enum';
 import { CivilStatus } from '../modules/person/enums/civil-status.enum';
-import { Gender } from '../modules/person/enums/gender.enum';
 import { CreateRealPersonDto } from '../modules/person/dto/create-real-person.dto';
 import { CreateInsurerDto } from '../modules/insurer/dto/create-insurer.dto';
 import { CreateAgentDto } from '../modules/agent/dto/create-agent.dto';
 import { IdentificationSeeder } from './identification.seeder';
 import { IdentificationType } from '../modules/person/common/identification/entity/identification-type.entity';
+import { Gender } from '../modules/person/entities/gender.entity';
+import { GenderSeeder } from './gender.seeder';
 import { City } from '../modules/person/common/address/entities/city.entity';
 import { BranchService } from '../modules/branch/branch.service';
 import { CreateBranchDto } from '../modules/branch/dto/create-branch.dto';
@@ -40,7 +41,10 @@ export class CatalogVerificationSeeder {
     private readonly identificationTypeRepo: Repository<IdentificationType>,
     @InjectRepository(City)
     private readonly cityRepo: Repository<City>,
+    @InjectRepository(Gender)
+    private readonly genderRepo: Repository<Gender>,
     private readonly identificationSeeder: IdentificationSeeder,
+    private readonly genderSeeder: GenderSeeder,
   ) { }
 
   async seed() {
@@ -50,8 +54,15 @@ export class CatalogVerificationSeeder {
 
     await this.clearExistingData();
 
-    // 0. PRELOAD: Seed Identification Types
+    // 0. PRELOAD: Seed Identification Types and Genders
     await this.identificationSeeder.seed();
+    await this.genderSeeder.seed();
+    // Assuming GenderSeeder runs before or we run it here if needed, but it's better to fetch.
+    // In SeederModule, GenderSeeder is a provider but not auto-called here. 
+    // We should probably rely on the fact that we can fetch them.
+
+    const maleGender = await this.genderRepo.findOne({ where: { slug: 'male' } });
+    if (!maleGender) this.logger.warn('Gender MALE not found. Make sure GenderSeeder runs.');
 
     // PRELOAD: Obtener Tipos de Identificación
     const dniType = await this.identificationTypeRepo.findOne({
@@ -156,7 +167,7 @@ export class CatalogVerificationSeeder {
       ],
       phoneNumbers: [{ number: '555-1234' }],
       birthDate: new Date('1990-01-01'),
-      gender: Gender.MALE,
+      genderId: maleGender?.id,
       civilStatus: CivilStatus.SINGLE,
       nationality: 'AR',
       identifications: dniTypeId
@@ -182,7 +193,7 @@ export class CatalogVerificationSeeder {
       ],
       phoneNumbers: [{ number: '555-9999' }],
       birthDate: new Date('1985-05-05'),
-      gender: Gender.MALE,
+      genderId: maleGender?.id,
       identifications: rucTypeId
         ? [{ typeId: rucTypeId, value: '99887766' }]
         : [],

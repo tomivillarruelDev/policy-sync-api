@@ -2,6 +2,8 @@ import { LegalPerson } from '../../entities/legal-person.entity';
 import { RealPerson } from '../../entities/real-person.entity';
 import { Person } from '../../entities/person.entity';
 import { mapAddressToResponseDto } from './address.mapper';
+import { Gender } from '../../entities/gender.entity';
+
 
 export interface FlatPersonDto {
   emails: any[];
@@ -17,7 +19,7 @@ export interface FlatPersonDto {
   maternalLastName?: string | null;
   nationality?: string | null;
   birthDate?: Date | null;
-  gender?: string | null;
+  gender?: Gender | null;
   civilStatus?: string | null;
 }
 
@@ -58,7 +60,7 @@ export class PersonDtoMapper {
         maternalLastName: entity.maternalLastName,
         nationality: entity.nationality,
         birthDate: entity.birthDate,
-        gender: entity.gender?.slug,
+        gender: entity.gender,
         civilStatus: entity.civilStatus,
       };
     }

@@ -3,11 +3,12 @@ import { Identification } from '../../person/common/identification/entity/identi
 import { PhoneNumber } from '../../person/common/phone-number/entities/phone-number.entity';
 import { Email } from '../../person/entities/email.entity';
 import { AddressResponseDto } from '../../person/common/mappers/address.mapper';
+import { Gender } from '../../person/entities/gender.entity';
 
 export class ClientDto {
     @Expose()
     id: string;
-    
+
     @Expose()
     isActive: boolean;
 
@@ -17,6 +18,10 @@ export class ClientDto {
 
     @Expose()
     lastName: string;
+
+    @Expose()
+    @Type(() => Gender)
+    gender: Gender;
 
     // Colecciones Completas (NO Strings sueltos)
     @Expose()

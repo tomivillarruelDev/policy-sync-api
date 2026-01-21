@@ -195,6 +195,7 @@ export class ClientsService extends BaseService<Client, ClientDto> {
             // Map RealPerson scalars flattened
             firstName: entity.realPerson?.firstName,
             lastName: entity.realPerson?.lastName,
+            gender: entity.realPerson?.gender,
             // Map Person collections fully (no flattening to string)
             emails: entity.realPerson?.person?.emails,
             phoneNumbers: entity.realPerson?.person?.phoneNumbers,

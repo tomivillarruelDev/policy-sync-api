@@ -1,5 +1,6 @@
 import { Expose, Type } from 'class-transformer';
 import { AddressResponseDto } from '../../person/common/mappers/address.mapper';
+import { Gender } from '../../person/entities/gender.entity';
 import { Identification } from '../../person/common/identification/entity/identification.entity';
 import { PhoneNumber } from '../../person/common/phone-number/entities/phone-number.entity';
 import { Email } from '../../person/entities/email.entity';
@@ -22,6 +23,12 @@ export class AgentDto {
 
     @Expose()
     lastName: string;
+
+    @Expose()
+    @Type(() => Gender)
+    gender: Gender;
+
+
 
     @Expose()
     @Type(() => Email)

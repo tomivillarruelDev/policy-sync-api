@@ -1,4 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Expose } from 'class-transformer';
 
 @Entity({ name: 'gender' })
 export class Gender {
@@ -11,6 +12,7 @@ export class Gender {
     @Column({ name: 'name_es', nullable: true })
     nameEs: string;
 
+    @Expose()
     @Column({ unique: true })
     slug: string;
 

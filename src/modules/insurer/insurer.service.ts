@@ -118,10 +118,13 @@ export class InsurerService extends BaseService<Insurer, InsurerDto> {
         identifications,
         addresses,
         phoneNumbers,
+        organizationName,
+        socialReason,
+        website,
         ...directUpdates
       } = updateInsurerDto;
 
-  
+
 
       const insurerUpdates = {
         code: directUpdates.code,
@@ -144,9 +147,7 @@ export class InsurerService extends BaseService<Insurer, InsurerDto> {
           insurer.legalPerson = newLegal;
         }
       } else if (insurer.legalPerson) {
-        // Actualización anidada de LegalPerson
-        // Extraemos solo props de LegalPerson del DTO
-        const { organizationName, socialReason, website } = updateInsurerDto;
+        // Actualización anidada de LegalPerson con whitelist explícita
         const legalUpdates = { organizationName, socialReason, website };
         Object.keys(legalUpdates).forEach(key => legalUpdates[key] === undefined && delete legalUpdates[key]);
 

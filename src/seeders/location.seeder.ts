@@ -1,6 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import * as fs from 'fs';
+import * as path from 'path';
 
 import csc from 'countries-states-cities';
 
@@ -31,6 +33,7 @@ export class LocationSeeder {
     const countriesMap = await this.seedCountries();
     const states = await this.seedStates(countriesMap);
     await this.seedCities(states);
+    await this.cleanupCountries();
 
     this.logger.log('Carga de datos de localización completada con éxito.');
   }
@@ -137,6 +140,18 @@ export class LocationSeeder {
     const clean = stateName.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
     if (clean.length === 0) return 'UN';
     return clean.substring(0, 2).padEnd(2, 'X');
+  }
+
+  async cleanupCountries() {
+    this.logger.log('Validando y limpiando países no requeridos...');
+    try {
+      const sqlPath = path.join(__dirname, 'data', 'cleanup-locations.sql');
+      const sql = fs.readFileSync(sqlPath, 'utf8');
+      await this.countryRepo.query(sql);
+      this.logger.log('Limpieza de países completada.');
+    } catch (error) {
+      this.logger.error('Error al limpiar países:', error);
+    }
   }
 
   // Heurística mejorada para “españolizar” nombres

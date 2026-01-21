@@ -65,14 +65,10 @@ export class CatalogVerificationSeeder {
 
     await this.clearExistingData();
 
-    // 0. PRELOAD: Seed Identification Types and Genders
     await this.identificationSeeder.seed();
     await this.genderSeeder.seed();
     await this.civilStatusSeeder.seed();
     await this.nationalitySeeder.seed();
-    // Assuming GenderSeeder runs before or we run it here if needed, but it's better to fetch.
-    // In SeederModule, GenderSeeder is a provider but not auto-called here. 
-    // We should probably rely on the fact that we can fetch them.
 
     const maleGender = await this.genderRepo.findOne({ where: { slug: 'male' } });
     if (!maleGender) this.logger.warn('Gender MALE not found. Make sure GenderSeeder runs.');
@@ -83,7 +79,6 @@ export class CatalogVerificationSeeder {
     const argentinaNationality = await this.nationalityRepo.findOne({ where: { name: 'Argentine' } });
     if (!argentinaNationality) this.logger.warn('Nationality Argentine not found.');
 
-    // PRELOAD: Obtener Tipos de Identificación
     const dniType = await this.identificationTypeRepo.findOne({
       where: { name: 'DNI' },
     });
@@ -93,14 +88,44 @@ export class CatalogVerificationSeeder {
     const dniTypeId = dniType?.id;
     const rucTypeId = rucType?.id || dniTypeId;
 
-    // PRELOAD: Obtener una Ciudad válida (cualquiera)
-    const city = await this.cityRepo.findOne({ where: {} });
+    // PRELOAD: Obtener Ubicación Específica (Argentina > Córdoba > Córdoba)
+    this.logger.log('Buscando ciudad específica: Argentina > Córdoba > Córdoba...');
+
+    let city = await this.cityRepo
+      .createQueryBuilder('city')
+      .innerJoinAndSelect('city.state', 'state')
+      .innerJoinAndSelect('state.country', 'country')
+      .where('(country.name = :countryName OR country.code = :countryCode)', {
+        countryName: 'Argentina',
+        countryCode: 'AR',
+      })
+      .andWhere('(state.nameEs = :stateName OR state.name = :stateName)', { stateName: 'Córdoba' })
+      .andWhere('city.name = :cityName', { cityName: 'Córdoba' })
+      .getOne();
+
+    if (!city) {
+      this.logger.warn('No se encontró Córdoba en Argentina. Intentando buscar cualquier ciudad de Córdoba...');
+      city = await this.cityRepo
+        .createQueryBuilder('city')
+        .innerJoinAndSelect('city.state', 'state')
+        .innerJoinAndSelect('state.country', 'country')
+        .where('country.code = :countryCode', { countryCode: 'AR' })
+        .andWhere('state.nameEs = :stateName', { stateName: 'Córdoba' })
+        .getOne();
+    }
+
+    if (!city) {
+      this.logger.warn('FALLBACK: No se encontró Madrid. Usando cualquier ciudad disponible.');
+      city = await this.cityRepo.findOne({ where: {}, relations: ['state', 'state.country'] });
+    }
+
     if (!city) {
       throw new Error(
         'No se encontraron ciudades. Ejecuta "npm run seed:location" primero.',
       );
     }
     const cityId = city.id;
+    this.logger.log(`>> Ubicación encontrada: ${city.name} (Ciudad) > ${city.state?.nameEs} (Estado) > ${city.state?.country?.nameEs} (País)`);
 
     // 1. CATALOGOS
     this.logger.log(
@@ -125,7 +150,7 @@ export class CatalogVerificationSeeder {
         : [],
     };
     const insurerCreated = await this.insurerService.create(insurerPayload);
-    // Fetch again to simulate "Edit" mode and verify deep relations loading
+
     const insurer = await this.insurerService.findOne(insurerCreated.id);
 
     this.logger.log(
@@ -136,8 +161,15 @@ export class CatalogVerificationSeeder {
     if (insurer.addresses && insurer.addresses.length > 0) {
       const addr = insurer.addresses[0];
       this.logger.log(
-        `>> Verificando Address Flattening: Street=${addr.street}, Number=${addr.streetNumber}, CityId=${addr.cityId}, StateId=${addr.stateId}, CountryId=${addr.countryId}`,
+        `>> Verificando Address Flattening IDs: CityId=${addr.cityId}, StateId=${addr.stateId}, CountryId=${addr.countryId}`,
       );
+
+      const country = await this.dataSource.getRepository('Country').findOne({ where: { id: addr.countryId } });
+      const state = await this.dataSource.getRepository('State').findOne({ where: { id: addr.stateId } });
+      const city = await this.dataSource.getRepository('City').findOne({ where: { id: addr.cityId } });
+
+      this.logger.log(`>> RESULTADO FINAL (DB): País="${country?.nameEs}", Estado="${state?.nameEs}", Ciudad="${city?.name}"`);
+
       if (!addr.street || !addr.countryId || !addr.stateId) {
         throw new Error(
           'CRITICAL: Address Flattening failed. Street, CountryId or StateId is missing in Backend Response.',
@@ -222,7 +254,6 @@ export class CatalogVerificationSeeder {
         : [],
     };
     const agent = await this.agentService.create(agentPayload);
-    // Note: AgentService now returns AgentDto (flat)
     this.logger.log(
       `>> Agente creado: ${agent.firstName} ${agent.lastName} (ID: ${agent.id})`,
     );
@@ -242,7 +273,7 @@ export class CatalogVerificationSeeder {
       paymentFrequency: PaymentFrequency.ANNUAL,
       paymentMethod: PaymentMethod.CREDIT_CARD,
       installments: 1,
-      clientId: client.personId, // Client is Person (via RealPerson)
+      clientId: client.personId,
       agentId: agent.id,
       planId: plan.id,
       dependents: [
@@ -258,7 +289,6 @@ export class CatalogVerificationSeeder {
     // 5. UPDATES
     this.logger.log('7. [UPDATE] Verificando Actualizaciones...');
 
-    // Update Agent: changing licenseNumber
     await this.agentService.update(agent.id, {
       licenseNumber: 'LIC-007-UPDATED',
     });
@@ -273,9 +303,8 @@ export class CatalogVerificationSeeder {
       '>> Agente actualizado correctamente (Update simple funcionó)',
     );
 
-    // Update Insurer
     await this.insurerService.update(insurer.id, {
-      organizationName: 'Global MVP Updated', // Flattened update
+      organizationName: 'Global MVP Updated',
     });
     const updatedInsurer = await this.insurerService.findOne(insurer.id);
     if (updatedInsurer.organizationName !== 'Global MVP Updated') {
@@ -305,22 +334,31 @@ export class CatalogVerificationSeeder {
     const agent = await agentRepo.findOne({ where: { agentCode: 'AG-007' } });
     if (agent) await agentRepo.remove(agent);
 
-    // 1. Find Product first to clean its dependencies
+    const clientRepo = this.dataSource.getRepository('Client');
+    const existingClients = await clientRepo.find({
+      relations: ['realPerson', 'realPerson.person', 'realPerson.person.emails'],
+    });
+    const testClient = existingClients.find(c =>
+      c.realPerson?.person?.emails?.some(e => e.account === 'juan.perez@test.com')
+    );
+    if (testClient) {
+      await clientRepo.remove(testClient);
+    }
+
     const product = await productRepo.findOne({
       where: { code: 'VID-ELITE' },
       relations: ['plans'],
     });
 
     if (product) {
-      // Delete all plans associated with this product (FK constraint fix)
+
       if (product.plans && product.plans.length > 0) {
         await planRepo.remove(product.plans);
       }
-      // Now delete the product
+
       await productRepo.remove(product);
     }
 
-    // Also try to find the specific plan by code if it wasn't linked to the product above for some reason
     const plan = await planRepo.findOne({ where: { code: 'PL-ELITE+' } });
     if (plan) await planRepo.remove(plan);
 
@@ -330,7 +368,6 @@ export class CatalogVerificationSeeder {
     const insurer = await insurerRepo.findOne({ where: { code: 'GLOB-MVP' } });
     if (insurer) await insurerRepo.remove(insurer);
 
-    // Manual cleanup via SQL to be safe purely for seed data
     await this.dataSource.query(
       `DELETE FROM "email" WHERE account IN ('juan.perez@test.com', 'agent.smith@matrix.com', 'global@mvp.com')`,
     );

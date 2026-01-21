@@ -24,9 +24,10 @@ export class AgentDto {
     @Expose()
     lastName: string;
 
+
+
     @Expose()
-    @Type(() => Gender)
-    gender: Gender;
+    genderId: string;
 
 
 

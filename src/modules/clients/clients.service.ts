@@ -115,17 +115,51 @@ export class ClientsService extends BaseService<Client, ClientDto> {
                 identifications,
                 addresses,
                 phoneNumbers,
-                ...personData
+                ...personData // Extract all person data (scalars + nested)
             } = updateDto;
 
-            if (clientCode) entity.clientCode = clientCode;
-            if (isActive !== undefined) entity.isActive = isActive;
+            // 2.1 Direct Client Updates (with undefined filter)
+            const clientUpdates = { clientCode, isActive };
+            Object.keys(clientUpdates).forEach(
+                (key) => clientUpdates[key] === undefined && delete clientUpdates[key],
+            );
+            Object.assign(entity, clientUpdates);
 
-            // Handle RealPerson and Person updates
+            // 2.2 Handle RealPerson Updates (Whitelist Approach)
             if (entity.realPerson) {
-                Object.assign(entity.realPerson, personData);
+                // Explicit whitelist for RealPerson scalars
+                const {
+                    firstName,
+                    lastName,
+                    middleName,
+                    maternalLastName,
+                    nationality,
+                    birthDate,
+                    gender,
+                    civilStatus,
+                } = personData as any; // Cast to access potential properties
 
-                // Update Nested Person Fields (Emails, etc)
+                const realPersonUpdates = {
+                    firstName,
+                    lastName,
+                    middleName,
+                    maternalLastName,
+                    nationality,
+                    birthDate,
+                    gender,
+                    civilStatus,
+                };
+
+                // Filter undefined values
+                Object.keys(realPersonUpdates).forEach(
+                    (key) =>
+                        realPersonUpdates[key] === undefined &&
+                        delete realPersonUpdates[key],
+                );
+
+                Object.assign(entity.realPerson, realPersonUpdates);
+
+                // 2.3 Handle Nested Person Fields (Emails, etc)
                 if (entity.realPerson.person) {
                     await validatePersonUniqueConstraints(
                         qr.manager,
@@ -140,7 +174,9 @@ export class ClientsService extends BaseService<Client, ClientDto> {
                     );
 
                     updatePersonFields(entity.realPerson.person, updateDto);
-                    await qr.manager.getRepository(Person).save(entity.realPerson.person);
+                    await qr.manager
+                        .getRepository(Person)
+                        .save(entity.realPerson.person);
                 }
 
                 await qr.manager.getRepository(RealPerson).save(entity.realPerson);

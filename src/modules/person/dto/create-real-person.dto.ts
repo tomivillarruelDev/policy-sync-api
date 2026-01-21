@@ -5,11 +5,11 @@ import {
   MinLength,
   IsEnum,
   IsDate,
+  IsUUID,
 } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
 import { ToTitleCase } from '../../../common/transformers/text.transformers';
 import { CreatePersonDto } from './create-person.dto';
-import { Gender } from '../enums/gender.enum';
 import { CivilStatus } from '../enums/civil-status.enum';
 
 export class CreateRealPersonDto extends CreatePersonDto {
@@ -43,8 +43,8 @@ export class CreateRealPersonDto extends CreatePersonDto {
   birthDate?: Date | null;
 
   @IsOptional()
-  @IsEnum(Gender)
-  gender?: Gender | null;
+  @IsUUID()
+  genderId?: string;
 
   @IsOptional()
   @IsEnum(CivilStatus)

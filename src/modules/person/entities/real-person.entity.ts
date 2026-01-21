@@ -4,10 +4,11 @@ import {
   JoinColumn,
   OneToOne,
   PrimaryGeneratedColumn,
+  ManyToOne,
 } from 'typeorm';
 import { Person } from './person.entity';
 import { AuditableEntity } from 'src/common/entities/auditable.entity';
-import { Gender } from '../enums/gender.enum';
+import { Gender } from './gender.entity';
 import { CivilStatus } from '../enums/civil-status.enum';
 
 @Entity({ name: 'real_people' })
@@ -33,8 +34,12 @@ export class RealPerson {
   @Column({ name: 'birth_date', type: 'date', nullable: true })
   birthDate: Date | null;
 
-  @Column({ type: 'enum', enum: Gender, nullable: true })
+  @ManyToOne(() => Gender, { eager: true })
+  @JoinColumn({ name: 'gender_id' })
   gender: Gender | null;
+
+  @Column({ name: 'gender_id' })
+  genderId: string;
 
   @Column({ name: 'civil_status', type: 'enum', enum: CivilStatus, nullable: true })
   civilStatus: CivilStatus | null;

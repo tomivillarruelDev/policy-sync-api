@@ -4,6 +4,7 @@ import { PersonController } from './person.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Person } from './entities/person.entity';
 import { RealPerson } from './entities/real-person.entity';
+import { Gender } from './entities/gender.entity';
 import { LegalPerson } from './entities/legal-person.entity';
 import { RealPersonService } from './services/real-person.service';
 import { LegalPersonService } from './services/legal-person.service';
@@ -14,7 +15,7 @@ import { ContactModule } from './roles/contact/contact.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Person, RealPerson, LegalPerson]),
+    TypeOrmModule.forFeature([Person, RealPerson, LegalPerson, Gender]),
     IdentificationModule,
     PhoneNumberModule,
     AddressModule,

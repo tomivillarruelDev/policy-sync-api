@@ -20,6 +20,7 @@ export const REAL_PERSON_RELATIONS = [
     'person.emails',
     'person.phoneNumbers',
     'person.identifications',
+    'gender',
 ];
 
 export const INSURER_RELATIONS = [

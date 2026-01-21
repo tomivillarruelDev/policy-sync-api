@@ -58,7 +58,7 @@ export class PersonDtoMapper {
         maternalLastName: entity.maternalLastName,
         nationality: entity.nationality,
         birthDate: entity.birthDate,
-        gender: entity.gender,
+        gender: entity.gender?.slug,
         civilStatus: entity.civilStatus,
       };
     }

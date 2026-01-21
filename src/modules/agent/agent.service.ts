@@ -110,7 +110,7 @@ export class AgentService extends BaseService<Agent, AgentDto> {
                 maternalLastName,
                 nationality,
                 birthDate,
-                gender,
+                genderId,
                 civilStatus,
             } = updateAgentDto;
 
@@ -127,7 +127,7 @@ export class AgentService extends BaseService<Agent, AgentDto> {
                     maternalLastName,
                     nationality,
                     birthDate,
-                    gender,
+                    genderId,
                     civilStatus,
                 };
 

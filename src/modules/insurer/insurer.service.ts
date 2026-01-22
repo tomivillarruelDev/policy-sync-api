@@ -188,6 +188,12 @@ export class InsurerService extends BaseService<Insurer, InsurerDto> {
   private toDto(insurer: Insurer): InsurerDto {
     const flatPerson = PersonDtoMapper.toFlatDto(insurer.legalPerson);
 
+    // Extract primary items from arrays
+    const primaryEmail = flatPerson.emails?.[0];
+    const primaryPhone = flatPerson.phoneNumbers?.[0];
+    const primaryAddress = flatPerson.addresses?.[0];
+    const primaryId = flatPerson.identifications?.[0];
+
     return plainToInstance(
       InsurerDto,
       {
@@ -205,6 +211,17 @@ export class InsurerService extends BaseService<Insurer, InsurerDto> {
         phoneNumbers: flatPerson.phoneNumbers,
         addresses: flatPerson.addresses,
         identifications: flatPerson.identifications,
+
+        // Flattened fields for form
+        name: flatPerson.organizationName,  // Alias
+        account: primaryEmail?.account,
+        phone: primaryPhone?.number,
+        address: primaryAddress?.street,
+        city: primaryAddress?.city?.id,
+        state: primaryAddress?.city?.state?.id,
+        country: primaryAddress?.city?.state?.country?.id,
+        identificationType: primaryId?.type?.id,
+        identificationValue: primaryId?.value,
       },
       { excludeExtraneousValues: true },
     );

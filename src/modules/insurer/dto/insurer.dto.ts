@@ -39,11 +39,38 @@ export class InsurerDto {
   phoneNumbers: PhoneNumber[];
 
   @Expose()
-  @Expose()
   @Type(() => AddressResponseDto)
   addresses: AddressResponseDto[];
 
   @Expose()
   @Type(() => Identification)
   identifications: Identification[];
+
+  // --- Flattened Fields for Form ---
+  @Expose()
+  name: string;  // Alias for organizationName
+
+  @Expose()
+  account: string;  // From emails[0].account
+
+  @Expose()
+  phone: string;  // From phoneNumbers[0].number
+
+  @Expose()
+  address: string;  // From addresses[0].street
+
+  @Expose()
+  city: string;  // From addresses[0].city.id
+
+  @Expose()
+  state: string;  // From addresses[0].city.state.id
+
+  @Expose()
+  country: string;  // From addresses[0].city.state.country.id
+
+  @Expose()
+  identificationType: string;  // From identifications[0].type.id
+
+  @Expose()
+  identificationValue: string;  // From identifications[0].value
 }

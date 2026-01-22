@@ -46,31 +46,31 @@ export class InsurerDto {
   @Type(() => Identification)
   identifications: Identification[];
 
-  // --- Flattened Fields for Form ---
+  // --- Campos Aplanados para Formulario ---
   @Expose()
-  name: string;  // Alias for organizationName
+  name: string;  // Alias para organizationName
 
   @Expose()
-  account: string;  // From emails[0].account
+  account: string;  // De emails[0].account
 
   @Expose()
-  phone: string;  // From phoneNumbers[0].number
+  phone: string;  // De phoneNumbers[0].number
 
   @Expose()
-  address: string;  // From addresses[0].street
+  address: string;  // De addresses[0].street
 
   @Expose()
-  city: string;  // From addresses[0].city.id
+  city: string;  // De addresses[0].city.id
 
   @Expose()
-  state: string;  // From addresses[0].city.state.id
+  state: string;  // De addresses[0].city.state.id
 
   @Expose()
-  country: string;  // From addresses[0].city.state.country.id
+  country: string;  // De addresses[0].city.state.country.id
 
   @Expose()
-  identificationType: string;  // From identifications[0].type.id
+  identificationType: string;  // De identifications[0].type.id
 
   @Expose()
-  identificationValue: string;  // From identifications[0].value
+  identificationValue: string;  // De identifications[0].value
 }

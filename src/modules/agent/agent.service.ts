@@ -170,6 +170,12 @@ export class AgentService extends BaseService<Agent, AgentDto> {
     private toDto(agent: Agent): AgentDto {
         const personData = PersonDtoMapper.toFlatDto(agent.realPerson);
 
+        // Extraer primer elemento de arrays
+        const primaryEmail = personData.emails?.[0];
+        const primaryPhone = personData.phoneNumbers?.[0];
+        const primaryAddress = personData.addresses?.[0];
+        const primaryId = personData.identifications?.[0];
+
         return plainToInstance(
             AgentDto,
             {
@@ -177,7 +183,18 @@ export class AgentService extends BaseService<Agent, AgentDto> {
                 agentCode: agent.agentCode,
                 licenseNumber: agent.licenseNumber,
                 isActive: agent.isActive,
-                ...personData
+                ...personData,
+
+                // Campos aplanados para formulario
+                account: primaryEmail?.account,
+                phone: primaryPhone?.number,
+                street: primaryAddress?.street,
+                streetNumber: primaryAddress?.streetNumber,
+                city: primaryAddress?.city?.id,
+                state: primaryAddress?.city?.state?.id,
+                country: primaryAddress?.city?.state?.country?.id,
+                identificationType: primaryId?.type?.id,
+                identificationValue: primaryId?.value,
             },
             { excludeExtraneousValues: true }
         );

@@ -35,14 +35,14 @@ export class ClientDto {
     @Expose()
     nationalityId: string;
 
-    // Flattened Contact Fields
+    // --- Campos Aplanados para Contacto ---
     @Expose()
-    account: string;
+    account: string;  // De emails[0].account
 
     @Expose()
-    phone: string;
+    phone: string;  // De phoneNumbers[0].number
 
-    // Flattened Address Fields
+    // --- Campos Aplanados para Dirección ---
     @Expose()
     street: string;
 
@@ -50,21 +50,20 @@ export class ClientDto {
     streetNumber: string;
 
     @Expose()
-    city: string;
+    city: string;  // De addresses[0].city.id
 
     @Expose()
-    state: string;
+    state: string;  // De addresses[0].city.state.id
 
     @Expose()
-    country: string;
+    country: string;  // De addresses[0].city.state.country.id
 
-    // Flattened Identification Fields
+    // --- Campos Aplanados para Identificación ---
     @Expose()
-    identificationType: string;
+    identificationType: string;  // De identifications[0].type.id
 
     @Expose()
-    identificationValue: string;
-
+    identificationValue: string;  // De identifications[0].valuetas
     // Colecciones Completas (NO Strings sueltos)
     @Expose()
     @Type(() => Email)

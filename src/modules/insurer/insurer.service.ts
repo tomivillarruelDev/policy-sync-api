@@ -188,7 +188,7 @@ export class InsurerService extends BaseService<Insurer, InsurerDto> {
   private toDto(insurer: Insurer): InsurerDto {
     const flatPerson = PersonDtoMapper.toFlatDto(insurer.legalPerson);
 
-    // Extract primary items from arrays
+    // Extraer primer elemento de arrays
     const primaryEmail = flatPerson.emails?.[0];
     const primaryPhone = flatPerson.phoneNumbers?.[0];
     const primaryAddress = flatPerson.addresses?.[0];
@@ -212,7 +212,7 @@ export class InsurerService extends BaseService<Insurer, InsurerDto> {
         addresses: flatPerson.addresses,
         identifications: flatPerson.identifications,
 
-        // Flattened fields for form
+        // Campos aplanados para formulario
         name: flatPerson.organizationName,  // Alias
         account: primaryEmail?.account,
         phone: primaryPhone?.number,

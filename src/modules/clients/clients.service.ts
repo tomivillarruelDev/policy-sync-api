@@ -190,7 +190,7 @@ export class ClientsService extends BaseService<Client, ClientDto> {
 
     // --- MAPPER ---
     private toDto(entity: Client): ClientDto {
-        // Extract primary items from arrays
+        // Extraer primer elemento de arrays
         const primaryEmail = entity.realPerson?.person?.emails?.[0];
         const primaryPhone = entity.realPerson?.person?.phoneNumbers?.[0];
         const primaryAddress = entity.realPerson?.person?.addresses?.[0];
@@ -198,7 +198,7 @@ export class ClientsService extends BaseService<Client, ClientDto> {
 
         return plainToInstance(ClientDto, {
             ...entity,
-            // Map RealPerson scalars flattened
+            // Mapear escalares de RealPerson aplanados
             firstName: entity.realPerson?.firstName,
             lastName: entity.realPerson?.lastName,
             birthday: entity.realPerson?.birthDate,
@@ -208,22 +208,22 @@ export class ClientsService extends BaseService<Client, ClientDto> {
             nationalityId: entity.realPerson?.nationalityId || entity.realPerson?.nationality?.id,
             personId: entity.realPerson?.person?.id,
 
-            // Flatten contact fields
+            // Aplanar campos de contacto
             account: primaryEmail?.account,
             phone: primaryPhone?.number,
 
-            // Flatten address fields
+            // Aplanar campos de dirección
             street: primaryAddress?.street,
             streetNumber: primaryAddress?.streetNumber,
             city: primaryAddress?.city?.id,
             state: primaryAddress?.city?.state?.id,
             country: primaryAddress?.city?.state?.country?.id,
 
-            // Flatten identification fields
+            // Aplanar campos de identificación
             identificationType: primaryId?.type?.id,
             identificationValue: primaryId?.value,
 
-            // Map Person collections fully (for other uses)
+            // Mapear colecciones de Person completas (para otros usos)
             emails: entity.realPerson?.person?.emails,
             phoneNumbers: entity.realPerson?.person?.phoneNumbers,
             identifications: entity.realPerson?.person?.identifications,

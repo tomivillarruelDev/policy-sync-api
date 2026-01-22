@@ -17,6 +17,8 @@ import { AddressModule } from './common/address/address.module';
 import { CivilStatus } from './entities/civil-status.entity';
 import { CivilStatusController } from './civil-status.controller';
 import { CivilStatusService } from './services/civil-status.service';
+import { NationalityController } from './nationality.controller';
+import { NationalityService } from './services/nationality.service';
 
 @Module({
   imports: [
@@ -26,8 +28,8 @@ import { CivilStatusService } from './services/civil-status.service';
     AddressModule,
 
   ],
-  controllers: [PersonController, GenderController, CivilStatusController],
-  providers: [PersonService, RealPersonService, LegalPersonService, GenderService, CivilStatusService],
-  exports: [PersonService, RealPersonService, LegalPersonService, GenderService, CivilStatusService],
+  controllers: [PersonController, GenderController, CivilStatusController, NationalityController],
+  providers: [PersonService, RealPersonService, LegalPersonService, GenderService, CivilStatusService, NationalityService],
+  exports: [PersonService, RealPersonService, LegalPersonService, GenderService, CivilStatusService, NationalityService],
 })
 export class PersonModule { }

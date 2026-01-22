@@ -12,9 +12,6 @@ export class ClientDto {
     @Expose()
     isActive: boolean;
 
-    @Expose()
-    personId: string;
-
     // Propiedades Directas de Persona
     @Expose()
     firstName: string;
@@ -23,11 +20,20 @@ export class ClientDto {
     lastName: string;
 
     @Expose()
+    birthday: Date;
+
+    @Expose()
     @Type(() => Gender)
     gender: Gender;
 
     @Expose()
+    genderId: string;
+
+    @Expose()
     civilStatusId: string;
+
+    @Expose()
+    nationalityId: string;
 
     // Colecciones Completas (NO Strings sueltos)
     @Expose()

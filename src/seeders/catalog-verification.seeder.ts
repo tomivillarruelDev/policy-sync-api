@@ -273,7 +273,7 @@ export class CatalogVerificationSeeder {
       paymentFrequency: PaymentFrequency.ANNUAL,
       paymentMethod: PaymentMethod.CREDIT_CARD,
       installments: 1,
-      clientId: client.personId,
+      clientId: client.id,
       agentId: agent.id,
       planId: plan.id,
       dependents: [

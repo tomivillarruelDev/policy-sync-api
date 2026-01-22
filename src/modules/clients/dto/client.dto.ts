@@ -35,6 +35,36 @@ export class ClientDto {
     @Expose()
     nationalityId: string;
 
+    // Flattened Contact Fields
+    @Expose()
+    account: string;
+
+    @Expose()
+    phone: string;
+
+    // Flattened Address Fields
+    @Expose()
+    street: string;
+
+    @Expose()
+    streetNumber: string;
+
+    @Expose()
+    city: string;
+
+    @Expose()
+    state: string;
+
+    @Expose()
+    country: string;
+
+    // Flattened Identification Fields
+    @Expose()
+    identificationType: string;
+
+    @Expose()
+    identificationValue: string;
+
     // Colecciones Completas (NO Strings sueltos)
     @Expose()
     @Type(() => Email)

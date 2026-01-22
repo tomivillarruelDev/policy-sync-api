@@ -190,6 +190,12 @@ export class ClientsService extends BaseService<Client, ClientDto> {
 
     // --- MAPPER ---
     private toDto(entity: Client): ClientDto {
+        // Extract primary items from arrays
+        const primaryEmail = entity.realPerson?.person?.emails?.[0];
+        const primaryPhone = entity.realPerson?.person?.phoneNumbers?.[0];
+        const primaryAddress = entity.realPerson?.person?.addresses?.[0];
+        const primaryId = entity.realPerson?.person?.identifications?.[0];
+
         return plainToInstance(ClientDto, {
             ...entity,
             // Map RealPerson scalars flattened
@@ -201,7 +207,23 @@ export class ClientsService extends BaseService<Client, ClientDto> {
             civilStatusId: entity.realPerson?.civilStatusId || entity.realPerson?.civilStatus?.id,
             nationalityId: entity.realPerson?.nationalityId || entity.realPerson?.nationality?.id,
             personId: entity.realPerson?.person?.id,
-            // Map Person collections fully (no flattening to string)
+
+            // Flatten contact fields
+            account: primaryEmail?.account,
+            phone: primaryPhone?.number,
+
+            // Flatten address fields
+            street: primaryAddress?.street,
+            streetNumber: primaryAddress?.streetNumber,
+            city: primaryAddress?.city?.id,
+            state: primaryAddress?.city?.state?.id,
+            country: primaryAddress?.city?.state?.country?.id,
+
+            // Flatten identification fields
+            identificationType: primaryId?.type?.id,
+            identificationValue: primaryId?.value,
+
+            // Map Person collections fully (for other uses)
             emails: entity.realPerson?.person?.emails,
             phoneNumbers: entity.realPerson?.person?.phoneNumbers,
             identifications: entity.realPerson?.person?.identifications,

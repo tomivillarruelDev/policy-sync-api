@@ -4,11 +4,24 @@ import { PolicyController } from './policy.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Policy } from './entities/policy.entity';
 import { PolicyDependent } from './entities/policy-dependent.entity';
+import { PolicyCategoryModule } from './catalogs/policy-category/policy-category.module';
+import { PolicyStatusModule } from './catalogs/policy-status/policy-status.module';
+import { RelationTypeModule } from './catalogs/relation-type/relation-type.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Policy, PolicyDependent])],
+  imports: [
+    TypeOrmModule.forFeature([Policy, PolicyDependent]),
+    PolicyCategoryModule,
+    PolicyStatusModule,
+    RelationTypeModule,
+  ],
   controllers: [PolicyController],
   providers: [PolicyService],
-  exports: [PolicyService],
+  exports: [
+    PolicyService,
+    PolicyCategoryModule,
+    PolicyStatusModule,
+    RelationTypeModule,
+  ],
 })
-export class PolicyModule {}
+export class PolicyModule { }

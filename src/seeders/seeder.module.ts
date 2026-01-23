@@ -5,6 +5,9 @@ import { SeederService } from './seeder.service';
 import { GenderSeeder } from './gender.seeder';
 import { NationalitySeeder } from './nationality.seeder';
 import { CivilStatusSeeder } from './civil-status.seeder';
+import { PolicyCategorySeeder } from './policy-category.seeder';
+import { PolicyStatusSeeder } from './policy-status.seeder';
+import { RelationTypeSeeder } from './relation-type.seeder';
 
 import { Country } from '../modules/person/common/address/entities/country.entity';
 import { State } from '../modules/person/common/address/entities/state.entity';
@@ -14,6 +17,9 @@ import { Identification } from '../modules/person/common/identification/entity/i
 import { Gender } from '../modules/person/entities/gender.entity';
 import { Nationality } from '../modules/person/entities/nationality.entity';
 import { CivilStatus } from '../modules/person/entities/civil-status.entity';
+import { PolicyCategory } from '../modules/policy/catalogs/policy-category/policy-category.entity';
+import { PolicyStatus } from '../modules/policy/catalogs/policy-status/policy-status.entity';
+import { RelationType } from '../modules/policy/catalogs/relation-type/relation-type.entity';
 import { IdentificationSeeder } from './identification.seeder';
 import { CatalogVerificationSeeder } from './catalog-verification.seeder';
 import { InsurerModule } from '../modules/insurer/insurer.module';
@@ -36,6 +42,9 @@ import { ClientsModule } from '../modules/clients/clients.module';
       Gender,
       Nationality,
       CivilStatus,
+      PolicyCategory,
+      PolicyStatus,
+      RelationType,
     ]),
     InsurerModule,
     ProductModule,
@@ -55,6 +64,9 @@ import { ClientsModule } from '../modules/clients/clients.module';
     GenderSeeder,
     NationalitySeeder,
     CivilStatusSeeder,
+    PolicyCategorySeeder,
+    PolicyStatusSeeder,
+    RelationTypeSeeder,
     CatalogVerificationSeeder,
   ],
   exports: [SeederService],

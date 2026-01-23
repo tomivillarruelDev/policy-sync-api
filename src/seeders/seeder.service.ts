@@ -2,6 +2,9 @@ import { Injectable, Logger } from '@nestjs/common';
 import { LocationSeeder } from './location.seeder';
 import { IdentificationSeeder } from './identification.seeder';
 import { CatalogVerificationSeeder } from './catalog-verification.seeder';
+import { PolicyCategorySeeder } from './policy-category.seeder';
+import { PolicyStatusSeeder } from './policy-status.seeder';
+import { RelationTypeSeeder } from './relation-type.seeder';
 
 @Injectable()
 export class SeederService {
@@ -10,8 +13,11 @@ export class SeederService {
   constructor(
     private readonly locationSeeder: LocationSeeder,
     private readonly identificationSeeder: IdentificationSeeder,
+    private readonly policyCategorySeeder: PolicyCategorySeeder,
+    private readonly policyStatusSeeder: PolicyStatusSeeder,
+    private readonly relationTypeSeeder: RelationTypeSeeder,
     private readonly catalogVerificationSeeder: CatalogVerificationSeeder,
-  ) {}
+  ) { }
 
   async seedLocation() {
     try {
@@ -36,6 +42,12 @@ export class SeederService {
   }
 
   async verifyCatalog() {
+    // Seed satellite tables first
+    await this.policyCategorySeeder.seed();
+    await this.policyStatusSeeder.seed();
+    await this.relationTypeSeeder.seed();
+
+    // Then run catalog verification seeder
     await this.catalogVerificationSeeder.seed();
   }
 }

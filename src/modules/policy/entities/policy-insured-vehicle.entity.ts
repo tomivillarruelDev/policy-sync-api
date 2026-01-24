@@ -9,25 +9,31 @@ import { Policy } from './policy.entity';
 import { AuditableEntity } from '../../../common/entities/auditable.entity';
 import { Country } from 'src/modules/person/common/address/entities/country.entity';
 import { Expose } from 'class-transformer';
+import { VehicleUsage } from '../catalogs/vehicle-usage/vehicle-usage.entity';
+import { VehicleType } from '../catalogs/vehicle-type/vehicle-type.entity';
 
 @Entity('policy_insured_vehicles')
 export class PolicyInsuredVehicle {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column({ name: 'usage_type', nullable: true }) //crear Select de uso
-    usageType: string;
+    @Expose()
+    @ManyToOne(() => VehicleUsage, { eager: true }) // Eager carga el nombre automáticamente
+    @JoinColumn({ name: 'usage_id' })
+    usageType: VehicleUsage;
 
-    @Column({ name: 'vehicle_type', nullable: true }) //crear Select de tipo de vehiculo
-    vehicleType: string;
+    @Expose()
+    @ManyToOne(() => VehicleType, { eager: true }) // Eager carga el nombre automáticamente
+    @JoinColumn({ name: 'vehicle_type_id' })
+    vehicleType: VehicleType;
 
-    @Column({ nullable: true }) //crear Select de marca cascada
+    @Column({ nullable: true }) //crear Select de marca cascada EN PRODUCCION
     brand: string;
 
-    @Column({ nullable: true }) //crear Select de modelo cascada
+    @Column({ nullable: true }) //crear Select de modelo cascada EN PRODUCCION
     model: string;
 
-    @Column({ nullable: true }) //crear Select de version cascada
+    @Column({ nullable: true }) //crear Select de version cascada EN PRODUCCION
     version: string;
 
     @Column({ type: 'int', nullable: true })

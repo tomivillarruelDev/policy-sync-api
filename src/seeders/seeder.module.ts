@@ -8,6 +8,8 @@ import { CivilStatusSeeder } from './civil-status.seeder';
 import { PolicyCategorySeeder } from './policy-category.seeder';
 import { PolicyStatusSeeder } from './policy-status.seeder';
 import { RelationTypeSeeder } from './relation-type.seeder';
+import { VehicleUsageSeeder } from './vehicle-usage.seeder';
+import { VehicleTypeSeeder } from './vehicle-type.seeder';
 
 import { Country } from '../modules/person/common/address/entities/country.entity';
 import { State } from '../modules/person/common/address/entities/state.entity';
@@ -20,6 +22,8 @@ import { CivilStatus } from '../modules/person/entities/civil-status.entity';
 import { PolicyCategory } from '../modules/policy/catalogs/policy-category/policy-category.entity';
 import { PolicyStatus } from '../modules/policy/catalogs/policy-status/policy-status.entity';
 import { RelationType } from '../modules/policy/catalogs/relation-type/relation-type.entity';
+import { VehicleUsage } from '../modules/policy/catalogs/vehicle-usage/vehicle-usage.entity';
+import { VehicleType } from '../modules/policy/catalogs/vehicle-type/vehicle-type.entity';
 import { IdentificationSeeder } from './identification.seeder';
 import { CatalogVerificationSeeder } from './catalog-verification.seeder';
 import { InsurerModule } from '../modules/insurer/insurer.module';
@@ -45,6 +49,8 @@ import { ClientsModule } from '../modules/clients/clients.module';
       PolicyCategory,
       PolicyStatus,
       RelationType,
+      VehicleUsage,
+      VehicleType,
     ]),
     InsurerModule,
     ProductModule,
@@ -67,6 +73,8 @@ import { ClientsModule } from '../modules/clients/clients.module';
     PolicyCategorySeeder,
     PolicyStatusSeeder,
     RelationTypeSeeder,
+    VehicleUsageSeeder,
+    VehicleTypeSeeder,
     CatalogVerificationSeeder,
   ],
   exports: [SeederService],

@@ -7,6 +7,8 @@ import { PolicyDependent } from './entities/policy-dependent.entity';
 import { PolicyCategoryModule } from './catalogs/policy-category/policy-category.module';
 import { PolicyStatusModule } from './catalogs/policy-status/policy-status.module';
 import { RelationTypeModule } from './catalogs/relation-type/relation-type.module';
+import { VehicleUsageModule } from './catalogs/vehicle-usage/vehicle-usage.module';
+import { VehicleTypeModule } from './catalogs/vehicle-type/vehicle-type.module';
 
 @Module({
   imports: [
@@ -14,6 +16,8 @@ import { RelationTypeModule } from './catalogs/relation-type/relation-type.modul
     PolicyCategoryModule,
     PolicyStatusModule,
     RelationTypeModule,
+    VehicleUsageModule,
+    VehicleTypeModule,
   ],
   controllers: [PolicyController],
   providers: [PolicyService],
@@ -22,6 +26,8 @@ import { RelationTypeModule } from './catalogs/relation-type/relation-type.modul
     PolicyCategoryModule,
     PolicyStatusModule,
     RelationTypeModule,
+    VehicleUsageModule,
+    VehicleTypeModule,
   ],
 })
 export class PolicyModule { }

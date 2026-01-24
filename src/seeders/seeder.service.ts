@@ -5,6 +5,8 @@ import { CatalogVerificationSeeder } from './catalog-verification.seeder';
 import { PolicyCategorySeeder } from './policy-category.seeder';
 import { PolicyStatusSeeder } from './policy-status.seeder';
 import { RelationTypeSeeder } from './relation-type.seeder';
+import { VehicleUsageSeeder } from './vehicle-usage.seeder';
+import { VehicleTypeSeeder } from './vehicle-type.seeder';
 
 @Injectable()
 export class SeederService {
@@ -16,6 +18,8 @@ export class SeederService {
     private readonly policyCategorySeeder: PolicyCategorySeeder,
     private readonly policyStatusSeeder: PolicyStatusSeeder,
     private readonly relationTypeSeeder: RelationTypeSeeder,
+    private readonly vehicleUsageSeeder: VehicleUsageSeeder,
+    private readonly vehicleTypeSeeder: VehicleTypeSeeder,
     private readonly catalogVerificationSeeder: CatalogVerificationSeeder,
   ) { }
 
@@ -46,6 +50,8 @@ export class SeederService {
     await this.policyCategorySeeder.seed();
     await this.policyStatusSeeder.seed();
     await this.relationTypeSeeder.seed();
+    await this.vehicleUsageSeeder.seed();
+    await this.vehicleTypeSeeder.seed();
 
     // Then run catalog verification seeder
     await this.catalogVerificationSeeder.seed();

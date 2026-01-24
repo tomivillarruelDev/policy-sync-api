@@ -33,8 +33,8 @@ export class PolicyInsuredVehicle {
     @Column({ nullable: true }) //crear Select de modelo cascada EN PRODUCCION
     model: string;
 
-    @Column({ nullable: true }) //crear Select de version cascada EN PRODUCCION
-    version: string;
+    @Column({ name: 'vehicle_version', nullable: true }) //crear Select de version cascada EN PRODUCCION
+    vehicleVersion: string;
 
     @Column({ type: 'int', nullable: true })
     year: number;

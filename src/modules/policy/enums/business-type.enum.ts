@@ -1,5 +1,5 @@
 export enum BusinessType {
-  NEW = 'NEW',
+  NEW_BUSINESS = 'NEW_BUSINESS',
   RENEWAL = 'RENEWAL',
   ENDORSEMENT = 'ENDORSEMENT',
 }

@@ -51,3 +51,51 @@ export const BRANCH_RELATIONS = [
 export const CLIENT_RELATIONS = [
     ...REAL_PERSON_RELATIONS.map((rel) => `realPerson.${rel}`),
 ];
+
+export const POLICY_RELATIONS = [
+    // --- Main catalogs ---
+    'policyStatus',
+    'policyCategory',
+
+    // --- Actors ---
+    'client',
+    ...CLIENT_RELATIONS.map((rel) => `client.${rel}`),
+
+    'agent',
+    ...AGENT_RELATIONS.map((rel) => `agent.${rel}`),
+
+    'insurer',
+    'insurer.legalPerson',
+
+    'plan',
+
+    // --- Previous Policy ---
+    'previousPolicy',
+
+    // --- Child entities ---
+    'insuredVehicles',
+    'insuredVehicles.usageType',
+    'insuredVehicles.vehicleType',
+    'insuredVehicles.country',
+
+    'insuredProperties',
+    'insuredProperties.city',
+    'insuredProperties.city.state',
+    'insuredProperties.city.state.country',
+    'insuredProperties.propertyType',
+    'insuredProperties.roofMaterial',
+
+    'dependents',
+    'dependents.realPerson',
+    'dependents.realPerson.person',
+    'dependents.relationType',
+
+    'beneficiaries',
+    'beneficiaries.realPerson',
+    'beneficiaries.realPerson.person',
+    'beneficiaries.relationType',
+
+    'additionalCoverages',
+
+    'installments',
+];

@@ -7,11 +7,7 @@ import { PlanService } from '../modules/plan/plan.service';
 import { RealPersonService } from '../modules/person/services/real-person.service';
 import { AgentService } from '../modules/agent/agent.service';
 import { PolicyService } from '../modules/policy/policy.service';
-import { PolicyStatus } from '../modules/policy/enums/policy-status.enum';
 import { BusinessType } from '../modules/policy/enums/business-type.enum';
-import { PaymentFrequency } from '../modules/policy/enums/payment-frequency.enum';
-import { PaymentMethod } from '../modules/policy/enums/payment-method.enum';
-import { RelationType } from '../modules/policy/enums/relation-type.enum';
 import { CivilStatus } from '../modules/person/entities/civil-status.entity';
 import { CreateRealPersonDto } from '../modules/person/dto/create-real-person.dto';
 import { CreateClientDto } from '../modules/clients/dto/create-client.dto';
@@ -258,33 +254,80 @@ export class CatalogVerificationSeeder {
       `>> Agente creado: ${agent.firstName} ${agent.lastName} (ID: ${agent.id})`,
     );
 
-    // 4. POLIZA
-    this.logger.log('6. [POLICY] Creando Póliza con Dependientes...');
-    await this.policyService.create({
-      policyNumber: 'POL-2024-001',
-      status: PolicyStatus.ACTIVE,
-      businessType: BusinessType.NEW,
-      issueDate: new Date(),
-      startDate: new Date(),
-      endDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
-      insuredAmount: 100000,
-      premiumAmount: 1200,
-      currency: 'USD',
-      paymentFrequency: PaymentFrequency.ANNUAL,
-      paymentMethod: PaymentMethod.CREDIT_CARD,
-      installments: 1,
-      clientId: client.id,
-      agentId: agent.id,
-      planId: plan.id,
-      dependents: [
-        {
-          firstName: 'Hijo',
-          lastName: 'Perez',
-          relationType: RelationType.CHILD,
-          birthDate: new Date('2020-01-01'),
-        },
-      ],
-    });
+    // 4. POLIZA (NUEVA ESTRUCTURA COMPLETA)
+    this.logger.log('6. [POLICY] Creando Póliza Completa (Auto + Hogar + Cuotas)...');
+
+    // Buscamos catálogos necesarios (Status y Category)
+    // Nota: Asumimos que los seeders de catálogos ya corrieron.
+    const activeStatus = await this.dataSource.getRepository('PolicyStatus').findOne({ where: { slug: 'ACTIVE' } });
+    const individualCategory = await this.dataSource.getRepository('PolicyCategory').findOne({ where: { slug: 'INDIVIDUAL' } });
+
+    if (!activeStatus || !individualCategory) {
+      this.logger.warn('⚠️ Faltan catálogos de Póliza (Status/Category). Saltando creación de póliza.');
+    } else {
+      // Creamos la póliza con toda la estructura anidada
+      const newPolicy = await this.policyService.create({
+        // --- Header ---
+        policyNumber: 'POL-2026-DEMO',
+        businessType: BusinessType.NEW_BUSINESS,
+        policyStatusId: activeStatus.id,
+        policyCategoryId: individualCategory.id,
+        clientId: client.id,
+        agentId: agent.id,
+        insurerId: insurer.id,
+        planId: plan.id,
+
+        // --- Fechas ---
+        issuedDate: new Date().toISOString(),
+        validityStart: new Date().toISOString(),
+        validityEnd: new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString(), // 1 año
+        renewalDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString(),
+
+        // --- Financials ---
+        currency: 'USD',
+        sumInsured: 50000,
+        netPremium: 1000,
+        taxAmount: 210,
+        totalPremium: 1210,
+        commissionPercentage: 10,
+        paymentFrequency: 'ANNUAL',
+        paymentMethod: 'CREDIT_CARD',
+        numberOfInstallments: 1,
+
+        // --- DETALLES DE RIESGO (Test de Relaciones Hijas) ---
+
+        // 1. Vehículo (Datos de la captura)
+        vehicles: [{
+          brand: 'KIA',
+          model: 'SONET',
+          version: 'LX 1.5',
+          year: 2023,
+          plate: 'PDX-9085',
+          insuredValue: 21640.70,
+          countryId: city.state.country.id, // País de la ubicación
+          address: 'Córdoba Capital', // Zona de riesgo (Texto)
+        }],
+
+        // 2. Hogar
+        properties: [{
+          cityId: cityId, // Relación con City
+          street: 'Av. Siempre Viva',
+          streetNumber: '742',
+          buildingFireSum: 150000,
+          contentFireSum: 50000,
+        }],
+
+        // 3. Cuotas (Grilla de Pagos)
+        installments: [{
+          installmentNumber: 1,
+          dueDate: new Date().toISOString(),
+          amount: 1210,
+          status: 'PENDING',
+        }],
+      });
+
+      this.logger.log(`>> Póliza ${newPolicy.policyNumber} creada exitosamente con sus detalles.`);
+    }
 
     // 5. UPDATES
     this.logger.log('7. [UPDATE] Verificando Actualizaciones...');
@@ -327,7 +370,7 @@ export class CatalogVerificationSeeder {
     const branchRepo = this.dataSource.getRepository('Branch');
 
     const policy = await policyRepo.findOne({
-      where: { policyNumber: 'POL-2024-001' },
+      where: { policyNumber: 'POL-2026-DEMO' },
     });
     if (policy) await policyRepo.remove(policy);
 

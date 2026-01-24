@@ -9,6 +9,8 @@ import { PolicyStatusModule } from './catalogs/policy-status/policy-status.modul
 import { RelationTypeModule } from './catalogs/relation-type/relation-type.module';
 import { VehicleUsageModule } from './catalogs/vehicle-usage/vehicle-usage.module';
 import { VehicleTypeModule } from './catalogs/vehicle-type/vehicle-type.module';
+import { PropertyTypeModule } from './catalogs/property-type/property-type.module';
+import { RoofMaterialModule } from './catalogs/roof-material/roof-material.module';
 
 @Module({
   imports: [
@@ -18,6 +20,8 @@ import { VehicleTypeModule } from './catalogs/vehicle-type/vehicle-type.module';
     RelationTypeModule,
     VehicleUsageModule,
     VehicleTypeModule,
+    PropertyTypeModule,
+    RoofMaterialModule,
   ],
   controllers: [PolicyController],
   providers: [PolicyService],
@@ -28,6 +32,8 @@ import { VehicleTypeModule } from './catalogs/vehicle-type/vehicle-type.module';
     RelationTypeModule,
     VehicleUsageModule,
     VehicleTypeModule,
+    PropertyTypeModule,
+    RoofMaterialModule,
   ],
 })
 export class PolicyModule { }

@@ -9,6 +9,8 @@ import { Policy } from './policy.entity';
 import { AuditableEntity } from '../../../common/entities/auditable.entity';
 import { Expose } from 'class-transformer';
 import { City } from 'src/modules/person/common/address/entities/city.entity';
+import { RoofMaterial } from '../catalogs/roof-material/roof-material.entity';
+import { PropertyType } from '../catalogs/property-type/property-type.entity';
 
 @Entity('policy_insured_properties')
 export class PolicyInsuredProperty {
@@ -41,12 +43,14 @@ export class PolicyInsuredProperty {
 
     // --- Constructivo ---
     @Expose()
-    @Column({ name: 'property_type', nullable: true })
-    propertyType: string; //crear Select de tipo de propiedad - Tabla Satelite
+    @ManyToOne(() => PropertyType, { eager: true })
+    @JoinColumn({ name: 'property_type_id' })
+    propertyType: PropertyType;
 
     @Expose()
-    @Column({ name: 'roof_material', nullable: true })
-    roofMaterial: string; //crear Select de material de techo - Tabla Satelite
+    @ManyToOne(() => RoofMaterial, { eager: true })
+    @JoinColumn({ name: 'roof_material_id' })
+    roofMaterial: RoofMaterial;
 
     @Column({ name: 'total_square_meters', type: 'float', nullable: true })
     totalSquareMeters: number;

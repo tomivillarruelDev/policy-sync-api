@@ -4,12 +4,15 @@ import { AuditableEntity } from 'src/common/entities/auditable.entity';
 
 @Entity({ name: 'policy_status' })
 export class PolicyStatus {
+    @Expose()
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
+    @Expose()
     @Column()
     name: string;
 
+    @Expose()
     @Column({ name: 'name_es', nullable: true })
     nameEs: string;
 

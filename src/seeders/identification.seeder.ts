@@ -11,29 +11,16 @@ export class IdentificationSeeder {
   constructor(
     @InjectRepository(IdentificationType)
     private readonly identificationTypeRepo: Repository<IdentificationType>,
-  ) {}
+  ) { }
 
   async seed() {
     this.logger.log(
       'Iniciando la carga de datos de tipos de identificación...',
     );
 
-    await this.clearData();
-
     await this.seedIdentificationTypes();
 
     this.logger.log('Carga de datos de identificación completada con éxito.');
-  }
-
-  async clearData() {
-    this.logger.log('Eliminando datos existentes...');
-    await this.identificationTypeRepo.query('DELETE FROM "identification"');
-    await this.identificationTypeRepo
-      .createQueryBuilder()
-      .delete()
-      .where('1=1')
-      .execute();
-    this.logger.log('Datos existentes eliminados.');
   }
 
   async seedIdentificationTypes(): Promise<Map<string, IdentificationType>> {
@@ -57,13 +44,20 @@ export class IdentificationSeeder {
     ];
 
     for (const type of types) {
-      const newType = this.identificationTypeRepo.create(type);
-      const saved = await this.identificationTypeRepo.save(newType);
-      identificationTypeMap.set(saved.id, saved);
+      let existingType = await this.identificationTypeRepo.findOne({
+        where: { name: type.name },
+      });
+
+      if (!existingType) {
+        const newType = this.identificationTypeRepo.create(type);
+        existingType = await this.identificationTypeRepo.save(newType);
+      }
+
+      identificationTypeMap.set(existingType.id, existingType);
     }
 
     this.logger.log(
-      `${identificationTypeMap.size} tipos de identificación cargados.`,
+      `${identificationTypeMap.size} tipos de identificación verificados/cargados.`,
     );
     return identificationTypeMap;
   }

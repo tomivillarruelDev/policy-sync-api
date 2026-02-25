@@ -5,6 +5,7 @@ import { CatalogVerificationSeeder } from './catalog-verification.seeder';
 import { PolicyCategorySeeder } from './policy-category.seeder';
 import { PolicyStatusSeeder } from './policy-status.seeder';
 import { RelationTypeSeeder } from './relation-type.seeder';
+import { SuperSeeder } from './super.seeder';
 import { VehicleUsageSeeder } from './vehicle-usage.seeder';
 import { VehicleTypeSeeder } from './vehicle-type.seeder';
 import { PropertyTypeSeeder } from './property-type.seeder';
@@ -25,6 +26,7 @@ export class SeederService {
     private readonly propertyTypeSeeder: PropertyTypeSeeder,
     private readonly roofMaterialSeeder: RoofMaterialSeeder,
     private readonly catalogVerificationSeeder: CatalogVerificationSeeder,
+    private readonly superSeeder: SuperSeeder,
   ) { }
 
   async seedLocation() {
@@ -61,5 +63,20 @@ export class SeederService {
 
     // Then run catalog verification seeder
     await this.catalogVerificationSeeder.seed();
+  }
+
+  async superSeed() {
+    this.logger.log('Inicializando Super Seeder...');
+
+    // Seed satellite tables first if not present
+    await this.policyCategorySeeder.seed();
+    await this.policyStatusSeeder.seed();
+    await this.relationTypeSeeder.seed();
+    await this.vehicleUsageSeeder.seed();
+    await this.vehicleTypeSeeder.seed();
+    await this.propertyTypeSeeder.seed();
+    await this.roofMaterialSeeder.seed();
+
+    await this.superSeeder.seed();
   }
 }

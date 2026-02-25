@@ -30,6 +30,8 @@ import { PropertyType } from '../modules/policy/catalogs/property-type/property-
 import { RoofMaterial } from '../modules/policy/catalogs/roof-material/roof-material.entity';
 import { IdentificationSeeder } from './identification.seeder';
 import { CatalogVerificationSeeder } from './catalog-verification.seeder';
+import { SuperSeeder } from './super.seeder';
+import { SuperSeederCommand } from './cli/commands/super-seeder.command';
 import { InsurerModule } from '../modules/insurer/insurer.module';
 import { ProductModule } from '../modules/product/product.module';
 import { PlanModule } from '../modules/plan/plan.module';
@@ -84,6 +86,8 @@ import { ClientsModule } from '../modules/clients/clients.module';
     PropertyTypeSeeder,
     RoofMaterialSeeder,
     CatalogVerificationSeeder,
+    SuperSeeder,
+    SuperSeederCommand,
   ],
   exports: [SeederService],
 })

@@ -32,7 +32,11 @@ export class LocationSeeder {
       return;
     }
 
-    await this.clearData();
+    const count = await this.countryRepo.count();
+    if (count > 0) {
+      this.logger.log('Datos de localización ya existen. Omitiendo inicialización.');
+      return;
+    }
 
     // Load full JSON
     this.logger.log('Leyendo archivo full.json...');
@@ -48,13 +52,7 @@ export class LocationSeeder {
     this.logger.log('Carga de datos de localización completada con éxito.');
   }
 
-  async clearData() {
-    this.logger.log('Eliminando datos existentes...');
-    await this.cityRepo.createQueryBuilder().delete().where('1=1').execute();
-    await this.stateRepo.createQueryBuilder().delete().where('1=1').execute();
-    await this.countryRepo.createQueryBuilder().delete().where('1=1').execute();
-    this.logger.log('Datos existentes eliminados.');
-  }
+
 
   async seedCountries(allCountries: any[]): Promise<Map<string, Country>> {
     this.logger.log('Cargando países...');

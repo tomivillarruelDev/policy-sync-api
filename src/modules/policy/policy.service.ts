@@ -188,46 +188,63 @@ export class PolicyService extends BaseService<Policy, PolicyDto> {
   }
 
   async update(id: string, updateDto: UpdatePolicyDto): Promise<PolicyDto> {
-    const policy = await this.policyRepository.findOne({
-      where: { id },
-      relations: POLICY_RELATIONS,
-    });
+    const qr = this.dataSource.createQueryRunner();
+    await qr.connect();
+    await qr.startTransaction();
 
-    if (!policy) {
-      throw new NotFoundException(`Policy with id ${id} not found`);
+    try {
+      const policyRepo = qr.manager.getRepository(Policy);
+      const policy = await policyRepo.findOne({
+        where: { id },
+        relations: POLICY_RELATIONS,
+      });
+
+      if (!policy) {
+        throw new NotFoundException(`Policy with id ${id} not found`);
+      }
+
+      const {
+        policyStatusId,
+        policyCategoryId,
+        clientId,
+        agentId,
+        insurerId,
+        planId,
+        previousPolicyId,
+        // Excluir arrays anidados del objeto raíz
+        vehicles,
+        properties,
+        dependents,
+        beneficiaries,
+        additionalCoverages,
+        installments,
+        ...updateData
+      } = updateDto;
+
+      // Whitelist: limpiar undefined
+      Object.keys(updateData).forEach(
+        (key) => updateData[key] === undefined && delete updateData[key],
+      );
+      Object.assign(policy, updateData);
+
+      // Relaciones por ID
+      if (policyStatusId) policy.policyStatus = { id: policyStatusId } as any;
+      if (policyCategoryId) policy.policyCategory = { id: policyCategoryId } as any;
+      if (clientId) policy.client = { id: clientId } as any;
+      if (agentId) policy.agent = { id: agentId } as any;
+      if (insurerId) policy.insurer = { id: insurerId } as any;
+      if (planId) policy.plan = { id: planId } as any;
+      if (previousPolicyId) policy.previousPolicy = { id: previousPolicyId } as any;
+
+      await policyRepo.save(policy);
+      await qr.commitTransaction();
+      return this.findOne(id);
+    } catch (error) {
+      await qr.rollbackTransaction();
+      handleDBErrors(error);
+    } finally {
+      await qr.release();
     }
-
-
-    const {
-      policyStatusId,
-      policyCategoryId,
-      clientId,
-      agentId,
-      insurerId,
-      planId,
-      previousPolicyId,
-      // Excluir arrays anidados para evitar polución del objeto entity (no se actualizan aquí)
-      vehicles,
-      properties,
-      dependents,
-      beneficiaries,
-      additionalCoverages,
-      installments,
-      ...updateData
-    } = updateDto;
-
-    Object.assign(policy, updateData);
-
-    if (policyStatusId) policy.policyStatus = { id: policyStatusId } as any;
-    if (policyCategoryId) policy.policyCategory = { id: policyCategoryId } as any;
-    if (clientId) policy.client = { id: clientId } as any;
-    if (agentId) policy.agent = { id: agentId } as any;
-    if (insurerId) policy.insurer = { id: insurerId } as any;
-    if (planId) policy.plan = { id: planId } as any;
-    if (previousPolicyId) policy.previousPolicy = { id: previousPolicyId } as any;
-
-    await this.policyRepository.save(policy);
-    return this.findOne(id);
   }
 
 
@@ -239,23 +256,27 @@ export class PolicyService extends BaseService<Policy, PolicyDto> {
     await this.policyRepository.softDelete(id);
   }
 
-  // Transformar entidad a DTO con IDs aplanados
+  // Transformar entidad a DTO con IDs aplanados (Strict ID Pattern)
   private toDto(entity: Policy): PolicyDto {
-    return plainToInstance(PolicyDto, {
+    const dto = plainToInstance(PolicyDto, {
       ...entity,
 
-
+      // Flat Catalog IDs + Names
       policyStatusId: entity.policyStatus?.id,
+      policyStatusName: entity.policyStatus?.name,
+      policyStatusNameEs: entity.policyStatus?.nameEs,
       policyCategoryId: entity.policyCategory?.id,
+      policyCategoryName: entity.policyCategory?.name,
+
+      // Flat Actor IDs
       clientId: entity.client?.id,
       agentId: entity.agent?.id,
       insurerId: entity.insurer?.id,
       planId: entity.plan?.id,
-      insurer: entity.insurer,
-      plan: entity.plan,
+      branchId: entity.plan?.product?.branch?.id,
       previousPolicyId: entity.previousPolicy?.id,
 
-
+      // Flat Display Names
       clientName: entity.client?.realPerson?.firstName && entity.client?.realPerson?.lastName
         ? `${entity.client.realPerson.firstName} ${entity.client.realPerson.lastName}`
         : undefined,
@@ -264,14 +285,84 @@ export class PolicyService extends BaseService<Policy, PolicyDto> {
         : undefined,
       insurerName: entity.insurer?.legalPerson?.organizationName,
       planName: entity.plan?.name,
-
-
-      insuredVehicles: entity.insuredVehicles,
-      insuredProperties: entity.insuredProperties,
-      dependents: entity.dependents,
-      beneficiaries: entity.beneficiaries,
-      additionalCoverages: entity.additionalCoverages,
-      installments: entity.installments,
     }, { excludeExtraneousValues: true });
+
+    // Paso 2: Asignar arrays de riesgo FUERA de plainToInstance
+    // para evitar que excludeExtraneousValues descarte sus propiedades
+    dto.insuredVehicles = (entity.insuredVehicles || []).map(v => ({
+      id: v.id,
+      brand: v.brand,
+      model: v.model,
+      version: v.vehicleVersion,
+      year: v.year,
+      plate: v.plate,
+      chassis: v.chassis,
+      engine: v.engine,
+      insuredValue: v.insuredValue,
+      address: v.address,
+      countryId: v.country?.id || null,
+      usageTypeId: v.usageType?.id || null,
+      vehicleTypeId: v.vehicleType?.id || null,
+    })) as any;
+
+    dto.insuredProperties = (entity.insuredProperties || []).map(p => ({
+      id: p.id,
+      street: p.street,
+      streetNumber: p.streetNumber,
+      zipCode: p.zipCode,
+      apartment: p.apartment,
+      floor: p.floor,
+      isPermanentResidence: p.isPermanentResidence,
+      totalSquareMeters: p.totalSquareMeters,
+      builtSquareMeters: p.builtSquareMeters,
+      hasAlarm: p.hasAlarm,
+      hasReinforcedDoor: p.hasReinforcedDoor,
+      windowBars: p.windowBars,
+      buildingFireSum: p.buildingFireSum,
+      contentFireSum: p.contentFireSum,
+      theftSum: p.theftSum,
+      cityId: p.city?.id || null,
+      propertyTypeId: p.propertyType?.id || null,
+      roofMaterialId: p.roofMaterial?.id || null,
+    })) as any;
+
+    dto.dependents = (entity.dependents || []).map(d => ({
+      id: d.id,
+      deductible: d.deductible,
+      status: d.status,
+      notes: d.notes,
+      realPersonId: d.realPerson?.id || null,
+      realPersonName: d.realPerson?.firstName
+        ? `${d.realPerson.firstName} ${d.realPerson.lastName || ''}`
+        : null,
+      relationTypeId: d.relationType?.id || null,
+    })) as any;
+
+    dto.beneficiaries = (entity.beneficiaries || []).map(b => ({
+      id: b.id,
+      percentage: b.percentage,
+      realPersonId: b.realPerson?.id || null,
+      realPersonName: b.realPerson?.firstName
+        ? `${b.realPerson.firstName} ${b.realPerson.lastName || ''}`
+        : null,
+      relationTypeId: b.relationType?.id || null,
+    })) as any;
+
+    dto.additionalCoverages = (entity.additionalCoverages || []).map(c => ({
+      id: c.id,
+      coverageName: c.coverageName,
+      percentage: c.percentage,
+      insuredValue: c.insuredValue,
+    })) as any;
+
+    dto.installments = (entity.installments || []).map(i => ({
+      id: i.id,
+      installmentNumber: i.installmentNumber,
+      dueDate: i.dueDate,
+      amount: i.amount,
+      status: i.status,
+    })) as any;
+
+    return dto;
   }
 }

@@ -42,6 +42,7 @@ export const PRODUCT_RELATIONS = [
 
 export const PLAN_RELATIONS = [
     'product',
+    'product.branch',
 ];
 
 export const BRANCH_RELATIONS = [

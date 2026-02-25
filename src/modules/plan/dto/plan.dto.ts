@@ -1,4 +1,4 @@
-import { Exclude, Expose } from 'class-transformer';
+import { Expose } from 'class-transformer';
 
 export class PlanDto {
     @Expose()
@@ -21,4 +21,10 @@ export class PlanDto {
 
     @Expose()
     productName: string; // Flattened property
+
+    @Expose()
+    branchId: string; // Derivado de product.branch.id
+
+    @Expose()
+    branchName: string; // Derivado de product.branch.name
 }

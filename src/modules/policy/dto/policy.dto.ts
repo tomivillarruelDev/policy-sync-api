@@ -1,15 +1,5 @@
-import { Expose, Type } from 'class-transformer';
-import { PolicyStatus } from '../catalogs/policy-status/policy-status.entity';
-import { PolicyCategory } from '../catalogs/policy-category/policy-category.entity';
-import { PolicyInsuredVehicle } from '../entities/policy-insured-vehicle.entity';
-import { PolicyInsuredProperty } from '../entities/policy-insured-property.entity';
-import { PolicyDependent } from '../entities/policy-dependent.entity';
-import { PolicyBeneficiary } from '../entities/policy-beneficiary.entity';
-import { PolicyAdditionalCoverage } from '../entities/policy-additional-coverage.entity';
-import { PolicyInstallment } from '../entities/policy-installment.entity';
+import { Expose } from 'class-transformer';
 import { BusinessType } from '../enums/business-type.enum';
-import { Insurer } from '../../insurer/entities/insurer.entity';
-import { Plan } from '../../plan/entities/plan.entity';
 
 export class PolicyDto {
     @Expose()
@@ -22,23 +12,23 @@ export class PolicyDto {
     @Expose()
     businessType: BusinessType;
 
-    // --- Catalog Relations (Full Objects) ---
-    @Expose()
-    @Type(() => PolicyStatus)
-    policyStatus: PolicyStatus;
-
-    @Expose()
-    @Type(() => PolicyCategory)
-    policyCategory: PolicyCategory;
-
-    // --- Flat IDs for catalogs ---
+    // --- Flat Catalog IDs (Strict ID Pattern) ---
     @Expose()
     policyStatusId: string;
 
     @Expose()
+    policyStatusName: string;
+
+    @Expose()
+    policyStatusNameEs: string;
+
+    @Expose()
     policyCategoryId: string;
 
-    // --- Actors (Flat IDs) ---
+    @Expose()
+    policyCategoryName: string;
+
+    // --- Flat Actor IDs ---
     @Expose()
     clientId: string;
 
@@ -52,12 +42,7 @@ export class PolicyDto {
     planId: string;
 
     @Expose()
-    @Type(() => Insurer)
-    insurer: Insurer;
-
-    @Expose()
-    @Type(() => Plan)
-    plan: Plan;
+    branchId: string;
 
     @Expose()
     previousPolicyId: string;
@@ -106,30 +91,24 @@ export class PolicyDto {
     @Expose()
     numberOfInstallments: number;
 
-    // --- Child Arrays (with @Type decorators) ---
+    // --- Child Arrays (plain objects, mapeados en toDto) ---
     @Expose()
-    @Type(() => PolicyInsuredVehicle)
-    insuredVehicles: PolicyInsuredVehicle[];
+    insuredVehicles: any[];
 
     @Expose()
-    @Type(() => PolicyInsuredProperty)
-    insuredProperties: PolicyInsuredProperty[];
+    insuredProperties: any[];
 
     @Expose()
-    @Type(() => PolicyDependent)
-    dependents: PolicyDependent[];
+    dependents: any[];
 
     @Expose()
-    @Type(() => PolicyBeneficiary)
-    beneficiaries: PolicyBeneficiary[];
+    beneficiaries: any[];
 
     @Expose()
-    @Type(() => PolicyAdditionalCoverage)
-    additionalCoverages: PolicyAdditionalCoverage[];
+    additionalCoverages: any[];
 
     @Expose()
-    @Type(() => PolicyInstallment)
-    installments: PolicyInstallment[];
+    installments: any[];
 
     // --- Flattened Client Info (for display) ---
     @Expose()

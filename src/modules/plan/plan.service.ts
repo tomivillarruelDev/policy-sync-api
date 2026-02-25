@@ -121,6 +121,8 @@ export class PlanService extends BaseService<Plan, PlanDto> {
         ...plan,
         productId: plan.product?.id,
         productName: plan.product?.name,
+        branchId: plan.product?.branch?.id,
+        branchName: plan.product?.branch?.name,
       },
       { excludeExtraneousValues: true },
     );

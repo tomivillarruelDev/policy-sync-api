@@ -19,7 +19,8 @@ export abstract class BaseService<T extends ObjectLiteral, R = T> {
 
     /**
      * Busca todos los registros con paginación.
-     * Usa `findAndCount` de TypeORM para obtener datos + total en una sola query.
+     * - Si NO se envían `page` ni `limit`, devuelve TODOS los registros (sin paginación).
+     * - Si se envían, usa `findAndCount` de TypeORM para obtener datos + total en una sola query.
      *
      * @param paginationDto - Parámetros de paginación (page, limit)
      * @param options       - Opciones adicionales de TypeORM (relations, where, order, etc.)
@@ -29,6 +30,22 @@ export abstract class BaseService<T extends ObjectLiteral, R = T> {
         paginationDto: PaginationDto,
         options?: FindManyOptions<T>,
     ): Promise<PaginatedResult<R>> {
+        // Sin parámetros de paginación → devolver todos los registros
+        if (paginationDto.page === undefined && paginationDto.limit === undefined) {
+            const [records, total] = await this.repository.findAndCount(options);
+            return {
+                data: records as unknown as R[],
+                meta: {
+                    total,
+                    page: 1,
+                    limit: total,
+                    totalPages: 1,
+                    hasPreviousPage: false,
+                    hasNextPage: false,
+                },
+            };
+        }
+
         const page = paginationDto.page ?? 1;
         const limit = paginationDto.limit ?? 10;
         const skip = (page - 1) * limit;

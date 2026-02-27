@@ -6,6 +6,8 @@ import { plainToInstance } from 'class-transformer';
 // Base & Utils
 import { BaseService } from '../../common/base/base.service';
 import { handleDBErrors } from '../../common/utils/typeorm-errors.util';
+import { PaginationDto } from '../../common/dtos/pagination.dto';
+import { PaginatedResult } from '../../common/interfaces/paginated-result.interface';
 
 // Module Imports
 import { Client } from './entities/client.entity';
@@ -75,6 +77,17 @@ export class ClientsService extends BaseService<Client, ClientDto> {
             relations: CLIENT_RELATIONS,
         });
         return entities.map(item => this.toDto(item as unknown as Client));
+    }
+
+    // --- FIND ALL PAGINATED ---
+    async findAllPaginated(paginationDto: PaginationDto): Promise<PaginatedResult<ClientDto>> {
+        const result = await super.findAllPaginated(paginationDto, {
+            relations: CLIENT_RELATIONS,
+        });
+        return {
+            ...result,
+            data: result.data.map(item => this.toDto(item as unknown as Client)),
+        };
     }
 
     // --- FIND ONE (Override) ---

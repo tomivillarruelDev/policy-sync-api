@@ -7,14 +7,16 @@ import {
   Param,
   Delete,
   ParseUUIDPipe,
+  Query,
 } from '@nestjs/common';
 import { PlanService } from './plan.service';
 import { CreatePlanDto } from './dto/create-plan.dto';
 import { UpdatePlanDto } from './dto/update-plan.dto';
+import { PaginationDto } from 'src/common/dtos/pagination.dto';
 
 @Controller('plans')
 export class PlanController {
-  constructor(private readonly planService: PlanService) {}
+  constructor(private readonly planService: PlanService) { }
 
   @Post()
   create(@Body() createPlanDto: CreatePlanDto) {
@@ -22,8 +24,8 @@ export class PlanController {
   }
 
   @Get()
-  findAll() {
-    return this.planService.findAll();
+  findAll(@Query() paginationDto: PaginationDto) {
+    return this.planService.findAllPaginated(paginationDto);
   }
 
   @Get(':id')

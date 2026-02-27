@@ -7,10 +7,12 @@ import {
   Param,
   Delete,
   ParseUUIDPipe,
+  Query,
 } from '@nestjs/common';
 import { InsurerService } from './insurer.service';
 import { CreateInsurerDto } from './dto/create-insurer.dto';
 import { UpdateInsurerDto } from './dto/update-insurer.dto';
+import { PaginationDto } from 'src/common/dtos/pagination.dto';
 
 @Controller('insurers')
 export class InsurerController {
@@ -22,8 +24,8 @@ export class InsurerController {
   }
 
   @Get()
-  findAll() {
-    return this.insurerService.findAll();
+  findAll(@Query() paginationDto: PaginationDto) {
+    return this.insurerService.findAllPaginated(paginationDto);
   }
 
   @Get(':id')

@@ -7,10 +7,12 @@ import {
     Param,
     Delete,
     ParseUUIDPipe,
+    Query,
 } from '@nestjs/common';
 import { BranchService } from './branch.service';
 import { CreateBranchDto } from './dto/create-branch.dto';
 import { UpdateBranchDto } from './dto/update-branch.dto';
+import { PaginationDto } from 'src/common/dtos/pagination.dto';
 
 @Controller('branches')
 export class BranchController {
@@ -22,8 +24,8 @@ export class BranchController {
     }
 
     @Get()
-    findAll() {
-        return this.branchService.findAll();
+    findAll(@Query() paginationDto: PaginationDto) {
+        return this.branchService.findAllPaginated(paginationDto);
     }
 
     @Get(':id')

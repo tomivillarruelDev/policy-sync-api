@@ -7,14 +7,16 @@ import {
   Param,
   Delete,
   ParseUUIDPipe,
+  Query,
 } from '@nestjs/common';
 import { PolicyService } from './policy.service';
 import { CreatePolicyDto } from './dto/create-policy.dto';
 import { UpdatePolicyDto } from './dto/update-policy.dto';
+import { PaginationDto } from 'src/common/dtos/pagination.dto';
 
 @Controller('policies')
 export class PolicyController {
-  constructor(private readonly policyService: PolicyService) {}
+  constructor(private readonly policyService: PolicyService) { }
 
   @Post()
   create(@Body() createPolicyDto: CreatePolicyDto) {
@@ -22,8 +24,8 @@ export class PolicyController {
   }
 
   @Get()
-  findAll() {
-    return this.policyService.findAll();
+  findAll(@Query() paginationDto: PaginationDto) {
+    return this.policyService.findAllPaginated(paginationDto);
   }
 
   @Get(':id')

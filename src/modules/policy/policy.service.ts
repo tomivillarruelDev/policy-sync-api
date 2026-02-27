@@ -3,6 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { plainToInstance } from 'class-transformer';
 import { BaseService } from '../../common/base/base.service';
+import { PaginationDto } from '../../common/dtos/pagination.dto';
+import { PaginatedResult } from '../../common/interfaces/paginated-result.interface';
 import { Policy } from './entities/policy.entity';
 import { PolicyInstallment } from './entities/policy-installment.entity';
 import { PolicyInsuredVehicle } from './entities/policy-insured-vehicle.entity';
@@ -177,6 +179,16 @@ export class PolicyService extends BaseService<Policy, PolicyDto> {
       relations: POLICY_RELATIONS,
     });
     return entities.map(item => this.toDto(item as unknown as Policy));
+  }
+
+  async findAllPaginated(paginationDto: PaginationDto): Promise<PaginatedResult<PolicyDto>> {
+    const result = await super.findAllPaginated(paginationDto, {
+      relations: POLICY_RELATIONS,
+    });
+    return {
+      ...result,
+      data: result.data.map(item => this.toDto(item as unknown as Policy)),
+    };
   }
 
 

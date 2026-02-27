@@ -9,6 +9,8 @@ import { plainToInstance } from 'class-transformer';
 
 import { BaseService } from 'src/common/base/base.service';
 import { handleDBErrors } from 'src/common/utils/typeorm-errors.util';
+import { PaginationDto } from 'src/common/dtos/pagination.dto';
+import { PaginatedResult } from 'src/common/interfaces/paginated-result.interface';
 import { PLAN_RELATIONS } from '../person/common/constants/relations.constant';
 
 import { Plan } from './entities/plan.entity';
@@ -66,6 +68,16 @@ export class PlanService extends BaseService<Plan, PlanDto> {
       relations: PLAN_RELATIONS,
     });
     return plans.map((plan) => this.toDto(plan as unknown as Plan));
+  }
+
+  async findAllPaginated(paginationDto: PaginationDto): Promise<PaginatedResult<PlanDto>> {
+    const result = await super.findAllPaginated(paginationDto, {
+      relations: PLAN_RELATIONS,
+    });
+    return {
+      ...result,
+      data: result.data.map((plan) => this.toDto(plan as unknown as Plan)),
+    };
   }
 
   async findOne(id: string): Promise<PlanDto> {

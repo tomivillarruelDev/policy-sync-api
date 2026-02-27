@@ -4,6 +4,8 @@ import { DataSource, Repository } from 'typeorm';
 import { plainToInstance } from 'class-transformer';
 
 import { BaseService } from 'src/common/base/base.service';
+import { PaginationDto } from 'src/common/dtos/pagination.dto';
+import { PaginatedResult } from 'src/common/interfaces/paginated-result.interface';
 import { Agent } from './entities/agent.entity';
 import { AgentDto } from './dto/agent.dto';
 import { CreateAgentDto } from './dto/create-agent.dto';
@@ -71,6 +73,16 @@ export class AgentService extends BaseService<Agent, AgentDto> {
             relations: AGENT_RELATIONS,
         });
         return agents.map((i) => this.toDto(i as unknown as Agent));
+    }
+
+    async findAllPaginated(paginationDto: PaginationDto): Promise<PaginatedResult<AgentDto>> {
+        const result = await super.findAllPaginated(paginationDto, {
+            relations: AGENT_RELATIONS,
+        });
+        return {
+            ...result,
+            data: result.data.map((i) => this.toDto(i as unknown as Agent)),
+        };
     }
 
     async findOne(id: string): Promise<AgentDto> {

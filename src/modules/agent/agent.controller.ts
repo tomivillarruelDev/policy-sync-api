@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseUUIDPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseUUIDPipe, Query } from '@nestjs/common';
 import { AgentService } from './agent.service';
 import { CreateAgentDto } from './dto/create-agent.dto';
 import { UpdateAgentDto } from './dto/update-agent.dto';
+import { PaginationDto } from 'src/common/dtos/pagination.dto';
 
 @Controller('agents')
 export class AgentController {
@@ -13,8 +14,8 @@ export class AgentController {
     }
 
     @Get()
-    findAll() {
-        return this.agentService.findAll();
+    findAll(@Query() paginationDto: PaginationDto) {
+        return this.agentService.findAllPaginated(paginationDto);
     }
 
     @Get(':id')

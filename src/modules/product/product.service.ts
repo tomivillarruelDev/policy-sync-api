@@ -13,6 +13,8 @@ import { Product } from './entities/product.entity';
 import { Insurer } from '../insurer/entities/insurer.entity';
 import { Branch } from '../branch/entities/branch.entity';
 import { BaseService } from 'src/common/base/base.service';
+import { PaginationDto } from 'src/common/dtos/pagination.dto';
+import { PaginatedResult } from 'src/common/interfaces/paginated-result.interface';
 import { PRODUCT_RELATIONS } from '../person/common/constants/relations.constant';
 import { handleDBErrors } from 'src/common/utils/typeorm-errors.util';
 
@@ -65,6 +67,16 @@ export class ProductService extends BaseService<Product, ProductDto> {
       relations: PRODUCT_RELATIONS,
     });
     return products.map((i) => this.toDto(i as unknown as Product));
+  }
+
+  async findAllPaginated(paginationDto: PaginationDto): Promise<PaginatedResult<ProductDto>> {
+    const result = await super.findAllPaginated(paginationDto, {
+      relations: PRODUCT_RELATIONS,
+    });
+    return {
+      ...result,
+      data: result.data.map((i) => this.toDto(i as unknown as Product)),
+    };
   }
 
   async findOne(id: string): Promise<ProductDto> {

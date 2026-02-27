@@ -4,6 +4,8 @@ import { DataSource, Repository } from 'typeorm';
 import { plainToInstance } from 'class-transformer';
 
 import { BaseService } from '../../common/base/base.service';
+import { PaginationDto } from '../../common/dtos/pagination.dto';
+import { PaginatedResult } from '../../common/interfaces/paginated-result.interface';
 import { handleDBErrors } from '../../common/utils/typeorm-errors.util';
 import { BRANCH_RELATIONS } from '../person/common/constants/relations.constant';
 
@@ -62,6 +64,16 @@ export class BranchService extends BaseService<Branch, BranchDto> {
             relations: BRANCH_RELATIONS,
         });
         return entities.map((item) => this.toDto(item as unknown as Branch));
+    }
+
+    async findAllPaginated(paginationDto: PaginationDto): Promise<PaginatedResult<BranchDto>> {
+        const result = await super.findAllPaginated(paginationDto, {
+            relations: BRANCH_RELATIONS,
+        });
+        return {
+            ...result,
+            data: result.data.map((item) => this.toDto(item as unknown as Branch)),
+        };
     }
 
     async findOne(id: string): Promise<BranchDto> {

@@ -6,6 +6,8 @@ import {
     ObjectLiteral,
 } from 'typeorm';
 import { NotFoundException } from '@nestjs/common';
+import { PaginationDto } from '../dtos/pagination.dto';
+import { PaginatedResult } from '../interfaces/paginated-result.interface';
 
 export abstract class BaseService<T extends ObjectLiteral, R = T> {
     protected constructor(protected readonly repository: Repository<T>) { }
@@ -13,6 +15,43 @@ export abstract class BaseService<T extends ObjectLiteral, R = T> {
     async findAll(options?: FindManyOptions<T>): Promise<R[]> {
         const records = await this.repository.find(options);
         return records as unknown as R[];
+    }
+
+    /**
+     * Busca todos los registros con paginación.
+     * Usa `findAndCount` de TypeORM para obtener datos + total en una sola query.
+     *
+     * @param paginationDto - Parámetros de paginación (page, limit)
+     * @param options       - Opciones adicionales de TypeORM (relations, where, order, etc.)
+     * @returns PaginatedResult<R> con data[] y meta (total, page, limit, totalPages, etc.)
+     */
+    async findAllPaginated(
+        paginationDto: PaginationDto,
+        options?: FindManyOptions<T>,
+    ): Promise<PaginatedResult<R>> {
+        const page = paginationDto.page ?? 1;
+        const limit = paginationDto.limit ?? 10;
+        const skip = (page - 1) * limit;
+
+        const [records, total] = await this.repository.findAndCount({
+            ...options,
+            take: limit,
+            skip,
+        });
+
+        const totalPages = Math.ceil(total / limit);
+
+        return {
+            data: records as unknown as R[],
+            meta: {
+                total,
+                page,
+                limit,
+                totalPages,
+                hasPreviousPage: page > 1,
+                hasNextPage: page < totalPages,
+            },
+        };
     }
 
     async findOne(id: any, options?: FindOneOptions<T>): Promise<R> {

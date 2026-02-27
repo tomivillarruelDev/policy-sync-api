@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { ClientsService } from './clients.service';
 import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
 import { ClientDto } from './dto/client.dto';
+import { PaginationDto } from 'src/common/dtos/pagination.dto';
 
 @Controller('clients')
 export class ClientsController {
@@ -14,8 +15,8 @@ export class ClientsController {
     }
 
     @Get()
-    findAll(): Promise<ClientDto[]> {
-        return this.clientsService.findAll();
+    findAll(@Query() paginationDto: PaginationDto) {
+        return this.clientsService.findAllPaginated(paginationDto);
     }
 
     @Get(':id')

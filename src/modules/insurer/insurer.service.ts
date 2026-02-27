@@ -19,6 +19,8 @@ import { plainToInstance } from 'class-transformer';
 import { PersonDtoMapper } from '../person/common/mappers/person-dto.mapper';
 import { validatePersonUniqueConstraints } from '../person/common/utils/person-validation.util';
 import { BaseService } from 'src/common/base/base.service';
+import { PaginationDto } from 'src/common/dtos/pagination.dto';
+import { PaginatedResult } from 'src/common/interfaces/paginated-result.interface';
 
 import { INSURER_RELATIONS } from '../person/common/constants/relations.constant';
 
@@ -88,6 +90,16 @@ export class InsurerService extends BaseService<Insurer, InsurerDto> {
       relations: INSURER_RELATIONS,
     });
     return insurers.map((i) => this.toDto(i as unknown as Insurer));
+  }
+
+  async findAllPaginated(paginationDto: PaginationDto): Promise<PaginatedResult<InsurerDto>> {
+    const result = await super.findAllPaginated(paginationDto, {
+      relations: INSURER_RELATIONS,
+    });
+    return {
+      ...result,
+      data: result.data.map((i) => this.toDto(i as unknown as Insurer)),
+    };
   }
 
   async findOne(id: string): Promise<InsurerDto> {

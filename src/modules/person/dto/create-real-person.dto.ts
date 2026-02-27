@@ -40,6 +40,7 @@ export class CreateRealPersonDto extends CreatePersonDto {
 
   @IsOptional()
   @IsDate()
+  @Type(() => Date)
   birthDate?: Date | null;
 
   @IsOptional()

@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DataSource, Repository } from 'typeorm';
+import { DataSource, ObjectLiteral, QueryRunner, Repository } from 'typeorm';
 import { plainToInstance } from 'class-transformer';
 import { BaseService } from '../../common/base/base.service';
 import { PaginationDto } from '../../common/dtos/pagination.dto';
@@ -28,7 +28,6 @@ export class PolicyService extends BaseService<Policy, PolicyDto> {
     super(policyRepository);
   }
 
-  // Crear póliza con transacción robusta
   async create(createDto: CreatePolicyDto): Promise<PolicyDto> {
     const qr = this.dataSource.createQueryRunner();
     await qr.connect();
@@ -36,13 +35,8 @@ export class PolicyService extends BaseService<Policy, PolicyDto> {
 
     try {
       const policyRepo = qr.manager.getRepository(Policy);
-      const installmentRepo = qr.manager.getRepository(PolicyInstallment);
-      const vehicleRepo = qr.manager.getRepository(PolicyInsuredVehicle);
-      const propertyRepo = qr.manager.getRepository(PolicyInsuredProperty);
-      const dependentRepo = qr.manager.getRepository(PolicyDependent);
-      const beneficiaryRepo = qr.manager.getRepository(PolicyBeneficiary);
-      const coverageRepo = qr.manager.getRepository(PolicyAdditionalCoverage);
 
+      // Validar unicidad del número de póliza
       const exists = await policyRepo.findOne({
         where: { policyNumber: createDto.policyNumber },
       });
@@ -50,121 +44,31 @@ export class PolicyService extends BaseService<Policy, PolicyDto> {
         throw new BadRequestException(`Policy number ${createDto.policyNumber} already exists`);
       }
 
-      // Separar datos principales de entidades hijas
+      // Separar campos escalares de relaciones e hijas
       const {
-        vehicles,
-        properties,
-        dependents,
-        beneficiaries,
-        additionalCoverages,
-        installments,
-        policyStatusId,
-        policyCategoryId,
-        clientId,
-        agentId,
-        insurerId,
-        planId,
-        previousPolicyId,
+        vehicles, properties, dependents, beneficiaries,
+        additionalCoverages, installments,
+        policyStatusId, policyCategoryId, clientId,
+        agentId, insurerId, planId, previousPolicyId,
         ...policyData
       } = createDto;
 
-      // Crear póliza principal
-      const policy = policyRepo.create({
-        ...policyData,
-        policyStatus: { id: policyStatusId } as any,
-        policyCategory: { id: policyCategoryId } as any,
-        client: { id: clientId } as any,
-        agent: { id: agentId } as any,
-        insurer: { id: insurerId } as any,
-        plan: { id: planId } as any,
-        previousPolicy: previousPolicyId ? ({ id: previousPolicyId } as any) : undefined,
-      });
+      // Crear y guardar póliza principal
+      const policy = policyRepo.create(policyData);
+      this.assignRelationIds(policy, createDto);
+      const saved = await policyRepo.save(policy);
 
-      const savedPolicy = await policyRepo.save(policy);
-
-      // Guardar entidades hijas asociadas
-      if (vehicles && vehicles.length > 0) {
-
-        for (const vehicleData of vehicles) {
-          const { usageTypeId, vehicleTypeId, countryId, ...vehicleFields } = vehicleData;
-          const vehicle = vehicleRepo.create({
-            ...vehicleFields,
-            policy: { id: savedPolicy.id } as any,
-            usageType: usageTypeId ? { id: usageTypeId } as any : null,
-            vehicleType: vehicleTypeId ? { id: vehicleTypeId } as any : null,
-            country: countryId ? { id: countryId } as any : null,
-          });
-          await vehicleRepo.save(vehicle);
-        }
-      }
-
-
-      if (properties && properties.length > 0) {
-        for (const propertyData of properties) {
-          const { cityId, propertyTypeId, roofMaterialId, ...propertyFields } = propertyData;
-          const property = propertyRepo.create({
-            ...propertyFields,
-            policy: { id: savedPolicy.id } as any,
-            city: { id: cityId } as any,
-            propertyType: propertyTypeId ? { id: propertyTypeId } as any : null,
-            roofMaterial: roofMaterialId ? { id: roofMaterialId } as any : null,
-          });
-          await propertyRepo.save(property);
-        }
-      }
-
-
-      if (dependents && dependents.length > 0) {
-        for (const dependentData of dependents) {
-          const { realPersonId, relationTypeId, ...dependentFields } = dependentData;
-          const dependent = dependentRepo.create({
-            ...dependentFields,
-            policy: { id: savedPolicy.id } as any,
-            realPerson: { id: realPersonId } as any,
-            relationType: { id: relationTypeId } as any,
-          });
-          await dependentRepo.save(dependent);
-        }
-      }
-
-
-      if (beneficiaries && beneficiaries.length > 0) {
-        for (const beneficiaryData of beneficiaries) {
-          const { realPersonId, relationTypeId, ...beneficiaryFields } = beneficiaryData;
-          const beneficiary = beneficiaryRepo.create({
-            ...beneficiaryFields,
-            policy: { id: savedPolicy.id } as any,
-            realPerson: { id: realPersonId } as any,
-            relationType: { id: relationTypeId } as any,
-          });
-          await beneficiaryRepo.save(beneficiary);
-        }
-      }
-
-
-      if (additionalCoverages && additionalCoverages.length > 0) {
-        for (const coverageData of additionalCoverages) {
-          const coverage = coverageRepo.create({
-            ...coverageData,
-            policy: { id: savedPolicy.id } as any,
-          });
-          await coverageRepo.save(coverage);
-        }
-      }
-
-
-      if (installments && installments.length > 0) {
-        for (const installmentData of installments) {
-          const installment = installmentRepo.create({
-            ...installmentData,
-            policy: { id: savedPolicy.id } as any,
-          });
-          await installmentRepo.save(installment);
-        }
-      }
+      // Guardar entidades hijas
+      const r = this.getChildRepos(qr);
+      if (vehicles?.length) await this.saveChildren(r.vehicle, vehicles, d => this.mapVehicle(d, saved.id));
+      if (properties?.length) await this.saveChildren(r.property, properties, d => this.mapProperty(d, saved.id));
+      if (dependents?.length) await this.saveChildren(r.dependent, dependents, d => this.mapDependent(d, saved.id));
+      if (beneficiaries?.length) await this.saveChildren(r.beneficiary, beneficiaries, d => this.mapBeneficiary(d, saved.id));
+      if (additionalCoverages?.length) await this.saveChildren(r.coverage, additionalCoverages, d => this.mapCoverage(d, saved.id));
+      if (installments?.length) await this.saveChildren(r.installment, installments, d => this.mapInstallment(d, saved.id));
 
       await qr.commitTransaction();
-      return this.findOne(savedPolicy.id);
+      return this.findOne(saved.id);
     } catch (error) {
       await qr.rollbackTransaction();
       handleDBErrors(error);
@@ -215,40 +119,29 @@ export class PolicyService extends BaseService<Policy, PolicyDto> {
         throw new NotFoundException(`Policy with id ${id} not found`);
       }
 
+      // Separar campos escalares de relaciones e hijas
       const {
-        policyStatusId,
-        policyCategoryId,
-        clientId,
-        agentId,
-        insurerId,
-        planId,
-        previousPolicyId,
-        // Excluir arrays anidados del objeto raíz
-        vehicles,
-        properties,
-        dependents,
-        beneficiaries,
-        additionalCoverages,
-        installments,
+        vehicles, properties, dependents, beneficiaries,
+        additionalCoverages, installments,
+        policyStatusId, policyCategoryId, clientId,
+        agentId, insurerId, planId, previousPolicyId,
         ...updateData
       } = updateDto;
 
-      // Whitelist: limpiar undefined
-      Object.keys(updateData).forEach(
-        (key) => updateData[key] === undefined && delete updateData[key],
-      );
-      Object.assign(policy, updateData);
-
-      // Relaciones por ID
-      if (policyStatusId) policy.policyStatus = { id: policyStatusId } as any;
-      if (policyCategoryId) policy.policyCategory = { id: policyCategoryId } as any;
-      if (clientId) policy.client = { id: clientId } as any;
-      if (agentId) policy.agent = { id: agentId } as any;
-      if (insurerId) policy.insurer = { id: insurerId } as any;
-      if (planId) policy.plan = { id: planId } as any;
-      if (previousPolicyId) policy.previousPolicy = { id: previousPolicyId } as any;
-
+      // Actualizar campos escalares
+      Object.assign(policy, this.stripUndefined(updateData));
+      this.assignRelationIds(policy, updateDto);
       await policyRepo.save(policy);
+
+      // Reemplazar entidades hijas (delete + insert)
+      const r = this.getChildRepos(qr);
+      await this.replaceChildren(r.vehicle, id, vehicles, d => this.mapVehicle(d, id));
+      await this.replaceChildren(r.property, id, properties, d => this.mapProperty(d, id));
+      await this.replaceChildren(r.dependent, id, dependents, d => this.mapDependent(d, id));
+      await this.replaceChildren(r.beneficiary, id, beneficiaries, d => this.mapBeneficiary(d, id));
+      await this.replaceChildren(r.coverage, id, additionalCoverages, d => this.mapCoverage(d, id));
+      await this.replaceChildren(r.installment, id, installments, d => this.mapInstallment(d, id));
+
       await qr.commitTransaction();
       return this.findOne(id);
     } catch (error) {
@@ -376,5 +269,126 @@ export class PolicyService extends BaseService<Policy, PolicyDto> {
     })) as any;
 
     return dto;
+  }
+
+  // ══════════════════════════════════════════════════════════════
+  // ── Private Helpers: Transaction & Child Entities
+  // ══════════════════════════════════════════════════════════════
+
+  /** Referencia FK shorthand: `{ id }` o `null` */
+  private idRef(id: string | null | undefined): any {
+    return id ? { id } : null;
+  }
+
+  /** Elimina claves `undefined` de un objeto para Object.assign seguro */
+  private stripUndefined(obj: Record<string, any>): Record<string, any> {
+    for (const key of Object.keys(obj)) {
+      if (obj[key] === undefined) delete obj[key];
+    }
+    return obj;
+  }
+
+  /** Asigna relaciones FK por ID a una entidad Policy */
+  private assignRelationIds(
+    policy: Policy,
+    { policyStatusId, policyCategoryId, clientId, agentId, insurerId, planId, previousPolicyId }:
+      Partial<CreatePolicyDto>,
+  ): void {
+    if (policyStatusId) policy.policyStatus = this.idRef(policyStatusId);
+    if (policyCategoryId) policy.policyCategory = this.idRef(policyCategoryId);
+    if (clientId) policy.client = this.idRef(clientId);
+    if (agentId) policy.agent = this.idRef(agentId);
+    if (insurerId) policy.insurer = this.idRef(insurerId);
+    if (planId) policy.plan = this.idRef(planId);
+    if (previousPolicyId) policy.previousPolicy = this.idRef(previousPolicyId);
+  }
+
+  /** Obtiene repositorios de entidades hijas desde un QueryRunner */
+  private getChildRepos(qr: QueryRunner) {
+    return {
+      vehicle: qr.manager.getRepository(PolicyInsuredVehicle),
+      property: qr.manager.getRepository(PolicyInsuredProperty),
+      dependent: qr.manager.getRepository(PolicyDependent),
+      beneficiary: qr.manager.getRepository(PolicyBeneficiary),
+      coverage: qr.manager.getRepository(PolicyAdditionalCoverage),
+      installment: qr.manager.getRepository(PolicyInstallment),
+    };
+  }
+
+  /** Guarda un array de entidades hijas (usado en create) */
+  private async saveChildren<T extends ObjectLiteral>(
+    repo: Repository<T>,
+    items: any[],
+    mapFn: (item: any) => any,
+  ): Promise<void> {
+    for (const item of items) {
+      await repo.save(repo.create(mapFn(item)));
+    }
+  }
+
+  /** Reemplaza entidades hijas: delete existentes + insert nuevas (usado en update) */
+  private async replaceChildren<T extends ObjectLiteral>(
+    repo: Repository<T>,
+    policyId: string,
+    items: any[] | undefined,
+    mapFn: (item: any) => any,
+  ): Promise<void> {
+    if (items === undefined) return;
+    await (repo as any).delete({ policy: { id: policyId } });
+    if (items.length > 0) {
+      await this.saveChildren(repo, items, mapFn);
+    }
+  }
+
+  // ── Child Entity Mappers ──
+
+  private mapVehicle(data: any, policyId: string) {
+    const { usageTypeId, vehicleTypeId, countryId, ...fields } = data;
+    return {
+      ...fields,
+      policy: this.idRef(policyId),
+      usageType: this.idRef(usageTypeId),
+      vehicleType: this.idRef(vehicleTypeId),
+      country: this.idRef(countryId),
+    };
+  }
+
+  private mapProperty(data: any, policyId: string) {
+    const { cityId, propertyTypeId, roofMaterialId, ...fields } = data;
+    return {
+      ...fields,
+      policy: this.idRef(policyId),
+      city: this.idRef(cityId),
+      propertyType: this.idRef(propertyTypeId),
+      roofMaterial: this.idRef(roofMaterialId),
+    };
+  }
+
+  private mapDependent(data: any, policyId: string) {
+    const { realPersonId, relationTypeId, ...fields } = data;
+    return {
+      ...fields,
+      policy: this.idRef(policyId),
+      realPerson: this.idRef(realPersonId),
+      relationType: this.idRef(relationTypeId),
+    };
+  }
+
+  private mapBeneficiary(data: any, policyId: string) {
+    const { realPersonId, relationTypeId, ...fields } = data;
+    return {
+      ...fields,
+      policy: this.idRef(policyId),
+      realPerson: this.idRef(realPersonId),
+      relationType: this.idRef(relationTypeId),
+    };
+  }
+
+  private mapCoverage(data: any, policyId: string) {
+    return { ...data, policy: this.idRef(policyId) };
+  }
+
+  private mapInstallment(data: any, policyId: string) {
+    return { ...data, policy: this.idRef(policyId) };
   }
 }

@@ -21,7 +21,7 @@ export class AuthService {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
     private readonly jwtService: JwtService,
-  ) {}
+  ) { }
 
   async register(registerDto: RegisterDto) {
     try {
@@ -57,11 +57,11 @@ export class AuthService {
     });
 
     if (!user) {
-      throw new UnauthorizedException('Invalid credentials');
+      throw new UnauthorizedException('INVALID_CREDENTIALS');
     }
 
     if (!(await user.comparePassword(password))) {
-      throw new UnauthorizedException('Invalid credentials');
+      throw new UnauthorizedException('INVALID_CREDENTIALS');
     }
 
     const { password: _, ...userWithoutPassword } = user;
@@ -77,7 +77,7 @@ export class AuthService {
       where: { id: userId },
     });
 
-    if (!user) {
+    if (!user) { 
       throw new UnauthorizedException('User not found');
     }
 
@@ -106,9 +106,7 @@ export class AuthService {
   private handleDBErrors(error: any): never {
     if (error.code === '23505') {
       // PostgreSQL unique violation
-      throw new BadRequestException(
-        `User already exists: ${JSON.stringify(error.detail)}`,
-      );
+      throw new BadRequestException('EMAIL_ALREADY_EXISTS');
     }
     console.error(error);
     throw new InternalServerErrorException(

@@ -17,16 +17,15 @@ export class RegisterDto {
   @MinLength(6)
   @MaxLength(50)
   @Matches(/(?:(?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
-    message:
-      'The password must have a Uppercase, lowercase letter and a number',
+    message: 'PASSWORD_PATTERN_ERROR',
   })
   password: string;
 
   @IsString()
   @MinLength(2)
   @MaxLength(50)
-  @Matches(/^[a-zA-Z\s]*$/, {
-    message: 'The full name must contain only letters and spaces',
+  @Matches(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/, {
+    message: 'The full name must contain only letters, spaces, and valid accents',
   })
   fullName: string;
 }

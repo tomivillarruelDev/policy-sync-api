@@ -6,7 +6,7 @@ import { User } from './entities/user.entity';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService) { }
 
   @Post('register')
   async register(@Body() registerDto: RegisterDto) {
@@ -41,5 +41,14 @@ export class AuthController {
       message: 'Hello world from private route',
       user,
     };
+  }
+
+  @Get('me')
+  @Auth()
+  getProfile(
+    @GetUser()
+    user: User,
+  ) {
+    return user;
   }
 }

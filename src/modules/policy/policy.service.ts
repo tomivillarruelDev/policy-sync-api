@@ -95,6 +95,19 @@ export class PolicyService extends BaseService<Policy, PolicyDto> {
     };
   }
 
+  async findLatest(limit: number = 10): Promise<PolicyDto[]> {
+    const entities = await this.policyRepository.find({
+      relations: POLICY_RELATIONS,
+      order: {
+        audit: {
+          createdAt: 'DESC',
+        },
+      },
+      take: limit,
+    });
+    return entities.map(item => this.toDto(item));
+  }
+
 
   async findOne(id: string): Promise<PolicyDto> {
     const entity = await super.findOne(id, {

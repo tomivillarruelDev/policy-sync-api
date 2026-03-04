@@ -9,7 +9,7 @@ import {
 
 export class RegisterDto {
   @IsString()
-  @IsEmail()
+  @IsEmail({}, { message: 'INVALID_EMAIL' })
   @Transform(({ value }: { value: string }) => value.toLowerCase())
   email: string;
 
@@ -25,7 +25,7 @@ export class RegisterDto {
   @MinLength(2)
   @MaxLength(50)
   @Matches(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/, {
-    message: 'The full name must contain only letters, spaces, and valid accents',
+    message: 'INVALID_PATTERN',
   })
   fullName: string;
 }

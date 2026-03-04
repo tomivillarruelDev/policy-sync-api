@@ -28,6 +28,11 @@ export class PolicyController {
     return this.policyService.findAllPaginated(paginationDto);
   }
 
+  @Get('latest')
+  findLatest() {
+    return this.policyService.findLatest(10);
+  }
+
   @Get(':id')
   findOne(@Param('id', ParseUUIDPipe) id: string) {
     return this.policyService.findOne(id);

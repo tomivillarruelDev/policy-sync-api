@@ -13,6 +13,7 @@ import { Product } from './entities/product.entity';
 import { Insurer } from '../insurer/entities/insurer.entity';
 import { Branch } from '../branch/entities/branch.entity';
 import { BaseService } from 'src/common/base/base.service';
+import { generateAutoCode } from 'src/common/utils/code-generator.util';
 import { PaginationDto } from 'src/common/dtos/pagination.dto';
 import { PaginatedResult } from 'src/common/interfaces/paginated-result.interface';
 import { PRODUCT_RELATIONS } from '../person/common/constants/relations.constant';
@@ -36,17 +37,19 @@ export class ProductService extends BaseService<Product, ProductDto> {
     try {
       const productRepo = qr.manager.getRepository(Product);
 
+      const code = generateAutoCode('PRD');
       const existingProduct = await productRepo.findOne({
-        where: { code: createProductDto.code },
+        where: { code },
       });
 
       if (existingProduct)
-        throw new BadRequestException(`Product with code ${createProductDto.code} already exists`);
+        throw new BadRequestException(`Product with code ${code} already exists`);
 
-      const { insurerId, branchId, ...planData } = createProductDto;
+      const { insurerId, branchId, code: _ignoredCode, ...planData } = createProductDto;
 
       const product = productRepo.create({
         ...planData,
+        code,
         insurer: { id: insurerId } as Insurer,
         branch: { id: branchId } as Branch,
       });
@@ -101,7 +104,7 @@ export class ProductService extends BaseService<Product, ProductDto> {
       if (!product)
         throw new NotFoundException(`Product with id ${id} not found`);
 
-      const { insurerId, branchId, ...productData } = updateProductDto;
+      const { insurerId, branchId, code: _ignoredCode, ...productData } = updateProductDto;
 
       Object.keys(productData).forEach(
         (key) => productData[key] === undefined && delete productData[key],

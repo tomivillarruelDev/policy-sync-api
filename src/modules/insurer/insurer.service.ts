@@ -19,6 +19,7 @@ import { plainToInstance } from 'class-transformer';
 import { PersonDtoMapper } from '../person/common/mappers/person-dto.mapper';
 import { validatePersonUniqueConstraints } from '../person/common/utils/person-validation.util';
 import { BaseService } from 'src/common/base/base.service';
+import { generateAutoCode } from 'src/common/utils/code-generator.util';
 import { PaginationDto } from 'src/common/dtos/pagination.dto';
 import { PaginatedResult } from 'src/common/interfaces/paginated-result.interface';
 
@@ -56,13 +57,14 @@ export class InsurerService extends BaseService<Insurer, InsurerDto> {
       }
 
       const {
-        code,
+        code: _ignoredCode,
         executive,
         agencyNumber,
         logoUrl,
         ...legalPersonData
       } = createInsurerDto;
 
+      const code = generateAutoCode('CIA');
       const insurer = insurerRepo.create({
         code,
         executive,
@@ -133,13 +135,13 @@ export class InsurerService extends BaseService<Insurer, InsurerDto> {
         organizationName,
         socialReason,
         website,
+        code: _ignoredCode,
         ...directUpdates
       } = updateInsurerDto;
 
 
 
       const insurerUpdates = {
-        code: directUpdates.code,
         executive: directUpdates.executive,
         agencyNumber: directUpdates.agencyNumber,
         logoUrl: directUpdates.logoUrl

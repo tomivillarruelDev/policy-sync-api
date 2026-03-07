@@ -8,6 +8,7 @@ import { DataSource, Repository } from 'typeorm';
 import { plainToInstance } from 'class-transformer';
 
 import { BaseService } from 'src/common/base/base.service';
+import { generateAutoCode } from 'src/common/utils/code-generator.util';
 import { handleDBErrors } from 'src/common/utils/typeorm-errors.util';
 import { PaginationDto } from 'src/common/dtos/pagination.dto';
 import { PaginatedResult } from 'src/common/interfaces/paginated-result.interface';
@@ -37,17 +38,19 @@ export class PlanService extends BaseService<Plan, PlanDto> {
     try {
       const planRepo = qr.manager.getRepository(Plan);
 
+      const code = generateAutoCode('PLN');
       const existingPlan = await planRepo.findOne({
-        where: { code: createPlanDto.code },
+        where: { code },
       });
 
       if (existingPlan)
-        throw new BadRequestException(`Plan with code ${createPlanDto.code} already exists`);
+        throw new BadRequestException(`Plan with code ${code} already exists`);
 
-      const { productId, ...planData } = createPlanDto;
+      const { productId, code: _ignoredCode, ...planData } = createPlanDto;
 
       const plan = planRepo.create({
         ...planData,
+        code,
         product: { id: productId } as Product,
       });
 
@@ -101,7 +104,7 @@ export class PlanService extends BaseService<Plan, PlanDto> {
 
       if (!plan) throw new NotFoundException(`Plan with id ${id} not found`);
 
-      const { productId, ...toUpdate } = updatePlanDto;
+      const { productId, code: _ignoredCode, ...toUpdate } = updatePlanDto;
 
       Object.keys(toUpdate).forEach(
         (key) => toUpdate[key] === undefined && delete toUpdate[key],

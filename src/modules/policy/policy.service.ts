@@ -17,6 +17,7 @@ import { UpdatePolicyDto } from './dto/update-policy.dto';
 import { PolicyDto } from './dto/policy.dto';
 import { POLICY_RELATIONS } from '../person/common/constants/relations.constant';
 import { handleDBErrors } from 'src/common/utils/typeorm-errors.util';
+import { generateAutoCode } from 'src/common/utils/code-generator.util';
 
 @Injectable()
 export class PolicyService extends BaseService<Policy, PolicyDto> {
@@ -37,11 +38,12 @@ export class PolicyService extends BaseService<Policy, PolicyDto> {
       const policyRepo = qr.manager.getRepository(Policy);
 
       // Validar unicidad del número de póliza
+      const policyNumber = generateAutoCode('POL');
       const exists = await policyRepo.findOne({
-        where: { policyNumber: createDto.policyNumber },
+        where: { policyNumber },
       });
       if (exists) {
-        throw new BadRequestException(`Policy number ${createDto.policyNumber} already exists`);
+        throw new BadRequestException(`Policy number ${policyNumber} already exists`);
       }
 
       // Separar campos escalares de relaciones e hijas
@@ -50,11 +52,15 @@ export class PolicyService extends BaseService<Policy, PolicyDto> {
         additionalCoverages, installments,
         policyStatusId, policyCategoryId, clientId,
         agentId, insurerId, planId, previousPolicyId,
+        policyNumber: _ignoredNumber,
         ...policyData
       } = createDto;
 
       // Crear y guardar póliza principal
-      const policy = policyRepo.create(policyData);
+      const policy = policyRepo.create({
+        ...policyData,
+        policyNumber
+      });
       this.assignRelationIds(policy, createDto);
       const saved = await policyRepo.save(policy);
 
@@ -138,6 +144,7 @@ export class PolicyService extends BaseService<Policy, PolicyDto> {
         additionalCoverages, installments,
         policyStatusId, policyCategoryId, clientId,
         agentId, insurerId, planId, previousPolicyId,
+        policyNumber: _ignoredNumber,
         ...updateData
       } = updateDto;
 

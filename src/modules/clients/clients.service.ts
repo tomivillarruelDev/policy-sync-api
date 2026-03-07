@@ -48,11 +48,11 @@ export class ClientsService extends BaseService<Client, ClientDto> {
             const personData = mapPersonData(createDto, PersonType.REAL);
             if (!personData) throw new BadRequestException('Person data is required');
 
-            // 3. Extract Client specific data
-            const { isActive, ...realPersonData } = createDto;
+            // 3. Extraer datos específicos del Cliente — isActive siempre true (regla de negocio)
+            const { isActive: _ignored, ...realPersonData } = createDto;
 
             const client = repo.create({
-                isActive,
+                isActive: true,
                 realPerson: {
                     ...realPersonData, // firstName, etc.
                     person: personData // nested person (emails, etc.)
@@ -125,11 +125,8 @@ export class ClientsService extends BaseService<Client, ClientDto> {
                 ...personData // Extract all person data (scalars + nested)
             } = updateDto;
 
-            // 2.1 Direct Client Updates (with undefined filter)
-            const clientUpdates = { isActive };
-            Object.keys(clientUpdates).forEach(
-                (key) => clientUpdates[key] === undefined && delete clientUpdates[key],
-            );
+            // 2.1 Actualizaciones directas del Cliente — isActive siempre true (regla de negocio)
+            const clientUpdates = { isActive: true };
             Object.assign(entity, clientUpdates);
 
             // 2.2 Handle RealPerson Updates (Whitelist Approach)

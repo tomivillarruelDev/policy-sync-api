@@ -4,6 +4,7 @@ import { DataSource, Repository } from 'typeorm';
 import { plainToInstance } from 'class-transformer';
 
 import { BaseService } from 'src/common/base/base.service';
+import { generateAutoCode } from 'src/common/utils/code-generator.util';
 import { PaginationDto } from 'src/common/dtos/pagination.dto';
 import { PaginatedResult } from 'src/common/interfaces/paginated-result.interface';
 import { Agent } from './entities/agent.entity';
@@ -44,13 +45,14 @@ export class AgentService extends BaseService<Agent, AgentDto> {
                 throw new BadRequestException('Person data is required');
             }
 
-            // 1. Separas los datos del Agente (código, licencias) del resto (nombre, apellido, etc.)
-            const { agentCode, licenseNumber, isActive, ...realPersonData } = createAgentDto;
-            // 2. Creas todo de una sola vez, anidando objetos
+            // 1. Separar datos del Agente del resto (nombre, apellido, etc.)
+            const { agentCode: _ignoredCode, licenseNumber, isActive: _ignored, ...realPersonData } = createAgentDto;
+            // 2. Crear anidando objetos — isActive siempre true (regla de negocio)
+            const agentCode = generateAutoCode('AGT');
             const agent = agentRepo.create({
                 agentCode,
                 licenseNumber,
-                isActive,
+                isActive: true,
                 realPerson: {
                     ...realPersonData,
                     person: personData
@@ -109,7 +111,7 @@ export class AgentService extends BaseService<Agent, AgentDto> {
                 throw new NotFoundException(`Agent with id ${id} not found`);
 
             const {
-                agentCode,
+                agentCode: _ignoredCode,
                 licenseNumber,
                 isActive,
                 emails,
@@ -126,7 +128,8 @@ export class AgentService extends BaseService<Agent, AgentDto> {
                 civilStatusId,
             } = updateAgentDto;
 
-            const agentUpdates = { agentCode, licenseNumber, isActive };
+            // isActive siempre true (regla de negocio, no se permite desactivar desde el frontend)
+            const agentUpdates = { licenseNumber, isActive: true };
             Object.keys(agentUpdates).forEach(key => agentUpdates[key] === undefined && delete agentUpdates[key]);
 
             Object.assign(agent, agentUpdates);

@@ -4,6 +4,7 @@ import { DataSource, Repository } from 'typeorm';
 import { plainToInstance } from 'class-transformer';
 
 import { BaseService } from '../../common/base/base.service';
+import { generateAutoCode } from '../../common/utils/code-generator.util';
 import { PaginationDto } from '../../common/dtos/pagination.dto';
 import { PaginatedResult } from '../../common/interfaces/paginated-result.interface';
 import { handleDBErrors } from '../../common/utils/typeorm-errors.util';
@@ -33,17 +34,19 @@ export class BranchService extends BaseService<Branch, BranchDto> {
         try {
             const branchRepo = qr.manager.getRepository(Branch);
 
+            const code = generateAutoCode('RAM');
             const exsistingBranch = await branchRepo.findOne({
-                where: { code: createDto.code },
+                where: { code },
             });
 
             if (exsistingBranch)
-                throw new BadRequestException(`Branch with code ${createDto.code} already exists`);
+                throw new BadRequestException(`Branch with code ${code} already exists`);
 
-            const { insurerId, ...branchData } = createDto;
+            const { insurerId, code: _ignoredCode, ...branchData } = createDto;
 
             const entity = branchRepo.create({
                 ...branchData,
+                code,
                 insurer: { id: insurerId } as Insurer,
             });
 
@@ -98,7 +101,7 @@ export class BranchService extends BaseService<Branch, BranchDto> {
 
             if (!entity) throw new NotFoundException(`Branch with id ${id} not found`);
 
-            const { insurerId, ...updateData } = updateDto;
+            const { insurerId, code: _ignoredCode, ...updateData } = updateDto;
 
             Object.keys(updateData).forEach(
                 (key) => updateData[key] === undefined && delete updateData[key],

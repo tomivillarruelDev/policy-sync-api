@@ -159,24 +159,28 @@ export class CatalogVerificationSeeder {
       name: 'Vehículos',
       code: 'RAMO-VEH',
       insurerId: insurer1.id,
+      riskType: 'vehicle' as any,
     });
 
     const branchProperty = await this.branchService.create({
       name: 'Ramo Hogar',
       code: 'RAMO-HOG',
       insurerId: insurer1.id,
+      riskType: 'property' as any,
     });
 
     const branchMedical = await this.branchService.create({
       name: 'Asistencia Médica',
       code: 'RAMO-MED',
       insurerId: insurer2.id,
+      riskType: 'medical' as any,
     });
 
     const branchLife = await this.branchService.create({
       name: 'Vida Individual',
       code: 'RAMO-VID',
       insurerId: insurer2.id,
+      riskType: 'life' as any,
     });
 
     this.logger.log(`>> Ramos: Vehículos, Hogar, Asistencia Médica, Vida Individual`);

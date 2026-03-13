@@ -16,4 +16,7 @@ export class BranchDto {
 
     @Expose()
     insurerName?: string;
+
+    @Expose()
+    riskType: string;
 }

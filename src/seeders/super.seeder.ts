@@ -134,11 +134,20 @@ export class SuperSeeder {
         const branchNames = ['Vehículos', 'Hogar', 'Vida', 'Salud', 'Mascotas', 'Viajes', 'Empresarial'];
         for (const insurer of insurers) {
             for (let j = 0; j < BRANCHES_PER_INSURER; j++) {
-                const branchName = faker.helpers.arrayElement(branchNames) + ' ' + faker.word.adjective({ length: { min: 4, max: 7 } });
+                const baseName = faker.helpers.arrayElement(branchNames);
+                const branchName = baseName + ' ' + faker.word.adjective({ length: { min: 4, max: 7 } });
+                
+                let assignedRiskType = 'other';
+                if (baseName === 'Vehículos') assignedRiskType = 'vehicle';
+                else if (baseName === 'Hogar' || baseName === 'Empresarial') assignedRiskType = 'property';
+                else if (baseName === 'Salud') assignedRiskType = 'medical';
+                else if (baseName === 'Vida') assignedRiskType = 'life';
+
                 const branch = await this.branchService.create({
                     name: branchName + ' ' + faker.string.numeric(4),
                     code: `BR-${faker.string.uuid().substring(0, 8).toUpperCase()}`,
                     insurerId: insurer.id,
+                    riskType: assignedRiskType as any,
                 });
                 branches.push({ ...branch, insurerId: insurer.id }); // Retain manual insurerId
             }

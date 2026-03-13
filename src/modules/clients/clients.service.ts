@@ -137,9 +137,9 @@ export class ClientsService extends BaseService<Client, ClientDto> {
                     lastName,
                     middleName,
                     maternalLastName,
-                    nationality,
+                    nationalityId,
                     birthDate,
-                    gender,
+                    genderId,
                     civilStatusId,
                 } = personData as any; // Cast to access potential properties
 
@@ -148,9 +148,9 @@ export class ClientsService extends BaseService<Client, ClientDto> {
                     lastName,
                     middleName,
                     maternalLastName,
-                    nationality,
+                    nationalityId,
                     birthDate,
-                    gender,
+                    genderId,
                     civilStatusId,
                 };
 
@@ -211,7 +211,7 @@ export class ClientsService extends BaseService<Client, ClientDto> {
             // Mapear escalares de RealPerson aplanados
             firstName: entity.realPerson?.firstName,
             lastName: entity.realPerson?.lastName,
-            birthday: entity.realPerson?.birthDate,
+            birthDate: entity.realPerson?.birthDate,
             gender: entity.realPerson?.gender,
             genderId: entity.realPerson?.genderId || entity.realPerson?.gender?.id,
             civilStatusId: entity.realPerson?.civilStatusId || entity.realPerson?.civilStatus?.id,

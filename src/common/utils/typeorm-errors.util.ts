@@ -33,25 +33,25 @@ export function handleDBErrors(error: any): never {
     // Mensajes por constraint conocidos con su targetField asociado al DTO exacto
     const constraintDefinitions: Record<string, { message: string; targetField?: string }> = {
       UQ_ident_person_type_number: {
-        message: 'La combinación de persona + tipo + número de identificación ya existe.',
+        message: 'The combination of person, type and identification number already exists.',
         targetField: 'identificationValue',
       },
       UQ_ident_person_type_value: {
-        message: 'La combinación de persona + tipo + identificación ya existe.',
+        message: 'The combination of person, type and identification value already exists.',
         targetField: 'identificationValue',
       },
       UQ_ident_type_value: {
-        message: 'El tipo de identificación con ese valor ya existe.',
+        message: 'An identification with this value already exists for this type.',
         targetField: 'identificationValue',
       },
       UQ_person_email_account: {
-        message: 'Este correo electrónico ya está registrado.',
+        message: 'This email account is already registered.',
         targetField: 'account',
       },
     };
 
     let response: any = {
-      message: 'Registro duplicado',
+      message: 'Duplicate record',
       code: '23505',
       constraint,
     };
@@ -90,8 +90,8 @@ export function handleDBErrors(error: any): never {
         ...response,
         message:
           keys.length > 1
-            ? `Valores duplicados en los campos: ${keys.join(', ')}`
-            : `Valor duplicado en el campo '${mainKey}'`,
+            ? `Duplicate values in fields: ${keys.join(', ')}`
+            : `Duplicate value in field '${mainKey}'`,
         fields,
         targetField: mainKey,
       };
@@ -128,7 +128,7 @@ export function handleDBErrors(error: any): never {
   ) {
     throw new BadRequestException({
       message:
-        'No hay valores para actualizar. Verifica que no estés enviando objetos vacíos o solo con id en una operación de actualización.',
+        'There is not values to update. Verify that you are not sending empty objects or only with id in an update operation.',
       error: 'UpdateValuesMissingError',
     });
   }

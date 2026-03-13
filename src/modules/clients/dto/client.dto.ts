@@ -20,7 +20,7 @@ export class ClientDto {
     lastName: string;
 
     @Expose()
-    birthday: Date;
+    birthDate: Date;
 
     @Expose()
     @Type(() => Gender)

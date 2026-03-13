@@ -22,7 +22,6 @@ export function handleDBErrors(error: any): never {
   const composed = `${message ?? ''} ${detail ?? ''}`.trim();
 
   // 23505: unique_violation
-  //todo: los errores deberian avisar el tipo de persona y el campo que falla exactamente
   if (
     code === '23505' ||
     /duplicate key value/i.test(composed) ||
@@ -31,13 +30,24 @@ export function handleDBErrors(error: any): never {
     /violaci[óo]n de restricci[óo]n [úu]nica/i.test(composed) ||
     /ya existe/i.test(composed)
   ) {
-    // Mensajes por constraint conocidos
-    const constraintMessages: Record<string, string> = {
-      UQ_ident_person_type_number:
-        'La combinación de persona + tipo + número de identificación ya existe.',
-      UQ_ident_person_type_value:
-        'La combinación de persona + tipo + identificación ya existe.',
-      UQ_ident_type_value: 'El tipo de identificación con ese valor ya existe.',
+    // Mensajes por constraint conocidos con su targetField asociado al DTO exacto
+    const constraintDefinitions: Record<string, { message: string; targetField?: string }> = {
+      UQ_ident_person_type_number: {
+        message: 'La combinación de persona + tipo + número de identificación ya existe.',
+        targetField: 'identificationValue',
+      },
+      UQ_ident_person_type_value: {
+        message: 'La combinación de persona + tipo + identificación ya existe.',
+        targetField: 'identificationValue',
+      },
+      UQ_ident_type_value: {
+        message: 'El tipo de identificación con ese valor ya existe.',
+        targetField: 'identificationValue',
+      },
+      UQ_person_email_account: {
+        message: 'Este correo electrónico ya está registrado.',
+        targetField: 'account',
+      },
     };
 
     let response: any = {
@@ -54,9 +64,11 @@ export function handleDBErrors(error: any): never {
       response.constraint = constraint;
     }
 
-    // Si hay mensaje específico por constraint, úsalo
-    if (constraint && constraintMessages[constraint]) {
-      response.message = constraintMessages[constraint];
+    // Si hay definición específica por constraint, úsala
+    if (constraint && constraintDefinitions[constraint]) {
+      const def = constraintDefinitions[constraint];
+      response.message = def.message;
+      response.targetField = def.targetField;
       throw new ConflictException(response);
     }
 
@@ -64,6 +76,7 @@ export function handleDBErrors(error: any): never {
     const match = (detail ?? composed).match(
       /Key \((.+)\)=\((.+)\) (?:already exists\.?|ya existe\.?)/i,
     );
+
     if (match) {
       const keys = match[1].split(',').map((s) => s.trim());
       const vals = match[2].split(',').map((s) => s.trim());
@@ -71,14 +84,16 @@ export function handleDBErrors(error: any): never {
         acc[k] = vals[i] ?? '';
         return acc;
       }, {});
-      //todo: los errores deberian avisar el tipo de persona y el campo que falla exactamente
+
+      const mainKey = keys[0];
       response = {
         ...response,
         message:
           keys.length > 1
             ? `Valores duplicados en los campos: ${keys.join(', ')}`
-            : `Valor duplicado en el campo '${keys[0]}'`,
+            : `Valor duplicado en el campo '${mainKey}'`,
         fields,
+        targetField: mainKey,
       };
     }
 

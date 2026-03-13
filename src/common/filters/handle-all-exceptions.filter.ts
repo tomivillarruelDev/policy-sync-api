@@ -21,30 +21,23 @@ export class AllExceptionsFilter implements ExceptionFilter {
         ? exception.getStatus()
         : HttpStatus.INTERNAL_SERVER_ERROR;
 
-    // Manejo específico para errores de validación (BadRequestException)
-    if (exception instanceof BadRequestException) {
-      const exceptionResponse = exception.getResponse();
-      const errorMessage =
-        typeof exceptionResponse === 'object' && 'message' in exceptionResponse
-          ? Array.isArray(exceptionResponse['message'])
-            ? exceptionResponse['message']
-            : [exceptionResponse['message']]
-          : ['Solicitud incorrecta'];
+    const exceptionResponse: any =
+      exception instanceof HttpException
+        ? exception.getResponse()
+        : { message: (exception as any).message || 'Internal server error' };
 
+    // Si es un objeto, lo enviamos de forma transparente
+    if (typeof exceptionResponse === 'object' && exceptionResponse !== null) {
       return response.status(status).json({
         statusCode: status,
-        message: errorMessage,
-        error: 'Bad Request',
+        ...exceptionResponse,
       });
     }
 
-    // Manejo para otros tipos de errores
-    response.status(status).json({
+    // Fallback para mensajes de error que son solo un string
+    return response.status(status).json({
       statusCode: status,
-      message:
-        status !== HttpStatus.INTERNAL_SERVER_ERROR
-          ? (exception as any).message
-          : 'Internal server error',
+      message: exceptionResponse,
     });
   }
 }

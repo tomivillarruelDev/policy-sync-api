@@ -230,7 +230,7 @@ export class InsurerService extends BaseService<Insurer, InsurerDto> {
         name: flatPerson.organizationName,  // Alias
         account: primaryEmail?.account,
         phone: primaryPhone?.number,
-        address: primaryAddress?.street,
+        street: primaryAddress?.street,
         city: primaryAddress?.city?.id,
         state: primaryAddress?.city?.state?.id,
         country: primaryAddress?.city?.state?.country?.id,

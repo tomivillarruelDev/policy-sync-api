@@ -1,5 +1,5 @@
 import { EntityManager, In, Not } from 'typeorm';
-import { BadRequestException } from '@nestjs/common';
+import { ConflictException } from '@nestjs/common';
 import { Email } from '../../entities/email.entity';
 import { Identification } from '../identification/entity/identification.entity';
 import { IdentificationType } from '../identification/entity/identification-type.entity';
@@ -29,9 +29,10 @@ export async function validatePersonUniqueConstraints(
 
             if (existingEmails.length > 0) {
                 const conflict = existingEmails[0];
-                throw new BadRequestException(
-                    `The email '${conflict.account}' is already associated with another person.`,
-                );
+                throw new ConflictException({
+                    message: `El correo '${conflict.account}' ya está asociado a otra persona.`,
+                    targetField: 'account',
+                });
             }
         }
     }
@@ -50,9 +51,10 @@ export async function validatePersonUniqueConstraints(
             });
 
             if (count > 0) {
-                throw new BadRequestException(
-                    `The identification '${ident.value}' is already in use by another person.`,
-                );
+                throw new ConflictException({
+                    message: `La identificación '${ident.value}' ya está en uso por otra persona.`,
+                    targetField: 'identificationValue',
+                });
             }
         }
     }

@@ -57,7 +57,7 @@ export class InsurerDto {
   phone: string;  // De phoneNumbers[0].number
 
   @Expose()
-  address: string;  // De addresses[0].street
+  street: string;  // De addresses[0].street
 
   @Expose()
   city: string;  // De addresses[0].city.id

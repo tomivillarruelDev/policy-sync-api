@@ -42,7 +42,7 @@ export class CreatePolicyVehicleDto {
 
   @IsOptional()
   @IsString()
-  version?: string;
+  vehicleVersion?: string;
 
   @IsOptional()
   @IsNumber()

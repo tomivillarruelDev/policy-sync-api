@@ -397,7 +397,7 @@ export class CatalogVerificationSeeder {
       vehicles: [{
         brand: 'Toyota',
         model: 'Corolla',
-        version: 'XEI 2.0',
+        vehicleVersion: 'XEI 2.0',
         year: 2024,
         plate: 'AB-123-CD',
         chassis: '9BWZZZ377VT004251',

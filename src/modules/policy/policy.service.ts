@@ -218,7 +218,7 @@ export class PolicyService extends BaseService<Policy, PolicyDto> {
       id: v.id,
       brand: v.brand,
       model: v.model,
-      version: v.vehicleVersion,
+      vehicleVersion: v.vehicleVersion,
       year: v.year,
       plate: v.plate,
       chassis: v.chassis,

@@ -266,7 +266,7 @@ export class SuperSeeder {
                     vehicles: faker.datatype.boolean() ? [{
                         brand: faker.vehicle.manufacturer(),
                         model: faker.vehicle.model(),
-                        version: 'Standard',
+                        vehicleVersion: 'Standard',
                         year: faker.number.int({ min: 2010, max: 2024 }),
                         plate: faker.vehicle.vrm(),
                         chassis: faker.vehicle.vin(),

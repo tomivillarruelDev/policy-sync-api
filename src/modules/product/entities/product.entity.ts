@@ -23,7 +23,7 @@ export class Product {
   @Column({ unique: true })
   code: string;
 
-  @ManyToOne(() => Branch)
+  @ManyToOne(() => Branch, { eager: true })
   @JoinColumn({ name: 'branch_id' })
   branch: Branch;
 

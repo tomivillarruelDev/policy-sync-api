@@ -131,7 +131,7 @@ export class SuperSeeder {
         // 2. RAMOS (BRANCHES)
         this.logger.log(`🏷️  [2/7] Creando ${NUM_INSURERS * BRANCHES_PER_INSURER} Ramos...`);
         const branches: any[] = [];
-        const branchNames = ['Vehículos', 'Hogar', 'Vida', 'Salud', 'Mascotas', 'Viajes', 'Empresarial'];
+        const branchNames = ['Vehículos', 'Hogar', 'Vida', 'Salud'];
         for (const insurer of insurers) {
             for (let j = 0; j < BRANCHES_PER_INSURER; j++) {
                 const baseName = faker.helpers.arrayElement(branchNames);
@@ -242,7 +242,7 @@ export class SuperSeeder {
             const client = faker.helpers.arrayElement(clients);
             const agent = faker.helpers.arrayElement(agents);
             const planObj = faker.helpers.arrayElement(plans);
-            const riskType = planObj.product.branch.riskType;
+            const riskType = planObj.product.branch.riskType?.toString().toLowerCase();
 
             const now = new Date();
             const nextYear = new Date(now);
@@ -287,21 +287,29 @@ export class SuperSeeder {
                     totalSquareMeters: faker.number.int({ min: 50, max: 500 }),
                     builtSquareMeters: faker.number.int({ min: 40, max: 400 }),
                 }];
-            } else if (riskType === 'medical' && allRealPersons.length > 0) {
-                const randomPerson: any = faker.helpers.arrayElement(allRealPersons);
-                dependents = [{
-                    realPersonId: randomPerson.id,
-                    relationTypeId: faker.helpers.arrayElement(relationTypes)?.id,
-                    deductible: faker.number.int({ min: 100, max: 1000 }),
-                    status: true,
-                }];
-            } else if (riskType === 'life' && allRealPersons.length > 0) {
-                const randomPerson: any = faker.helpers.arrayElement(allRealPersons);
-                beneficiaries = [{
-                    realPersonId: randomPerson.id,
-                    relationTypeId: faker.helpers.arrayElement(relationTypes)?.id,
-                    percentage: 100,
-                }];
+            } else if (riskType === 'medical') {
+                if (allRealPersons && allRealPersons.length > 0) {
+                    const randomPerson: any = faker.helpers.arrayElement(allRealPersons);
+                    dependents = [{
+                        realPersonId: randomPerson.id,
+                        relationTypeId: faker.helpers.arrayElement(relationTypes)?.id,
+                        deductible: faker.number.int({ min: 100, max: 1000 }),
+                        status: true,
+                    }];
+                } else {
+                    this.logger.warn('No hay RealPersons disponibles para crear un Dependiente en ramo Medical');
+                }
+            } else if (riskType === 'life') {
+                if (allRealPersons && allRealPersons.length > 0) {
+                    const randomPerson: any = faker.helpers.arrayElement(allRealPersons);
+                    beneficiaries = [{
+                        realPersonId: randomPerson.id,
+                        relationTypeId: faker.helpers.arrayElement(relationTypes)?.id,
+                        percentage: 100,
+                    }];
+                } else {
+                    this.logger.warn('No hay RealPersons disponibles para crear un Beneficiario en ramo Life');
+                }
             }
 
             try {

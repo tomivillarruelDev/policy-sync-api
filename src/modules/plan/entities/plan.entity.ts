@@ -20,7 +20,7 @@ export class Plan {
   @Column({ name: 'deductible_two', type: 'decimal', precision: 12, scale: 2, default: 0 })
   deductibleTwo: number;
 
-  @ManyToOne(() => Product, (product) => product.plans)
+  @ManyToOne(() => Product, (product) => product.plans, { eager: true })
   @JoinColumn({ name: 'product_id' })
   product: Product;
 

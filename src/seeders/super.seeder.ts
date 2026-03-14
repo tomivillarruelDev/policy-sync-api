@@ -165,7 +165,7 @@ export class SuperSeeder {
                     insuredAmount: faker.number.int({ min: 10000, max: 500000 }),
                     insurerId: branch.insurerId,
                 });
-                products.push(product);
+                products.push({ ...product, branch }); // Incluimos el objeto branch
             }
         }
 
@@ -227,6 +227,10 @@ export class SuperSeeder {
         this.logger.log(`📜 [7/7] Creando ${NUM_POLICIES} Pólizas...`);
         const activeStatus = await this.dataSource.getRepository('PolicyStatus').findOne({ where: { slug: 'ACTIVE' } });
         const individualCategory = await this.dataSource.getRepository('PolicyCategory').findOne({ where: { slug: 'INDIVIDUAL' } });
+        
+        // Obtener personas reales para beneficiarios/dependientes
+        const realPersonRepo = this.dataSource.getRepository('RealPerson');
+        const allRealPersons = await realPersonRepo.find();
 
         if (!activeStatus || !individualCategory) {
             this.logger.warn('⚠️ Faltan catálogos de Póliza (Status/Category). No se pueden crear pólizas.');
@@ -238,6 +242,7 @@ export class SuperSeeder {
             const client = faker.helpers.arrayElement(clients);
             const agent = faker.helpers.arrayElement(agents);
             const planObj = faker.helpers.arrayElement(plans);
+            const riskType = planObj.product.branch.riskType;
 
             const now = new Date();
             const nextYear = new Date(now);
@@ -248,6 +253,56 @@ export class SuperSeeder {
             const totalPremium = netPremium + taxAmount;
 
             const paymentFrequencies = ['MONTHLY', 'QUARTERLY', 'SEMI_ANNUAL', 'ANNUAL'];
+
+            // Preparar objetos de riesgo con tipos explícitos para evitar errores de TS
+            let vehicles: any[] | undefined = undefined;
+            let properties: any[] | undefined = undefined;
+            let dependents: any[] | undefined = undefined;
+            let beneficiaries: any[] | undefined = undefined;
+
+            if (riskType === 'vehicle') {
+                vehicles = [{
+                    brand: faker.vehicle.manufacturer(),
+                    model: faker.vehicle.model(),
+                    vehicleVersion: 'Standard',
+                    year: faker.number.int({ min: 2010, max: 2024 }),
+                    plate: faker.vehicle.vrm(),
+                    chassis: faker.vehicle.vin(),
+                    engine: faker.string.alphanumeric(10).toUpperCase(),
+                    insuredValue: faker.number.int({ min: 5000, max: 50000 }),
+                    countryId: countryId,
+                    address: faker.location.city(),
+                }];
+            } else if (riskType === 'property') {
+                properties = [{
+                    cityId: cityId,
+                    street: faker.location.street(),
+                    streetNumber: faker.location.buildingNumber(),
+                    hasAlarm: faker.datatype.boolean(),
+                    hasReinforcedDoor: faker.datatype.boolean(),
+                    buildingFireSum: faker.number.int({ min: 100000, max: 500000 }),
+                    contentFireSum: faker.number.int({ min: 10000, max: 50000 }),
+                    propertyTypeId: faker.helpers.arrayElement(propertyTypes).id,
+                    roofMaterialId: faker.helpers.arrayElement(roofMaterials)?.id,
+                    totalSquareMeters: faker.number.int({ min: 50, max: 500 }),
+                    builtSquareMeters: faker.number.int({ min: 40, max: 400 }),
+                }];
+            } else if (riskType === 'medical' && allRealPersons.length > 0) {
+                const randomPerson: any = faker.helpers.arrayElement(allRealPersons);
+                dependents = [{
+                    realPersonId: randomPerson.id,
+                    relationTypeId: faker.helpers.arrayElement(relationTypes)?.id,
+                    deductible: faker.number.int({ min: 100, max: 1000 }),
+                    status: true,
+                }];
+            } else if (riskType === 'life' && allRealPersons.length > 0) {
+                const randomPerson: any = faker.helpers.arrayElement(allRealPersons);
+                beneficiaries = [{
+                    realPersonId: randomPerson.id,
+                    relationTypeId: faker.helpers.arrayElement(relationTypes)?.id,
+                    percentage: 100,
+                }];
+            }
 
             try {
                 await this.policyService.create({
@@ -272,31 +327,10 @@ export class SuperSeeder {
                     paymentFrequency: faker.helpers.arrayElement(paymentFrequencies),
                     paymentMethod: faker.helpers.arrayElement(['CREDIT_CARD', 'BANK_TRANSFER', 'CASH']),
                     numberOfInstallments: faker.number.int({ min: 1, max: 12 }),
-                    vehicles: faker.datatype.boolean() ? [{
-                        brand: faker.vehicle.manufacturer(),
-                        model: faker.vehicle.model(),
-                        vehicleVersion: 'Standard',
-                        year: faker.number.int({ min: 2010, max: 2024 }),
-                        plate: faker.vehicle.vrm(),
-                        chassis: faker.vehicle.vin(),
-                        engine: faker.string.alphanumeric(10).toUpperCase(),
-                        insuredValue: faker.number.int({ min: 5000, max: 50000 }),
-                        countryId: countryId,
-                        address: faker.location.city(),
-                    }] : undefined,
-                    properties: (!faker.datatype.boolean() && propertyTypes.length > 0) ? [{
-                        cityId: cityId,
-                        street: faker.location.street(),
-                        streetNumber: faker.location.buildingNumber(),
-                        hasAlarm: faker.datatype.boolean(),
-                        hasReinforcedDoor: faker.datatype.boolean(),
-                        buildingFireSum: faker.number.int({ min: 100000, max: 500000 }),
-                        contentFireSum: faker.number.int({ min: 10000, max: 50000 }),
-                        propertyTypeId: faker.helpers.arrayElement(propertyTypes).id,
-                        roofMaterialId: faker.helpers.arrayElement(roofMaterials)?.id,
-                        totalSquareMeters: faker.number.int({ min: 50, max: 500 }),
-                        builtSquareMeters: faker.number.int({ min: 40, max: 400 }),
-                    }] : undefined,
+                    vehicles,
+                    properties,
+                    dependents,
+                    beneficiaries,
                     installments: [
                         { installmentNumber: 1, dueDate: now.toISOString(), amount: totalPremium / 12, status: 'PAID' },
                     ],

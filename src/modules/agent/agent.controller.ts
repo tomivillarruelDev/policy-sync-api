@@ -18,6 +18,11 @@ export class AgentController {
         return this.agentService.findAllPaginated(paginationDto);
     }
 
+    @Get('dropdown')
+    getDropdown() {
+        return this.agentService.getDropdownOptions();
+    }
+
     @Get(':id')
     findOne(@Param('id', ParseUUIDPipe) id: string) {
         return this.agentService.findOne(id);

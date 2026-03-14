@@ -94,6 +94,23 @@ export class AgentService extends BaseService<Agent, AgentDto> {
         return this.toDto(agent as unknown as Agent);
     }
 
+    async getDropdownOptions() {
+        const agents = await this.agentRepository.createQueryBuilder('agent')
+            .innerJoin('agent.realPerson', 'realPerson')
+            .select([
+                'agent.id',
+                'realPerson.firstName',
+                'realPerson.lastName'
+            ])
+            .where('agent.isActive = :isActive', { isActive: true })
+            .getMany();
+
+        return agents.map(agent => ({
+            id: agent.id,
+            name: `${agent.realPerson.firstName} ${agent.realPerson.lastName}`.trim()
+        }));
+    }
+
 
     async update(id: string, updateAgentDto: UpdateAgentDto) {
         const qr = this.dataSource.createQueryRunner();

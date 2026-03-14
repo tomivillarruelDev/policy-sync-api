@@ -282,6 +282,7 @@ export class SuperSeeder {
                     hasReinforcedDoor: faker.datatype.boolean(),
                     buildingFireSum: faker.number.int({ min: 100000, max: 500000 }),
                     contentFireSum: faker.number.int({ min: 10000, max: 50000 }),
+                    theftSum: faker.number.int({ min: 1000, max: 20000 }),
                     propertyTypeId: faker.helpers.arrayElement(propertyTypes).id,
                     roofMaterialId: faker.helpers.arrayElement(roofMaterials)?.id,
                     totalSquareMeters: faker.number.int({ min: 50, max: 500 }),
@@ -312,6 +313,20 @@ export class SuperSeeder {
                 }
             }
 
+            // --- CÁLCULO DE SUMA ASEGURADA REAL ---
+            let calculatedSumInsured = 0;
+            if (riskType === 'vehicle' && vehicles) {
+                calculatedSumInsured = vehicles[0].insuredValue;
+            } else if (riskType === 'property' && properties) {
+                // Sumamos los 3 campos de la propiedad: Edificio + Contenido + Robo
+                calculatedSumInsured = (properties[0].buildingFireSum || 0) + 
+                                     (properties[0].contentFireSum || 0) + 
+                                     (properties[0].theftSum || 0);
+            } else {
+                // Para Vida y Salud, un faker está bien
+                calculatedSumInsured = faker.number.int({ min: 10000, max: 500000 });
+            }
+
             try {
                 await this.policyService.create({
                     policyNumber: `POL-S-${faker.string.uuid().substring(0, 8).toUpperCase()}`,
@@ -327,7 +342,7 @@ export class SuperSeeder {
                     validityEnd: nextYear.toISOString(),
                     renewalDate: nextYear.toISOString(),
                     currency: faker.helpers.arrayElement(['USD', 'ARS']),
-                    sumInsured: faker.number.int({ min: 10000, max: 1000000 }),
+                    sumInsured: calculatedSumInsured,
                     netPremium: netPremium,
                     taxAmount: taxAmount,
                     totalPremium: totalPremium,

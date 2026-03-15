@@ -50,6 +50,21 @@ export class RealPersonService {
     });
   }
 
+  async getDropdownOptions() {
+    const people = await this.realRepo.createQueryBuilder('realPerson')
+      .select([
+        'realPerson.id',
+        'realPerson.firstName',
+        'realPerson.lastName'
+      ])
+      .getMany();
+
+    return people.map(p => ({
+      id: p.id,
+      name: `${p.firstName} ${p.lastName}`.trim()
+    }));
+  }
+
   async findOne(id: string): Promise<RealPerson> {
     const entity = await this.realRepo.findOne({
       where: { id },

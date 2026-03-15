@@ -57,6 +57,11 @@ export class PersonController {
     return results.map(flattenAddresses);
   }
 
+  @Get('real/dropdown')
+  async getRealDropdown(): Promise<any[]> {
+    return this.realService.getDropdownOptions();
+  }
+
   @Get('real/:id')
   async findOneReal(
     @Param('id', new ParseUUIDPipe()) id: string,
